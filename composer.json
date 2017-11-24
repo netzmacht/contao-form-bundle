@@ -1,0 +1,40 @@
+{
+    "name":"netzmacht/contao-form-bundle",
+    "description":"Form bundle for using symfony forms with Contao CMS",
+    "keywords":["contao", "forms"],
+    "type":"contao-bundle",
+    "license":"LGPL-3.0+",
+    "authors":[
+        {
+            "name":"David Molineus",
+            "email":"mail@netzmacht.de",
+            "homepage":"https://netzmacht.de"
+        }
+    ],
+    "support":{
+        "email":"mail@netzmacht.de",
+        "issues":"https://github.com/netzmacht/contao-form-bundle/issues",
+        "source":"https://github.com/netzmacht/contao-form-bundle"
+    },
+    "require":{
+        "php":"^7.1",
+        "beberlei/assert": "~2.0",
+        "contao/core-bundle":"~4.4",
+        "symfony/form": "^3.3",
+        "adamquaile/symfony-fieldset-bundle": "^1.1",
+        "netzmacht/contao-toolkit": "dev-master"
+    },
+    "require-dev": {
+        "phpcq/all-tasks": "^1.2",
+        "contao/manager-plugin": "^2.1"
+    },
+    "autoload": {
+        "psr-4": { "Netzmacht\\ContaoFormBundle\\": "src/" }
+    },
+    "extra":{
+        "contao-manager-plugin": "Netzmacht\\ContaoFormBundle\\ContaoManager\\Plugin",
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}

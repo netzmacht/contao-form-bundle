@@ -1,0 +1,10 @@
+services:
+  netzmacht.contao_form.listener.map_form_generator_fields:
+    class: Netzmacht\ContaoFormBundle\EventListener\MapFormGeneratorFieldsListener
+    tags:
+      - {
+          name: kernel.event_listener,
+          event: 'Netzmacht\ContaoFormBundle\Event\BuildFormGeneratorFormFieldEvent',
+          method: mapFormTypes,
+          priority: 100
+        }
