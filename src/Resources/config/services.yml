@@ -1,0 +1,35 @@
+services:
+  netzmacht.contao_form.mapper.checkbox:
+    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\CheckboxFieldMapper
+    tags:
+      - { name: netzmacht.contao_form.mapper }
+
+  netzmacht.contao_form.mapper.hidden:
+     class: Netzmacht\ContaoFormBundle\Form\FormGenerator\HiddenFieldMapper
+     tags:
+      - { name: netzmacht.contao_form.mapper }
+
+  netzmacht.contao_form.mapper.password:
+    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\PasswordFieldMapper
+    tags:
+      - { name: netzmacht.contao_form.mapper }
+
+  netzmacht.contao_form.mapper.radio:
+    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\RadioFieldMapper
+    tags:
+      - { name: netzmacht.contao_form.mapper }
+
+  netzmacht.contao_form.mapper.select:
+    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\SelectFieldMapper
+    tags:
+      - { name: netzmacht.contao_form.mapper }
+
+  netzmacht.contao_form.mapper.textarea:
+    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\TextareaFieldMapper
+    tags:
+      - { name: netzmacht.contao_form.mapper }
+
+  netzmacht.contao_form.mapper.text:
+    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\TextFieldMapper
+    tags:
+      - { name: netzmacht.contao_form.mapper }

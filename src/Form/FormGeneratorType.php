@@ -17,8 +17,7 @@ namespace Netzmacht\ContaoFormBundle\Form;
 use Contao\FormFieldModel;
 use Contao\FormModel;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
-use Netzmacht\ContaoFormBundle\Event\BuildFormGeneratorFormEvent;
-use Netzmacht\ContaoFormBundle\Event\BuildFormGeneratorFormFieldEvent;
+use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatcher;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -35,6 +34,11 @@ class FormGeneratorType extends AbstractType
      * @var RepositoryManager
      */
     private $repositoryManager;
+
+    /**
+     * @var FieldTypeBuilder
+     */
+    private $formTypeBuilder;
 
     /**
      * The event dispatcher.
@@ -75,18 +79,46 @@ class FormGeneratorType extends AbstractType
 
         $builder->setMethod($formModel->method);
 
-        $event = new BuildFormGeneratorFormEvent($formModel, $options, $builder);
-        $this->eventDispatcher->dispatch(BuildFormGeneratorFormEvent::class, $event);
+        $groups  = [];
+        $current = null;
 
         foreach ($formFields as $formField) {
-            $event = new BuildFormGeneratorFormFieldEvent($formField, $options);
-            $this->eventDispatcher->dispatch(BuildFormGeneratorFormFieldEvent::class, $event);
+            $config = $this->formTypeBuilder->build($formField);
 
-            if ($event->isSupported()) {
-                $builder->add($formField->name, $event->getType(), $event->getOptions());
-            } elseif(!$options['ignoreUnsupported']) {
-                throw new \RuntimeException(sprintf('Form field ID "%s" was not mapped'));
+            if ($config === null) {
+                continue;
             }
+
+            if ($config['group'] === 'start') {
+                if ($current) {
+                    array_push($groups, $current);
+                    $current = null;
+                }
+
+                $config['model'] = $formField;
+                $current         = $config;
+            } elseif ($config['group'] === 'stop') {
+                if ($current) {
+                    $options = $this->formTypeBuilder->setChildrenAsOption($formField, $current);
+                    $builder->add($current['name'], $current['type'], $options);
+                    $current = array_pop($groups);
+                }
+            } elseif ($current === null) {
+                $builder->add($config['name'], $config['type'], $config['options']);
+            } else {
+                $current['children'][] = [
+                    'name'    => $config['name'],
+                    'type'    => $config['type'],
+                    'options' => $config['options']
+                ];
+            }
+        }
+
+        while ($current) {
+            $options = $this->formTypeBuilder->setChildrenAsOption($current['model'], $current);
+            $builder->add($current['name'], $current['type'], $options);
+
+            $current = array_pop($groups);
         }
     }
 
