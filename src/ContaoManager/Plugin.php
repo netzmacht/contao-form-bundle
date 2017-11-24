@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\ContaoManager;
 
+use AdamQuaile\Bundle\FieldsetBundle\AdamQuaileFieldsetBundle;
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
@@ -34,6 +35,7 @@ class Plugin implements BundlePluginInterface, ExtensionPluginInterface
     public function getBundles(ParserInterface $parser)
     {
         return [
+            BundleConfig::create(AdamQuaileFieldsetBundle::class),
             BundleConfig::create(NetzmachtContaoFormBundle::class)
                 ->setLoadAfter([ContaoCoreBundle::class, NetzmachtContaoToolkitBundle::class])
         ];
