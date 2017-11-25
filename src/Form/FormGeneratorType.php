@@ -75,50 +75,27 @@ class FormGeneratorType extends AbstractType
     {
         $formId     = (int) $options['formId'];
         $formModel  = $this->loadFormModel($formId);
-        $formFields = $this->loadFormFields($formId);
 
         $builder->setMethod($formModel->method);
 
-        $groups  = [];
-        $current = null;
-
-        foreach ($formFields as $formField) {
-            $config = $this->formTypeBuilder->build($formField);
-
-            if ($config === null) {
-                continue;
+        $formFields = $this->loadFormFields($formId);
+        $next       = function (?callable $condition = null) use ($formFields) {
+            if (($next = next($formFields)) === false) {
+                return null;
             }
 
-            if ($config['group'] === 'start') {
-                if ($current) {
-                    array_push($groups, $current);
-                    $current = null;
-                }
-
-                $config['model'] = $formField;
-                $current         = $config;
-            } elseif ($config['group'] === 'stop') {
-                if ($current) {
-                    $options = $this->formTypeBuilder->setChildrenAsOption($formField, $current);
-                    $builder->add($current['name'], $current['type'], $options);
-                    $current = array_pop($groups);
-                }
-            } elseif ($current === null) {
-                $builder->add($config['name'], $config['type'], $config['options']);
-            } else {
-                $current['children'][] = [
-                    'name'    => $config['name'],
-                    'type'    => $config['type'],
-                    'options' => $config['options']
-                ];
+            if (!$condition || $condition($next)) {
+                return $next;
             }
-        }
 
-        while ($current) {
-            $options = $this->formTypeBuilder->setChildrenAsOption($current['model'], $current);
-            $builder->add($current['name'], $current['type'], $options);
+            prev($formFields);
 
-            $current = array_pop($groups);
+            return null;
+        };
+
+        while (($formField = $next())) {
+            $config = $this->formTypeBuilder->build($formField, $next);
+            $builder->add(...$config);
         }
     }
 
@@ -145,15 +122,15 @@ class FormGeneratorType extends AbstractType
      *
      * @param int $formId The form id.
      *
-     * @return FormFieldModel[]|iterable
+     * @return FormFieldModel[]|array
      */
-    private function loadFormFields(int $formId): iterable
+    private function loadFormFields(int $formId): array
     {
         $repository = $this->repositoryManager->getRepository(FormFieldModel::class);
         $collection = $repository->findBy(['.pid=?'], [$formId], ['order' => '.sorting ASC']);
 
         if ($collection) {
-            return $collection;
+            return $collection->fetchAll();
         }
 
         return [];

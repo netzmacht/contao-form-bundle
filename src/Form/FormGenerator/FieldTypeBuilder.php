@@ -29,41 +29,23 @@ class FieldTypeBuilder
     /**
      * Build the form field type.
      *
-     * @param FormFieldModel $fieldModel
+     * @param FormFieldModel $fieldModel The field model.
+     * @param callable       $next       Callback to get the next form field model.
      *
      * @return array|null
      */
-    public function build(FormFieldModel $fieldModel): ?array
+    public function build(FormFieldModel $fieldModel, $next): ?array
     {
         foreach ($this->mappers as $mapper) {
             if ($mapper->supports($fieldModel)) {
-                $config = [
-                    'name'     => $fieldModel->name,
-                    'type'     => $mapper->getTypeClass($fieldModel),
-                    'options'  => $mapper->getOptions($fieldModel),
-                    'children' => [],
-                    'group'    => null
+                return [
+                    'name'    => $fieldModel->name,
+                    'type'    => $mapper->getTypeClass($fieldModel),
+                    'options' => $mapper->getOptions($fieldModel, $this, $next)
                 ];
-
-                if ($mapper instanceof GroupFormFieldMapper) {
-                    $config['group'] = $mapper->isGroupOpener($fieldModel) ? 'start' : 'stop';
-                }
-
-                return $config;
             }
         }
 
         return null;
-    }
-
-    public function setChildrenAsOption(FormFieldModel $fieldModel, array $config): array
-    {
-        foreach ($this->mappers as $mapper) {
-            if ($mapper->supports($fieldModel) && $mapper instanceof GroupFormFieldMapper) {
-                return $mapper->setChildrenAsOption($config['options'], $config['children']);
-            }
-        }
-
-        return $config['options'];
     }
 }

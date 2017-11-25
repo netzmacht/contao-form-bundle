@@ -86,7 +86,7 @@ abstract class AbstractFieldMapper implements FormFieldMapper
     /**
      * {@inheritDoc}
      */
-    public function getOptions(FormFieldModel $model): array
+    public function getOptions(FormFieldModel $model, FieldTypeBuilder $typeBuilder, callable $next): array
     {
         $options = [
             'attr' => $this->getAttributes($model),

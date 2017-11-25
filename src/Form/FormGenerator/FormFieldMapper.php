@@ -40,9 +40,15 @@ interface FormFieldMapper
     /**
      * Get the options for the form field.
      *
-     * @param FormFieldModel $model The form field.
+     * @param FormFieldModel   $model The form field.
+     * @param FieldTypeBuilder $fieldTypeBuilder
+     * @param callable         $next
      *
      * @return array
      */
-    public function getOptions(FormFieldModel $model): array;
+    public function getOptions(
+        FormFieldModel $model,
+        FieldTypeBuilder $fieldTypeBuilder,
+        callable $next
+    ): array;
 }

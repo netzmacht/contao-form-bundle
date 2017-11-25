@@ -38,9 +38,9 @@ class TextareaFieldMapper extends AbstractFieldMapper
     /**
      * {@inheritDoc}
      */
-    public function getOptions(FormFieldModel $model): array
+    public function getOptions(FormFieldModel $model, FieldTypeBuilder $typeBuilder, callable $next): array
     {
-        $options = parent::getOptions($model);
+        $options = parent::getOptions($model, $typeBuilder, $next);
         $size    = StringUtil::deserialize($model->size);
 
         if ($size[0]) {
