@@ -4,6 +4,11 @@ services:
     tags:
       - { name: netzmacht.contao_form.mapper }
 
+  netzmacht.contao_form.mapper.fieldset:
+    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldsetFieldMapper
+    tags:
+      - { name: netzmacht.contao_form.mapper }
+
   netzmacht.contao_form.mapper.hidden:
      class: Netzmacht\ContaoFormBundle\Form\FormGenerator\HiddenFieldMapper
      tags:
@@ -21,6 +26,11 @@ services:
 
   netzmacht.contao_form.mapper.select:
     class: Netzmacht\ContaoFormBundle\Form\FormGenerator\SelectFieldMapper
+    tags:
+      - { name: netzmacht.contao_form.mapper }
+
+  netzmacht.contao_form.mapper.submit:
+    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\SubmitFieldMapper
     tags:
       - { name: netzmacht.contao_form.mapper }
 

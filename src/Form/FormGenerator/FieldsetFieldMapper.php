@@ -8,6 +8,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\ContaoFormBundle\Form\FormGenerator;
 
 use AdamQuaile\Bundle\FieldsetBundle\Form\FieldsetType;
