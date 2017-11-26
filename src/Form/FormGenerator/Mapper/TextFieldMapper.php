@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Netzmacht\ContaoFormBundle\Form\FormGenerator;
+namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
 
 use Contao\FormFieldModel;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;

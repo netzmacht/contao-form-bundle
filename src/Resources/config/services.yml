@@ -11,46 +11,46 @@ services:
       - []
 
   netzmacht.contao_form.form_generator.mapper.checkbox:
-    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\CheckboxFieldMapper
+    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\CheckboxFieldMapper
     tags:
       - { name: netzmacht.contao_form.form_generator.mapper }
 
   netzmacht.contao_form.form_generator.mapper.fieldset:
-    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldsetFieldMapper
+    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\FieldsetFieldMapper
     tags:
       - { name: netzmacht.contao_form.form_generator.mapper }
 
   netzmacht.contao_form.form_generator.mapper.hidden:
-     class: Netzmacht\ContaoFormBundle\Form\FormGenerator\HiddenFieldMapper
+     class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\HiddenFieldMapper
      tags:
       - { name: netzmacht.contao_form.form_generator.mapper }
 
   netzmacht.contao_form.form_generator.mapper.password:
-    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\PasswordFieldMapper
+    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\PasswordFieldMapper
     tags:
       - { name: netzmacht.contao_form.form_generator.mapper }
 
   netzmacht.contao_form.form_generator.mapper.radio:
-    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\RadioFieldMapper
+    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\RadioFieldMapper
     tags:
       - { name: netzmacht.contao_form.form_generator.mapper }
 
   netzmacht.contao_form.form_generator.mapper.select:
-    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\SelectFieldMapper
+    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\SelectFieldMapper
     tags:
       - { name: netzmacht.contao_form.form_generator.mapper }
 
   netzmacht.contao_form.form_generator.mapper.submit:
-    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\SubmitFieldMapper
+    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\SubmitFieldMapper
     tags:
       - { name: netzmacht.contao_form.form_generator.mapper }
 
   netzmacht.contao_form.form_generator.mapper.textarea:
-    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\TextareaFieldMapper
+    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\TextareaFieldMapper
     tags:
       - { name: netzmacht.contao_form.form_generator.mapper }
 
   netzmacht.contao_form.form_generator.mapper.text:
-    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\TextFieldMapper
+    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\TextFieldMapper
     tags:
       - { name: netzmacht.contao_form.form_generator.mapper }

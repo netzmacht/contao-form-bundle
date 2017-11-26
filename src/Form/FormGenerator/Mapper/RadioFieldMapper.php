@@ -10,24 +10,24 @@
 
 declare(strict_types=1);
 
-namespace Netzmacht\ContaoFormBundle\Form\FormGenerator;
+namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
 
 /**
  * Class CheckboxFieldMapper
  */
-class CheckboxFieldMapper extends AbstractChoicesFieldMapper
+class RadioFieldMapper extends AbstractChoicesFieldMapper
 {
     /**
      * The form field type.
      *
      * @var string
      */
-    protected $fieldType = 'checkbox';
+    protected $fieldType = 'radio';
 
     /**
      * Multiple. If null, the value is read from the model.
      *
      * @var bool|null
      */
-    protected $multiple = true;
+    protected $multiple = false;
 }
