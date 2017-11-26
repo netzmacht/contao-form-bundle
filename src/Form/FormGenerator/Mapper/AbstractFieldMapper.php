@@ -1,11 +1,13 @@
 <?php
 
 /**
+ * Netzmacht Contao Form Bundle.
+ *
  * @package    contao-form-bundle
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved
+ * @copyright  2017 netzmacht David Molineus. All rights reserved.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
  * @filesource
- *
  */
 
 declare(strict_types=1);
@@ -63,6 +65,9 @@ abstract class AbstractFieldMapper implements FormFieldMapper
         'maxlength' => true
     ];
 
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         Assertion::string($this->typeClass);
@@ -78,7 +83,7 @@ abstract class AbstractFieldMapper implements FormFieldMapper
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getTypeClass(FormFieldModel $model): string
     {
@@ -119,11 +124,11 @@ abstract class AbstractFieldMapper implements FormFieldMapper
     /**
      * Get the attributes.
      *
-     * @param FormFieldModel $formFieldModel
+     * @param FormFieldModel $formFieldModel The form field model.
      *
      * @return array
      */
-    private function getAttributes(FormFieldModel $formFieldModel)
+    private function getAttributes(FormFieldModel $formFieldModel): array
     {
         $attributes = [];
 

@@ -1,12 +1,12 @@
 <?php
 
 /**
- * contao-form-bundle.
+ * Netzmacht Contao Form Bundle.
  *
  * @package    contao-form-bundle
  * @author     David Molineus <david.molineus@netzmacht.de>
  * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
  * @filesource
  */
 
@@ -67,8 +67,8 @@ class FormGeneratorType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $formId     = (int) $options['formId'];
-        $formModel  = $this->loadFormModel($formId);
+        $formId    = (int) $options['formId'];
+        $formModel = $this->loadFormModel($formId);
 
         $builder->setMethod($formModel->method);
 
@@ -99,6 +99,8 @@ class FormGeneratorType extends AbstractType
      * @param int $formId The form id.
      *
      * @return FormModel
+     *
+     * @throws \RuntimeException When form could not be found.
      */
     private function loadFormModel(int $formId): FormModel
     {
