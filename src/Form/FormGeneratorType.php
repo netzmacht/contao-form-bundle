@@ -18,7 +18,6 @@ use Contao\FormFieldModel;
 use Contao\FormModel;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatcher;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -36,27 +35,22 @@ class FormGeneratorType extends AbstractType
     private $repositoryManager;
 
     /**
+     * Contao form generator field type builder.
+     *
      * @var FieldTypeBuilder
      */
-    private $formTypeBuilder;
-
-    /**
-     * The event dispatcher.
-     *
-     * @var EventDispatcher
-     */
-    private $eventDispatcher;
+    private $fieldTypeBuilder;
 
     /**
      * FormGeneratorType constructor.
      *
      * @param RepositoryManager $repositoryManager Contao model repository manager.
-     * @param EventDispatcher   $eventDispatcher   The event dispatcher.
+     * @param FieldTypeBuilder  $fieldTypeBuilder  Contao form type builder.
      */
-    public function __construct(RepositoryManager $repositoryManager, EventDispatcher $eventDispatcher)
+    public function __construct(RepositoryManager $repositoryManager, FieldTypeBuilder $fieldTypeBuilder)
     {
         $this->repositoryManager = $repositoryManager;
-        $this->eventDispatcher   = $eventDispatcher;
+        $this->fieldTypeBuilder  = $fieldTypeBuilder;
     }
 
     /**
@@ -94,7 +88,7 @@ class FormGeneratorType extends AbstractType
         };
 
         while (($formField = $next())) {
-            $config = $this->formTypeBuilder->build($formField, $next);
+            $config = $this->fieldTypeBuilder->build($formField, $next);
             $builder->add(...$config);
         }
     }
