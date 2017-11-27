@@ -21,7 +21,7 @@ ships a FromGeneratorType.
 
 ```php
 // Symfony form generator, provided as service form.factory
-$form = $formFactory->create(NetzmachtContaoFormBundle\Form\FormGeneratorType::class, null, ['formId' => 5]);
+$form = $formFactory->create(Netzmacht\ContaoFormBundle\Form\FormGeneratorType::class, null, ['formId' => 5]);
 
 // That's all. Now you can use a symfon form having your form generator form fields.
 

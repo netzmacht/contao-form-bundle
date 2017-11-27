@@ -16,10 +16,11 @@ namespace Netzmacht\ContaoFormBundle\Form;
 
 use Contao\FormFieldModel;
 use Contao\FormModel;
+use Contao\StringUtil;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormBuilderInterface as FormBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -65,12 +66,12 @@ class FormGeneratorType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilder $builder, array $options)
     {
         $formId    = (int) $options['formId'];
         $formModel = $this->loadFormModel($formId);
 
-        $builder->setMethod($formModel->method);
+        $this->applyFormModelSettings($formModel, $builder);
 
         $formFields = $this->loadFormFields($formId);
         $next       = function (?callable $condition = null) use ($formFields) {
@@ -90,6 +91,33 @@ class FormGeneratorType extends AbstractType
         while (($formField = $next())) {
             $config = $this->fieldTypeBuilder->build($formField, $next);
             $builder->add(...$config);
+        }
+    }
+
+    /**
+     * Apply the form model settings.
+     *
+     * @param FormModel   $formModel The form model.
+     * @param FormBuilder $builder   The form builder.
+     *
+     * @return void
+     */
+    private function applyFormModelSettings(FormModel $formModel, FormBuilder $builder): void
+    {
+        $builder->setMethod($formModel->method);
+
+        if ($formModel->novalidate) {
+            $builder->setAttribute('novalidate', 'novalidate');
+        }
+
+        $attributes = StringUtil::deserialize($formModel->attributes, true);
+
+        if (!empty($attributes[0])) {
+            $builder->setAttribute('id', $attributes[0]);
+        }
+
+        if (!empty($attributes[1])) {
+            $builder->setAttribute('class', $attributes[1]);
         }
     }
 
