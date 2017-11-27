@@ -74,23 +74,13 @@ class FormGeneratorType extends AbstractType
         $this->applyFormModelSettings($formModel, $builder);
 
         $formFields = $this->loadFormFields($formId);
-        $next       = function (?callable $condition = null) use ($formFields) {
-            if (($next = next($formFields)) === false) {
-                return null;
-            }
-
-            if (!$condition || $condition($next)) {
-                return $next;
-            }
-
-            prev($formFields);
-
-            return null;
-        };
+        $next       = $this->createNextCallback($formFields);
 
         while (($formField = $next())) {
             $config = $this->fieldTypeBuilder->build($formField, $next);
-            $builder->add(...$config);
+            if ($config !== null) {
+                $builder->add(...$config);
+            }
         }
     }
 
@@ -158,5 +148,29 @@ class FormGeneratorType extends AbstractType
         }
 
         return [];
+    }
+
+    /**
+     * Crate the next callback.
+     *
+     * @param FormFieldModel[]|array $formFields Form fields array.
+     *
+     * @return callable
+     */
+    private function createNextCallback($formFields): callable
+    {
+        return function (?callable $condition = null) use ($formFields) {
+            if (($next = next($formFields)) === false) {
+                return null;
+            }
+
+            if (!$condition || $condition($next)) {
+                return $next;
+            }
+
+            prev($formFields);
+
+            return null;
+        };
     }
 }
