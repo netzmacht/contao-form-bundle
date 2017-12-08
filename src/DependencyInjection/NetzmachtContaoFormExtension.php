@@ -35,6 +35,6 @@ class NetzmachtContaoFormExtension extends Extension
         );
 
         // Common config, services and listeners
-        $loader->load('listeners.yml');
+        $loader->load('services.yml');
     }
 }
