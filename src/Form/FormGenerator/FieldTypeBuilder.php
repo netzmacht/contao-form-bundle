@@ -29,6 +29,16 @@ class FieldTypeBuilder
     private $mappers;
 
     /**
+     * FieldTypeBuilder constructor.
+     *
+     * @param FormFieldMapper[] $mappers Form field mappers.
+     */
+    public function __construct(array $mappers)
+    {
+        $this->mappers = $mappers;
+    }
+
+    /**
      * Build the form field type.
      *
      * @param FormFieldModel $fieldModel The field model.
@@ -41,7 +51,7 @@ class FieldTypeBuilder
         foreach ($this->mappers as $mapper) {
             if ($mapper->supports($fieldModel)) {
                 return [
-                    'name'    => $fieldModel->name,
+                    'name'    => $fieldModel->name ?: 'field_' . $fieldModel->id,
                     'type'    => $mapper->getTypeClass($fieldModel),
                     'options' => $mapper->getOptions($fieldModel, $this, $next)
                 ];
