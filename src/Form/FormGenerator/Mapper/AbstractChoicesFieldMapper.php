@@ -62,9 +62,10 @@ abstract class AbstractChoicesFieldMapper extends AbstractFieldMapper
      */
     public function getOptions(FormFieldModel $model, FieldTypeBuilder $typeBuilder, callable $next): array
     {
-        $options             = parent::getOptions($model, $typeBuilder, $next);
-        $options['multiple'] = $this->multiple === null ? (bool) $model->multiple : $this->multiple;
-        $options['expanded'] = $this->expanded;
+        $options                = parent::getOptions($model, $typeBuilder, $next);
+        $options['multiple']    = $this->multiple === null ? (bool) $model->multiple : $this->multiple;
+        $options['expanded']    = $this->expanded;
+        $options['placeholder'] = false;
 
         $options = $this->parseOptionsConfig($options, $model->options);
 
