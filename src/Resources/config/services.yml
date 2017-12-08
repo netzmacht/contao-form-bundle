@@ -4,6 +4,8 @@ services:
     arguments:
       - '@netzmacht.contao_toolkit.repository_manager'
       - '@netzmacht.contao_form.form_generator.type_builder'
+    tags:
+      - { name: form.type }
 
   netzmacht.contao_form.form_generator.type_builder:
     class: Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder

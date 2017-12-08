@@ -59,7 +59,13 @@ class FormGeneratorType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefault('ignoreUnsupported', true);
+        $resolver->setDefaults(
+            [
+                'ignoreUnsupported' => true,
+                'ignore'            => [],
+            ]
+        );
+
         $resolver->setRequired(['formId']);
     }
 
@@ -77,9 +83,13 @@ class FormGeneratorType extends AbstractType
         $next       = $this->createNextCallback($formFields);
 
         while (($formField = $next())) {
+            if (in_array($formField->type, $options['ignore'])) {
+                continue;
+            }
+
             $config = $this->fieldTypeBuilder->build($formField, $next);
             if ($config !== null) {
-                $builder->add(...$config);
+                $builder->add(... array_values($config));
             }
         }
     }
@@ -144,7 +154,7 @@ class FormGeneratorType extends AbstractType
         $collection = $repository->findBy(['.pid=?'], [$formId], ['order' => '.sorting ASC']);
 
         if ($collection) {
-            return $collection->fetchAll();
+            return $collection->getModels();
         }
 
         return [];
@@ -157,18 +167,20 @@ class FormGeneratorType extends AbstractType
      *
      * @return callable
      */
-    private function createNextCallback($formFields): callable
+    private function createNextCallback(&$formFields): callable
     {
-        return function (?callable $condition = null) use ($formFields) {
-            if (($next = next($formFields)) === false) {
+        return function (?callable $condition = null) use (&$formFields) {
+            $current = current($formFields);
+
+            if ($current === false) {
                 return null;
             }
 
-            if (!$condition || $condition($next)) {
-                return $next;
-            }
+            if (!$condition || $condition($current)) {
+                next($formFields);
 
-            prev($formFields);
+                return $current;
+            }
 
             return null;
         };
