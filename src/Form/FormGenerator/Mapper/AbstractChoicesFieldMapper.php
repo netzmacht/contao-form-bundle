@@ -65,7 +65,8 @@ abstract class AbstractChoicesFieldMapper extends AbstractFieldMapper
         $options             = parent::getOptions($model, $typeBuilder, $next);
         $options['multiple'] = $this->multiple === null ? (bool) $model->multiple : $this->multiple;
         $options['expanded'] = $this->expanded;
-        $options['choices']  = $this->buildChoices($model->options);
+
+        $options = $this->parseOptionsConfig($options, $model->options);
 
         return $options;
     }
@@ -73,33 +74,43 @@ abstract class AbstractChoicesFieldMapper extends AbstractFieldMapper
     /**
      * Build the choices.
      *
-     * @param mixed $options Given options.
+     * @param array $options Form type options.
+     * @param mixed $values  Given options.
      *
      * @return array
      */
-    private function buildChoices($options): array
+    private function parseOptionsConfig(array $options, $values): array
     {
-        $options = StringUtil::deserialize($options);
-        $choices = [];
+        $values             = StringUtil::deserialize($values);
+        $options['choices'] = [];
 
-        if (empty($options) || !is_array($options)) {
-            return $choices;
+        if (empty($values) || !is_array($values)) {
+            return $options;
         }
 
         $group = null;
 
-        foreach ($options as $option) {
+        foreach ($values as $option) {
             if ($option['group']) {
                 $group = $option['label'];
+                continue;
             }
 
             if ($group) {
-                $choices[$group][$option['label']] = $option['value'];
+                $options['choices'][$group][$option['label']] = $option['value'];
             } else {
-                $choices[][$option['label']] = $option['value'];
+                $options['choices'][][$option['label']] = $option['value'];
+            }
+
+            if ($option['default']) {
+                if ($options['multiple']) {
+                    $options['data'][] = $option['value'];
+                } else {
+                    $options['data'] = $option['value'];
+                }
             }
         }
 
-        return $choices;
+        return $options;
     }
 }
