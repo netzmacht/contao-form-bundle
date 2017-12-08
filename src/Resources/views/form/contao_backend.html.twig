@@ -1,0 +1,64 @@
+{% use "form_div_layout.html.twig" %}
+
+{# Rows #}
+{%- block form_row -%}
+    {% if 'form_generator' not in form.vars.block_prefixes and 'fieldset' not in form.vars.block_prefixes %}
+    <div class="widget">
+    {% endif %}
+    {% if label is not empty  %}
+        <h3>{{- form_label(form) -}}</h3>
+    {% endif %}
+    {{- form_errors(form) -}}
+    {{- form_widget(form) -}}
+    {% if 'form_generator' not in form.vars.block_prefixes and 'fieldset' not in form.vars.block_prefixes %}
+    </div>
+    {% endif %}
+{%- endblock form_row -%}
+
+
+{# Widgets #}
+
+{% block form_widget_simple -%}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' tl_text')|trim}) %}
+        {{- parent() -}}
+{%- endblock form_widget_simple %}
+
+{% block textarea_widget -%}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' tl_textarea')|trim}) %}
+    {{- parent() -}}
+{%- endblock textarea_widget %}
+
+{% block choice_widget_collapsed -%}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' tl_select')|trim}) %}
+    {{- parent() -}}
+{%- endblock choice_widget_collapsed %}
+
+{% block fieldset_widget %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' tl_box')|trim}) %}
+    <fieldset {{ block('widget_container_attributes') }}>
+
+        {% if legend is defined and legend is not empty %}
+            <legend>{{ legend | trans({}, translation_domain) }}</legend>
+        {% endif %}
+        {{ form_widget(form) }}
+
+    </fieldset>
+{% endblock fieldset_widget %}
+
+{%- block button_widget -%}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' tl_submit')|trim}) %}
+    <div class="tl_submit_container">
+        {{- parent() -}}
+    </div>
+{% endblock %}
+
+
+{# Form #}
+
+{%- block form -%}
+    <div class="tl_edit_form">
+    <div class="tl_formbody_edit">
+    {{- parent() -}}
+    </div>
+    </div>
+{%- endblock form -%}
