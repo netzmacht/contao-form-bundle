@@ -16,6 +16,7 @@ namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
 
 use AdamQuaile\Bundle\FieldsetBundle\Form\FieldsetType;
 use Contao\FormFieldModel;
+use Contao\StringUtil;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FormFieldMapper;
 
@@ -52,7 +53,7 @@ class FieldsetFieldMapper implements FormFieldMapper
     {
         $options = [
             'label'  => false,
-            'legend' => $model->label,
+            'legend' => StringUtil::decodeEntities($model->label),
             'attr'   => [],
             'fields' => []
         ];

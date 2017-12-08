@@ -16,6 +16,7 @@ namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
 
 use Assert\Assertion;
 use Contao\FormFieldModel;
+use Contao\StringUtil;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FormFieldMapper;
 use Symfony\Component\Validator\Constraints\Length;
@@ -67,6 +68,8 @@ abstract class AbstractFieldMapper implements FormFieldMapper
 
     /**
      * Constructor.
+     *
+     * @throws \Assert\AssertionFailedException When type class or field type is not givvn.
      */
     public function __construct()
     {
@@ -100,7 +103,7 @@ abstract class AbstractFieldMapper implements FormFieldMapper
         ];
 
         if ($this->options['label']) {
-            $options['label'] = $model->label;
+            $options['label'] = StringUtil::decodeEntities($model->label);
         }
         
         if ($this->options['mandatory']) {

@@ -23,6 +23,7 @@
         "symfony/form": "^3.3",
         "adamquaile/symfony-fieldset-bundle": "^1.1",
         "netzmacht/contao-toolkit": "dev-master",
+        "symfony/symfony": "~3.3",
         "symfony/validator": "~3.3"
     },
     "require-dev": {
