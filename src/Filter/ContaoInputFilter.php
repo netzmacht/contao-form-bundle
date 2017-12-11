@@ -37,6 +37,8 @@ class ContaoInputFilter
     private $configAdapter;
 
     /**
+     * Request scope matcher.
+     *
      * @var RequestScopeMatcher
      */
     private $scopeMatcher;
@@ -45,12 +47,14 @@ class ContaoInputFilter
      * ContaoInputFilter constructor.
      *
      * @param Adapter|Input       $inputAdapter The input adapter.
+     * @param Adapter|Config      $configAdapter The config adapter.
      * @param RequestScopeMatcher $scopeMatcher
      */
-    public function __construct($inputAdapter, RequestScopeMatcher $scopeMatcher)
+    public function __construct($inputAdapter, $configAdapter, RequestScopeMatcher $scopeMatcher)
     {
         $this->inputAdapter = $inputAdapter;
         $this->scopeMatcher = $scopeMatcher;
+        $this->configAdapter = $configAdapter;
     }
 
     /**

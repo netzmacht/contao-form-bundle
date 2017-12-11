@@ -12,6 +12,13 @@ services:
     arguments:
       - []
 
+  netzmacht.contao_form.input_filter:
+    class: Netzmacht\ContaoFormBundle\Filter\ContaoInputFilter
+    arguments:
+      - '@netzmacht.contao_toolkit.contao.input_adapter'
+      - '@netzmacht.contao_toolkit.contao.config_adapter'
+      - '@netzmacht.contao_toolkit.routing.scope_matcher'
+
   netzmacht.contao_form.form_generator.mapper.checkbox:
     class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\CheckboxFieldMapper
     tags:
