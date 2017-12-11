@@ -51,7 +51,7 @@ class FieldTypeBuilder
         foreach ($this->mappers as $mapper) {
             if ($mapper->supports($fieldModel)) {
                 return [
-                    'name'    => $fieldModel->name ?: 'field_' . $fieldModel->id,
+                    'name'    => $mapper->getName($fieldModel),
                     'type'    => $mapper->getTypeClass($fieldModel),
                     'options' => $mapper->getOptions($fieldModel, $this, $next)
                 ];

@@ -35,6 +35,14 @@ class SubmitFieldMapper implements FormFieldMapper
     /**
      * {@inheritDoc}
      */
+    public function getName(FormFieldModel $model): ?string
+    {
+        return 'submit_' . $model->id;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getTypeClass(FormFieldModel $model): string
     {
         return ButtonType::class;

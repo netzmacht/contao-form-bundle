@@ -88,6 +88,14 @@ abstract class AbstractFieldMapper implements FormFieldMapper
     /**
      * {@inheritDoc}
      */
+    public function getName(FormFieldModel $model): ?string
+    {
+        return $model->name;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getTypeClass(FormFieldModel $model): string
     {
         return $this->typeClass;

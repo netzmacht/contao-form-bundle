@@ -31,6 +31,15 @@ interface FormFieldMapper
     public function supports(FormFieldModel $model): bool;
 
     /**
+     * Get the name of the form field.
+     *
+     * @param FormFieldModel $model The form field.
+     *
+     * @return string|null
+     */
+    public function getName(FormFieldModel $model): ?string;
+
+    /**
      * Get the type class from the form field.
      *
      * @param FormFieldModel $model The form field.

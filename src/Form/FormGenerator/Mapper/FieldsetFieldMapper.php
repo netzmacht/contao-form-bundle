@@ -39,6 +39,14 @@ class FieldsetFieldMapper implements FormFieldMapper
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function getName(FormFieldModel $model): ?string
+    {
+        return 'fieldset_' . $model->id;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getTypeClass(FormFieldModel $model): string
