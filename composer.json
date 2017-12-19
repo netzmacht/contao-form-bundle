@@ -22,7 +22,7 @@
         "contao/core-bundle":"~4.4",
         "symfony/form": "^3.3",
         "adamquaile/symfony-fieldset-bundle": "^1.1",
-        "netzmacht/contao-toolkit": "dev-master",
+        "netzmacht/contao-toolkit": "~3.0",
         "symfony/symfony": "~3.3",
         "symfony/validator": "~3.3"
     },
