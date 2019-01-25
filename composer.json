@@ -18,13 +18,16 @@
     },
     "require":{
         "php":"^7.1",
-        "beberlei/assert": "~2.0",
+        "beberlei/assert": "^2.0 || ^3.0",
         "contao/core-bundle":"~4.4",
-        "symfony/form": "^3.3",
         "adamquaile/symfony-fieldset-bundle": "^1.1",
         "netzmacht/contao-toolkit": "~3.0",
-        "symfony/symfony": "~3.3",
-        "symfony/validator": "~3.3"
+        "symfony/config": "~3.3 || ^4.0",
+        "symfony/dependency-injection": "~3.3 || ^4.0",
+        "symfony/form": "~3.3 || ^4.0",
+        "symfony/http-kernel": "~3.3 || ^4.0",
+        "symfony/options-resolver": "~3.3 || ^4.0",
+        "symfony/validator": "~3.3 || ^4.0"
     },
     "require-dev": {
         "phpcq/all-tasks": "^1.2",
