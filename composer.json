@@ -1,26 +1,24 @@
 {
-    "name":"netzmacht/contao-form-bundle",
-    "description":"Form bundle for using symfony forms with Contao CMS",
-    "keywords":["contao", "forms"],
-    "type":"contao-bundle",
-    "license":"LGPL-3.0+",
-    "authors":[
+    "name": "netzmacht/contao-form-bundle",
+    "type": "contao-bundle",
+    "description": "Form bundle for using symfony forms with Contao CMS",
+    "keywords": [
+        "contao",
+        "forms"
+    ],
+    "license": "LGPL-3.0-or-later",
+    "authors": [
         {
-            "name":"David Molineus",
-            "email":"mail@netzmacht.de",
-            "homepage":"https://netzmacht.de"
+            "name": "David Molineus",
+            "email": "mail@netzmacht.de",
+            "homepage": "https://netzmacht.de"
         }
     ],
-    "support":{
-        "email":"mail@netzmacht.de",
-        "issues":"https://github.com/netzmacht/contao-form-bundle/issues",
-        "source":"https://github.com/netzmacht/contao-form-bundle"
-    },
-    "require":{
-        "php":"^7.1",
-        "beberlei/assert": "^2.0 || ^3.0",
-        "contao/core-bundle":"~4.4",
+    "require": {
+        "php": "^7.1",
         "adamquaile/symfony-fieldset-bundle": "^1.1",
+        "beberlei/assert": "^2.0 || ^3.0",
+        "contao/core-bundle": "~4.4",
         "netzmacht/contao-toolkit": "~3.0",
         "symfony/config": "~3.3 || ^4.0",
         "symfony/dependency-injection": "~3.3 || ^4.0",
@@ -30,16 +28,23 @@
         "symfony/validator": "~3.3 || ^4.0"
     },
     "require-dev": {
-        "phpcq/all-tasks": "^1.2",
-        "contao/manager-plugin": "^2.1"
+        "contao/manager-plugin": "^2.1",
+        "phpcq/all-tasks": "^1.2"
     },
-    "autoload": {
-        "psr-4": { "Netzmacht\\ContaoFormBundle\\": "src/" }
-    },
-    "extra":{
-        "contao-manager-plugin": "Netzmacht\\ContaoFormBundle\\ContaoManager\\Plugin",
+    "extra": {
         "branch-alias": {
             "dev-master": "1.0.x-dev"
+        },
+        "contao-manager-plugin": "Netzmacht\\ContaoFormBundle\\ContaoManager\\Plugin"
+    },
+    "autoload": {
+        "psr-4": {
+            "Netzmacht\\ContaoFormBundle\\": "src/"
         }
+    },
+    "support": {
+        "email": "mail@netzmacht.de",
+        "issues": "https://github.com/netzmacht/contao-form-bundle/issues",
+        "source": "https://github.com/netzmacht/contao-form-bundle"
     }
 }
