@@ -36,6 +36,8 @@ services:
 
   netzmacht.contao_form.form_generator.mapper.password:
     class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\PasswordFieldMapper
+    arguments:
+      - '@translator'
     tags:
       - { name: netzmacht.contao_form.form_generator.mapper }
 
