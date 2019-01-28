@@ -8,8 +8,8 @@
     {% if label is not empty  %}
         <h3>{{- form_label(form) -}}</h3>
     {% endif %}
-    {{- form_errors(form) -}}
     {{- form_widget(form) -}}
+    {{- form_errors(form) -}}
     {% if 'form_generator' not in form.vars.block_prefixes and 'fieldset' not in form.vars.block_prefixes %}
     </div>
     {% endif %}
@@ -62,3 +62,14 @@
     </div>
     </div>
 {%- endblock form -%}
+
+{# Form errors #}
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
+        <ul class="tl_error">
+            {%- for error in errors -%}
+                <li>{{ error.message }}</li>
+            {%- endfor -%}
+        </ul>
+    {%- endif -%}
+{%- endblock form_errors -%}
