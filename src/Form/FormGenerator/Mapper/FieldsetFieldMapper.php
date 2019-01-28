@@ -83,7 +83,7 @@ class FieldsetFieldMapper implements FormFieldMapper
         };
 
         while (($child = $next($condition)) !== null) {
-            $field = $typeBuilder->build($child, $next);;
+            $field = $typeBuilder->build($child, $next);
 
             if ($field) {
                 $options['fields'][] = [

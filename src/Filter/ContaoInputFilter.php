@@ -1,11 +1,13 @@
 <?php
 
 /**
+ * Netzmacht Contao Form Bundle.
+ *
  * @package    contao-form-bundle
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved
+ * @copyright  2017-2019 netzmacht David Molineus. All rights reserved.
+ * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
  * @filesource
- *
  */
 
 declare(strict_types=1);
@@ -46,14 +48,14 @@ class ContaoInputFilter
     /**
      * ContaoInputFilter constructor.
      *
-     * @param Adapter|Input       $inputAdapter The input adapter.
+     * @param Adapter|Input       $inputAdapter  The input adapter.
      * @param Adapter|Config      $configAdapter The config adapter.
-     * @param RequestScopeMatcher $scopeMatcher
+     * @param RequestScopeMatcher $scopeMatcher  Scope matcher.
      */
     public function __construct($inputAdapter, $configAdapter, RequestScopeMatcher $scopeMatcher)
     {
-        $this->inputAdapter = $inputAdapter;
-        $this->scopeMatcher = $scopeMatcher;
+        $this->inputAdapter  = $inputAdapter;
+        $this->scopeMatcher  = $scopeMatcher;
         $this->configAdapter = $configAdapter;
     }
 
@@ -62,8 +64,8 @@ class ContaoInputFilter
      *
      * @param mixed $data           The data.
      * @param bool  $decodeEntities If true entities will be encoded.
-     * @param bool  $allowHtml
-     * @param bool  $raw
+     * @param bool  $allowHtml      Allow html.
+     * @param bool  $raw            Get raw content.
      *
      * @return mixed
      */
@@ -93,7 +95,9 @@ class ContaoInputFilter
     }
 
     /**
-     * @param bool $allowHtml
+     * Get all allowed tags as string.
+     *
+     * @param bool $allowHtml Allowed html.
      *
      * @return string
      */

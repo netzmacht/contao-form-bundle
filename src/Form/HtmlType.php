@@ -47,7 +47,7 @@ final class HtmlType extends AbstractType
     {
         parent::buildView($view, $form, $options);
 
-        $view->vars['html'] = $options['html'] ?? null;
-        $view->vars['class'] = $options['class'] ?? '';
+        $view->vars['html']  = ($options['html'] ?? null);
+        $view->vars['class'] = ($options['class'] ?? '');
     }
 }

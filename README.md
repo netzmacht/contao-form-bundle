@@ -45,3 +45,4 @@ Known limitations
  - Missing input sanitizing. At the moment Contao input sanitizing is bypassed. If you have to use it
    you have to manually sanitize the data.
  - Unsupported form fields are just ignored (form generator) 
+ - Submit buttons with images are not supported.
