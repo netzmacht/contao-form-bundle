@@ -5,8 +5,8 @@
  *
  * @package    contao-form-bundle
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0 https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
+ * @copyright  2017-2019 netzmacht David Molineus. All rights reserved.
+ * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
  * @filesource
  */
 
@@ -51,7 +51,6 @@ abstract class AbstractFieldMapper implements FormFieldMapper
         'tabindex'    => true,
         'class'       => true,
         'placeholder' => true,
-        'value'       => 'data'
     ];
 
     /**
@@ -63,7 +62,8 @@ abstract class AbstractFieldMapper implements FormFieldMapper
         'label'     => true,
         'mandatory' => true,
         'minlength' => true,
-        'maxlength' => true
+        'maxlength' => true,
+        'value'     => true,
     ];
 
     /**
@@ -127,6 +127,10 @@ abstract class AbstractFieldMapper implements FormFieldMapper
         if ($this->options['maxlength'] && $model->maxlength > 0) {
             $options['attr']['maxlength'] = $model->maxlength;
             $options['constraints'][]     = new Length(['max' => (int) $model->maxlength]);
+        }
+
+        if ($this->options['value'] && $model->value) {
+            $options['data'] = $model->value;
         }
 
         return $options;
