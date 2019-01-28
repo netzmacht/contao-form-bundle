@@ -29,8 +29,6 @@ $form = $formFactory->create(Netzmacht\ContaoFormBundle\Form\FormGeneratorType::
 
 **At the moment following elements are not supported:**
 
- - explanation
- - html
  - upload
  
 Roadmap

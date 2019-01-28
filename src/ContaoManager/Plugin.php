@@ -23,6 +23,7 @@ use Contao\ManagerPlugin\Config\ContainerBuilder;
 use Contao\ManagerPlugin\Config\ExtensionPluginInterface;
 use Netzmacht\Contao\Toolkit\Bundle\NetzmachtContaoToolkitBundle;
 use Netzmacht\ContaoFormBundle\NetzmachtContaoFormBundle;
+use function dirname;
 
 /**
  * Class Plugin
@@ -44,11 +45,17 @@ class Plugin implements BundlePluginInterface, ExtensionPluginInterface
     /**
      * {@inheritdoc}
      */
-    public function getExtensionConfig($extensionName, array $extensionConfigs, ContainerBuilder $container)
+    public function getExtensionConfig($extensionName, array $extensionConfigs, ContainerBuilder $container): array
     {
         if ($extensionName === 'framework') {
             $extensionConfigs[] = [
                 'form' => true
+            ];
+        }
+
+        if ($extensionName === 'twig') {
+            $extensionConfigs[] = [
+                'form_themes' => [dirname(__DIR__) . '/Resources/views/form/fields.html.twig']
             ];
         }
 

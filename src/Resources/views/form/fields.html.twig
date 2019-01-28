@@ -1,0 +1,5 @@
+{% block html_widget %}
+    {% if form.vars.class %}<div class="{{ form.vars.class }}">{% endif %}
+    {{ form.vars.html|raw }}
+    {% if form.vars.class %}</div>{% endif %}
+{% endblock %}

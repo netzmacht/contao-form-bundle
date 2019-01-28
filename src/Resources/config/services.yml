@@ -7,6 +7,12 @@ services:
     tags:
       - { name: form.type }
 
+  netzumacht.contao_form.form_type.html:
+    class: Netzmacht\ContaoFormBundle\Form\HtmlType
+    arguments: []
+    tags:
+      - { name: form.type, alias: html }
+
   netzmacht.contao_form.form_generator.type_builder:
     class: Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder
     arguments:
@@ -63,5 +69,15 @@ services:
 
   netzmacht.contao_form.form_generator.mapper.text:
     class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\TextFieldMapper
+    tags:
+      - { name: netzmacht.contao_form.form_generator.mapper }
+
+  netzmacht.contao_form.form_generator.mapper.explanation:
+    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\ExplanationFieldMapper
+    tags:
+      - { name: netzmacht.contao_form.form_generator.mapper }
+
+  netzmacht.contao_form.form_generator.mapper.html:
+    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\HtmlFieldMapper
     tags:
       - { name: netzmacht.contao_form.form_generator.mapper }
