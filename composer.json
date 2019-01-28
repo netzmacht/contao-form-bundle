@@ -20,12 +20,12 @@
         "beberlei/assert": "^2.0 || ^3.0",
         "contao/core-bundle": "~4.4",
         "netzmacht/contao-toolkit": "~3.0",
-        "symfony/config": "~3.3 || ^4.0",
-        "symfony/dependency-injection": "~3.3 || ^4.0",
-        "symfony/form": "~3.3 || ^4.0",
-        "symfony/http-kernel": "~3.3 || ^4.0",
-        "symfony/options-resolver": "~3.3 || ^4.0",
-        "symfony/validator": "~3.3 || ^4.0"
+        "symfony/config": "~3.4 || ^4.0",
+        "symfony/dependency-injection": "~3.4 || ^4.0",
+        "symfony/form": "~3.4 || ^4.0",
+        "symfony/http-kernel": "~3.4 || ^4.0",
+        "symfony/options-resolver": "~3.4 || ^4.0",
+        "symfony/validator": "~3.4 || ^4.0"
     },
     "require-dev": {
         "contao/manager-plugin": "^2.1",
