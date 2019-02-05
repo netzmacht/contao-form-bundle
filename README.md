@@ -32,10 +32,16 @@ $form = $formFactory->create(Netzmacht\ContaoFormBundle\Form\FormGeneratorType::
 This bundle also provides a form theme for the Contao backend. You can enable it in your twig template where the form is
 used:
 
-```twig`
+```twig
 {% form_theme form '@NetzmachtContaoForm/form/contao_backend.html.twig' %}
 {{ form(form) }}
-``
+```
+
+### Input filtering
+
+Be aware that the **Contao input sanitizing is bypassed by default**. If you need the data filtered, especially when 
+using it in legacy context (f.e. Contao templates) you can filter the data by using the provided input filter
+`Netzmacht\ContaoFormBundle\Filter\ContaoInputFilter` which is provided as service `netzmacht.contao_form.input_filter`.
 
 Roadmap
 -------

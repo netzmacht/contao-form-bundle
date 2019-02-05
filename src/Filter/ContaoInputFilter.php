@@ -60,31 +60,41 @@ class ContaoInputFilter
     }
 
     /**
+     * Filter to get raw data.
+     *
+     * @param mixed $data Given data.
+     *
+     * @return mixed
+     */
+    public function filterRaw($data)
+    {
+        $data = $this->inputAdapter->preserveBasicEntities($data);
+        $data = $this->inputAdapter->xssClean($data, true);
+
+        if (!$this->scopeMatcher->isBackendRequest()) {
+            $data = $this->inputAdapter->encodeInsertTags($data);
+        }
+
+        return $data;
+    }
+
+    /**
      * Filter the given data.
      *
      * @param mixed $data           The data.
      * @param bool  $decodeEntities If true entities will be encoded.
      * @param bool  $allowHtml      Allow html.
-     * @param bool  $raw            Get raw content.
      *
      * @return mixed
      */
-    public function filter($data, bool $decodeEntities = false, bool $allowHtml = false, bool $raw = false)
+    public function filter($data, bool $decodeEntities = false, bool $allowHtml = false)
     {
-        if ($raw) {
-            $data = $this->inputAdapter->preserveBasicEntities($data);
-        } else {
-            $data = $this->inputAdapter->decodeEntities($data);
-        }
-
+        $data = $this->inputAdapter->decodeEntities($data);
         $data = $this->inputAdapter->xssClean($data, true);
+        $data = $this->inputAdapter->stripTags($data, $this->getAllowedTags($allowHtml));
 
-        if (!$raw) {
-            $data = $this->inputAdapter->stripTags($data, $this->getAllowedTags($allowHtml));
-
-            if (!$decodeEntities) {
-                $data = $this->inputAdapter->encodeSpecialChars($data);
-            }
+        if (!$decodeEntities) {
+            $data = $this->inputAdapter->encodeSpecialChars($data);
         }
 
         if (!$this->scopeMatcher->isBackendRequest()) {
