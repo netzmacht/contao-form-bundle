@@ -25,6 +25,16 @@ services:
       - '@netzmacht.contao_toolkit.contao.config_adapter'
       - '@netzmacht.contao_toolkit.routing.scope_matcher'
 
+  netzmacht.contao_form.form_generator.upload_handler:
+    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\UploadHandler
+    arguments:
+      - '@netzmacht.contao_toolkit.repository_manager'
+      - '@netzmacht.contao_form.form_generator.mapper.upload'
+      - '@filesystem'
+      - '@contao.framework'
+      - '@monolog.logger'
+      - '%kernel.project_dir%'
+
   netzmacht.contao_form.form_generator.mapper.checkbox:
     class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\CheckboxFieldMapper
     tags:

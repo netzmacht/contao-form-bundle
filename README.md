@@ -43,19 +43,21 @@ Be aware that the **Contao input sanitizing is bypassed by default**. If you nee
 using it in legacy context (f.e. Contao templates) you can filter the data by using the provided input filter
 `Netzmacht\ContaoFormBundle\Filter\ContaoInputFilter` which is provided as service `netzmacht.contao_form.input_filter`.
 
+### Upload handler
+
+By default the uploaded file is available as `UploadedFile` instance in the form data. If you want to apply the 
+configured setting form the form field, you might use the `Netzmacht\ContaoFormBundle\Form\FormGenerator\UploadHandler` 
+class provided as service `netzmacht.contao_form.form_generator.upload_handler`.
+
 Roadmap
 -------
 
  - Provide a form theme for Contao backend and frontend standards.
  - Provide DcaType for data container based forms
- - Implement input sanitizing as an optional feature
  - Support popular 3rd party form fields
  
 Known limitations
 -----------------
-  
- - Missing input sanitizing. At the moment Contao input sanitizing is bypassed. If you have to use it
-   you have to manually sanitize the data.
+
  - Unsupported form fields are just ignored (form generator) 
  - Submit buttons with images are not supported.
- - Upload settings to handle the file upload is not recognized.
