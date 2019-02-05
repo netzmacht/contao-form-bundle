@@ -11,4 +11,4 @@
  - Do not include invisible form fields
  - Fix choices group for multiple select fields
 
-[1.0.1]: https://github.com/netzmacht/contao-worklfow/compare/1.0.0...1.0.1
+[1.0.1]: https://github.com/netzmacht/contao-form-bundle/compare/1.0.0...1.0.1
