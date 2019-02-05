@@ -37,10 +37,6 @@ used:
 {{ form(form) }}
 ``
 
-**At the moment following elements are not supported:**
-
- - upload
- 
 Roadmap
 -------
 
@@ -56,3 +52,4 @@ Known limitations
    you have to manually sanitize the data.
  - Unsupported form fields are just ignored (form generator) 
  - Submit buttons with images are not supported.
+ - Upload settings to handle the file upload is not recognized.

@@ -81,3 +81,8 @@ services:
     class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\HtmlFieldMapper
     tags:
       - { name: netzmacht.contao_form.form_generator.mapper }
+
+  netzmacht.contao_form.form_generator.mapper.upload:
+    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\UploadFieldMapper
+    tags:
+      - { name: netzmacht.contao_form.form_generator.mapper }
