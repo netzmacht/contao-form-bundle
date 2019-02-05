@@ -151,7 +151,7 @@ class FormGeneratorType extends AbstractType
     private function loadFormFields(int $formId): array
     {
         $repository = $this->repositoryManager->getRepository(FormFieldModel::class);
-        $collection = $repository->findBy(['.pid=?'], [$formId], ['order' => '.sorting ASC']);
+        $collection = $repository->findBy(['.pid=?', '.invisible=?'], [$formId, ''], ['order' => '.sorting ASC']);
 
         if ($collection) {
             return $collection->getModels();
