@@ -14,6 +14,9 @@ declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
 
+use Contao\FormFieldModel;
+use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
+
 /**
  * Class SelectFieldMapper
  */
@@ -32,4 +35,18 @@ class SelectFieldMapper extends AbstractChoicesFieldMapper
      * @var bool
      */
     protected $expanded = false;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getOptions(FormFieldModel $model, FieldTypeBuilder $typeBuilder, callable $next): array
+    {
+        $options = parent::getOptions($model, $typeBuilder, $next);
+
+        if (($options['multiple'] ?? false) && $model->mSize > 0) {
+            $options['attr']['size'] = $model->mSize;
+        }
+
+        return $options;
+    }
 }
