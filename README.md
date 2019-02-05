@@ -27,6 +27,16 @@ $form = $formFactory->create(Netzmacht\ContaoFormBundle\Form\FormGeneratorType::
 
 ```
 
+### Backend form theme
+
+This bundle also provides a form theme for the Contao backend. You can enable it in your twig template where the form is
+used:
+
+```twig`
+{% form_theme form '@NetzmachtContaoForm/form/contao_backend.html.twig' %}
+{{ form(form) }}
+``
+
 **At the moment following elements are not supported:**
 
  - upload
