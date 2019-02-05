@@ -36,7 +36,7 @@ abstract class AbstractChoicesFieldMapper extends AbstractFieldMapper
      *
      * @var bool|null
      */
-    protected $multiple = null;
+    protected $multiple;
 
     /**
      * Display the choices expanded.
