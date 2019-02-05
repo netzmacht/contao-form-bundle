@@ -5,7 +5,8 @@
 ### Added
 
  - Add class `Netzmacht\ContaoFormBundle\Form\FormGenerator\UploadHandler` and service 
-   `netzmacht.contao_form.form_generator.upload_handler` to handle form uploads.
+   `netzmacht.contao_form.form_generator.upload_handler` to handle form uploads
+ - Add File constraint for uploaded files recognizing supported extensions and max size settings
 
 ## [1.0.2] - 2019-06-20
 

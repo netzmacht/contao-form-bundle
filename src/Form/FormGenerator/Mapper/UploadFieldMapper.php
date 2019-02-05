@@ -14,7 +14,12 @@ declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
 
+use Contao\FileUpload;
+use Contao\FormFieldModel;
+use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
+use function explode;
 
 /**
  * Class UploadFieldMapper maps the upload form field to the FileType
@@ -36,7 +41,9 @@ final class UploadFieldMapper extends AbstractFieldMapper
     protected $typeClass = FileType::class;
 
     /**
-     * {@inheritdoc}
+     * Construct.
+     *
+     * @throws \Assert\AssertionFailedException When mapper is misconfigured.
      */
     public function __construct()
     {
@@ -45,5 +52,60 @@ final class UploadFieldMapper extends AbstractFieldMapper
         $this->options['minlength'] = false;
         $this->options['maxlength'] = false;
         $this->options['value']     = false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getOptions(FormFieldModel $model, FieldTypeBuilder $typeBuilder, callable $next): array
+    {
+        $options                  = parent::getOptions($model, $typeBuilder, $next);
+        $options['constraints'][] = [
+            new File($this->buildConstraintOptions($model)),
+        ];
+
+        return $options;
+    }
+
+    /**
+     * Build the file constraints options.
+     *
+     * @param FormFieldModel $model The form field model.
+     *
+     * @return array
+     */
+    private function buildConstraintOptions(FormFieldModel $model): array
+    {
+        $options = [
+            'maxSize' => $model->maxlength > 0 ? $model->maxlength : FileUpload::getMaxUploadSize(),
+        ];
+
+        if ($model->extensions) {
+            $options['mimeTypes'] = $this->getSupportedMimeTypes($model->extensions);
+        }
+
+        return $options;
+    }
+
+    /**
+     * Get a list of all supported mime types.
+     *
+     * @param string $extensions Allowed file extensions as csv value.
+     *
+     * @return array
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
+     */
+    private function getSupportedMimeTypes(string $extensions): array
+    {
+        $mimeTypes = [];
+
+        foreach (explode(',', $extensions) as $extension) {
+            if (isset($GLOBALS['TL_MIME'][$extension])) {
+                $mimeTypes[] = $GLOBALS['TL_MIME'][$extension];
+            }
+        }
+
+        return $mimeTypes;
     }
 }
