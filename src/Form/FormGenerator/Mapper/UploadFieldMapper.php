@@ -14,10 +14,12 @@ declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
 
-use Contao\FileUpload;
+use Contao\Config;
+use Contao\CoreBundle\Framework\Adapter;
 use Contao\FormFieldModel;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints\File;
 use function explode;
 
@@ -41,17 +43,28 @@ final class UploadFieldMapper extends AbstractFieldMapper
     protected $typeClass = FileType::class;
 
     /**
+     * Config adapter.
+     *
+     * @var Config|Adapter
+     */
+    private $configAdapter;
+
+    /**
      * Construct.
+     *
+     * @param Config|Adapter $configAdapter Config adapter.
      *
      * @throws \Assert\AssertionFailedException When mapper is misconfigured.
      */
-    public function __construct()
+    public function __construct($configAdapter)
     {
         parent::__construct();
 
         $this->options['minlength'] = false;
         $this->options['maxlength'] = false;
         $this->options['value']     = false;
+
+        $this->configAdapter = $configAdapter;
     }
 
     /**
@@ -76,8 +89,14 @@ final class UploadFieldMapper extends AbstractFieldMapper
      */
     private function buildConstraintOptions(FormFieldModel $model): array
     {
+        if ($model->maxlength > 0) {
+            $maxSize = $model->maxlength;
+        } else {
+            $maxSize = min(UploadedFile::getMaxFilesize(), (int) $this->configAdapter->get('maxFileSize'));
+        }
+
         $options = [
-            'maxSize' => $model->maxlength > 0 ? $model->maxlength : FileUpload::getMaxUploadSize(),
+            'maxSize' => $maxSize
         ];
 
         if ($model->extensions) {

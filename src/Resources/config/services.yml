@@ -94,5 +94,7 @@ services:
 
   netzmacht.contao_form.form_generator.mapper.upload:
     class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\UploadFieldMapper
+    arguments:
+      - '@netzmacht.contao_toolkit.contao.config_adapter'
     tags:
       - { name: netzmacht.contao_form.form_generator.mapper }
