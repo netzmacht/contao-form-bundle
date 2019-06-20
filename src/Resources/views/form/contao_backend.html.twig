@@ -26,6 +26,7 @@
 {% block textarea_widget -%}
     {% set attr = attr|merge({class: (attr.class|default('') ~ ' tl_textarea')|trim}) %}
     {{- parent() -}}
+    {{ form.vars.rte|raw }}
 {%- endblock textarea_widget %}
 
 {% block choice_widget_collapsed -%}
