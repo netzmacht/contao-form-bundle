@@ -11,6 +11,9 @@ Features
 
  - Enables the symfony form component in your application
  - Provides a FormGeneratorType to use form based on the backend
+ - Provides a HtmlType to add plain html to a form
+ - Provides a backend form theme
+ - Adds option for the widget allowing to define `class`, `fe_class`, `be_class` css attributes
  
 ### Form generator
 

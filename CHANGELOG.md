@@ -4,6 +4,7 @@
 
 ### Added
 
+ - Add widget option for every form type allowing to define `class`, `fe_class`, `be_class` css attributes
  - Add class `Netzmacht\ContaoFormBundle\Form\FormGenerator\UploadHandler` and service 
    `netzmacht.contao_form.form_generator.upload_handler` to handle form uploads
  - Add File constraint for uploaded files recognizing supported extensions and max size settings

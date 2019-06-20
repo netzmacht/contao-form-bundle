@@ -13,6 +13,13 @@ services:
     tags:
       - { name: form.type, alias: html }
 
+  netzmacht.contao_form.extension.widget_class:
+    class: Netzmacht\ContaoFormBundle\Form\Extension\WidgetClassExtension
+    arguments:
+      - '@netzmacht.contao_toolkit.routing.scope_matcher'
+    tags:
+      - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+
   netzmacht.contao_form.form_generator.type_builder:
     class: Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder
     arguments:
