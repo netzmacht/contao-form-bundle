@@ -5,7 +5,7 @@
  *
  * @package    contao-form-bundle
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
+ * @copyright  2017-2019 netzmacht David Molineus. All rights reserved.
  * @license    LGPL-3.0 https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
  * @filesource
  */
@@ -55,7 +55,8 @@ class Plugin implements BundlePluginInterface, ExtensionPluginInterface
 
         if ($extensionName === 'twig') {
             $extensionConfigs[] = [
-                'form_themes' => [dirname(__DIR__) . '/Resources/views/form/fields.html.twig']
+                'paths'       => [dirname(__DIR__) . '/Resources/views/form'],
+                'form_themes' => ['fields.html.twig']
             ];
         }
 
