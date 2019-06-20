@@ -4,6 +4,7 @@
 
 ### Added
 
+ - Render mandatory hint in the `contao_backend` theme
  - Add `toggleable` option for fieldsets
  - Backport `help` message option from Symfony 4.1
  - Add `rte` option for `TextAreaType` to support RTE in the Contao backend 
