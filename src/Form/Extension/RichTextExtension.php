@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Netzmacht Contao Form Bundle.
+ *
+ * @package    contao-form-bundle
+ * @author     David Molineus <david.molineus@netzmacht.de>
+ * @copyright  2017-2019 netzmacht David Molineus. All rights reserved.
+ * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
+ * @filesource
+ */
+
 declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\Extension;
@@ -7,7 +17,6 @@ namespace Netzmacht\ContaoFormBundle\Form\Extension;
 use Contao\Backend;
 use Contao\BackendTemplate;
 use Contao\CoreBundle\Picker\PickerBuilderInterface;
-use Contao\System;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -16,7 +25,9 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use function explode;
 
-
+/**
+ * Class RichTextExtension enables RTE support in Contao backend scope
+ */
 final class RichTextExtension extends AbstractTypeExtension
 {
     /**
@@ -42,7 +53,7 @@ final class RichTextExtension extends AbstractTypeExtension
     public function __construct(PickerBuilderInterface $pickerBuilder, RequestScopeMatcher $scopeMatcher)
     {
         $this->pickerBuilder = $pickerBuilder;
-        $this->scopeMatcher = $scopeMatcher;
+        $this->scopeMatcher  = $scopeMatcher;
     }
 
     /** @inheritDoc */

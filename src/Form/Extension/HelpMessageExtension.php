@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Netzmacht Contao Form Bundle.
+ *
+ * @package    contao-form-bundle
+ * @author     David Molineus <david.molineus@netzmacht.de>
+ * @copyright  2017-2019 netzmacht David Molineus. All rights reserved.
+ * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
+ * @filesource
+ */
 declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\Extension;
@@ -10,24 +19,31 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class HelpMessageExtension adds help text option to form types.
+ */
 final class HelpMessageExtension extends AbstractTypeExtension
 {
-    public function getExtendedType() : string
+    /** @inheritDoc */
+    public function getExtendedType(): string
     {
         return FormType::class;
     }
 
-    public function getExtendedTypes() : iterable
+    /** @inheritDoc */
+    public function getExtendedTypes(): iterable
     {
         return [FormType::class];
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    /** @inheritDoc */
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        $view->vars['help'] = $options['help'] ?? '';
+        $view->vars['help'] = ($options['help'] ?? '');
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    /** @inheritDoc */
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['help' => null]);
     }
