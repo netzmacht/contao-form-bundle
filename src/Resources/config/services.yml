@@ -20,6 +20,11 @@ services:
     tags:
       - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
+  netzmacht.contao_form.extension.help_message:
+    class: Netzmacht\ContaoFormBundle\Form\Extension\HelpMessageExtension
+    tags:
+      - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+
   netzmacht.contao_form.extension.rte:
     class: Netzmacht\ContaoFormBundle\Form\Extension\RichTextExtension
     arguments:

@@ -9,6 +9,9 @@
         <h3>{{- form_label(form) -}}</h3>
     {% endif %}
     {{- form_widget(form) -}}
+    {% if form.vars.help ?? false %}
+        <p class="tl_help tl_tip">{{ form.vars.help }}</p>
+    {% endif %}
     {{- form_errors(form) -}}
     {% if 'form_generator' not in form.vars.block_prefixes and 'fieldset' not in form.vars.block_prefixes %}
     </div>
