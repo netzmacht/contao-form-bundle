@@ -4,6 +4,7 @@
 
 ### Added
 
+ - Add `toggleable` option for fieldsets
  - Backport `help` message option from Symfony 4.1
  - Add `rte` option for `TextAreaType` to support RTE in the Contao backend 
  - Add widget option for every form type allowing to define `class`, `fe_class`, `be_class` css attributes

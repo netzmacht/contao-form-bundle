@@ -33,6 +33,11 @@ services:
     tags:
       - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\TextareaType }
 
+  netzmacht.contao_form.extension.toggleable_fieldset:
+    class: Netzmacht\ContaoFormBundle\Form\Extension\ToggleableFieldsetExtension
+    tags:
+      - { name: form.type_extension, extended_type: AdamQuaile\Bundle\FieldsetBundle\Form\FieldsetType }
+
   netzmacht.contao_form.form_generator.type_builder:
     class: Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder
     arguments:

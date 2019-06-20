@@ -38,11 +38,13 @@
 {%- endblock choice_widget_collapsed %}
 
 {% block fieldset_widget %}
+    {% set id = 'pal_' ~ form.vars.id %}
     {% set attr = attr|merge({class: (attr.class|default('') ~ ' tl_box')|trim}) %}
     <fieldset {{ block('widget_container_attributes') }}>
-
+        {% set id = form.vars.id %}
         {% if legend is defined and legend is not empty %}
-            <legend>{{ legend | trans({}, translation_domain) }}</legend>
+        {% dump(form) %}
+            <legend{% if form.vars.toggleable %} onclick="AjaxRequest.toggleFieldset(this,'{{ form.vars.id }}','{{ form.vars.root_id }}')"{% endif %}>{{ legend | trans({}, translation_domain) }}</legend>
         {% endif %}
         {{ form_widget(form) }}
 
