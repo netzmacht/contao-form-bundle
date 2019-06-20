@@ -43,7 +43,6 @@
     <fieldset {{ block('widget_container_attributes') }}>
         {% set id = form.vars.id %}
         {% if legend is defined and legend is not empty %}
-        {% dump(form) %}
             <legend{% if form.vars.toggleable %} onclick="AjaxRequest.toggleFieldset(this,'{{ form.vars.id }}','{{ form.vars.root_id }}')"{% endif %}>{{ legend | trans({}, translation_domain) }}</legend>
         {% endif %}
         {{ form_widget(form) }}
