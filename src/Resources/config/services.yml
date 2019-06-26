@@ -123,3 +123,11 @@ services:
       - '@netzmacht.contao_toolkit.contao.config_adapter'
     tags:
       - { name: netzmacht.contao_form.form_generator.mapper }
+
+  netzmacht.contao_form.twig.extension:
+    class: Netzmacht\ContaoFormBundle\Twig\TwigExtension
+    arguments:
+      - '@contao.csrf.token_manager'
+      - '%contao.csrf_token_name%'
+    tags:
+      - 'twig.extension'
