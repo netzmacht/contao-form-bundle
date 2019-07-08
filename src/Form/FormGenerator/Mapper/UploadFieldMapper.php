@@ -45,14 +45,14 @@ final class UploadFieldMapper extends AbstractFieldMapper
     /**
      * Config adapter.
      *
-     * @var Config|Adapter
+     * @var Adapter
      */
     private $configAdapter;
 
     /**
      * Construct.
      *
-     * @param Config|Adapter $configAdapter Config adapter.
+     * @param Adapter $configAdapter Config adapter.
      *
      * @throws \Assert\AssertionFailedException When mapper is misconfigured.
      */
@@ -92,7 +92,7 @@ final class UploadFieldMapper extends AbstractFieldMapper
         if ($model->maxlength > 0) {
             $maxSize = $model->maxlength;
         } else {
-            $maxSize = min(UploadedFile::getMaxFilesize(), (int) $this->configAdapter->get('maxFileSize'));
+            $maxSize = min(UploadedFile::getMaxFilesize(), (int) $this->configAdapter->__call('get', ['maxFileSize']));
         }
 
         $options = [

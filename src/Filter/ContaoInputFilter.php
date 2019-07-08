@@ -27,14 +27,14 @@ class ContaoInputFilter
     /**
      * Contao input adapter.
      *
-     * @var Adapter|Input
+     * @var Adapter
      */
     private $inputAdapter;
 
     /**
      * Config adapter.
      *
-     * @var Adapter|Config
+     * @var Adapter
      */
     private $configAdapter;
 
@@ -48,8 +48,8 @@ class ContaoInputFilter
     /**
      * ContaoInputFilter constructor.
      *
-     * @param Adapter|Input       $inputAdapter  The input adapter.
-     * @param Adapter|Config      $configAdapter The config adapter.
+     * @param Adapter             $inputAdapter  The input adapter.
+     * @param Adapter             $configAdapter The config adapter.
      * @param RequestScopeMatcher $scopeMatcher  Scope matcher.
      */
     public function __construct($inputAdapter, $configAdapter, RequestScopeMatcher $scopeMatcher)
@@ -68,11 +68,11 @@ class ContaoInputFilter
      */
     public function filterRaw($data)
     {
-        $data = $this->inputAdapter->preserveBasicEntities($data);
-        $data = $this->inputAdapter->xssClean($data, true);
+        $data = $this->inputAdapter->__call('preserveBasicEntities', [$data]);
+        $data = $this->inputAdapter->__call('xssClean', [$data, true]);
 
         if (!$this->scopeMatcher->isBackendRequest()) {
-            $data = $this->inputAdapter->encodeInsertTags($data);
+            $data = $this->inputAdapter->__call('encodeInsertTags', [$data]);
         }
 
         return $data;
@@ -89,16 +89,16 @@ class ContaoInputFilter
      */
     public function filter($data, bool $decodeEntities = false, bool $allowHtml = false)
     {
-        $data = $this->inputAdapter->decodeEntities($data);
-        $data = $this->inputAdapter->xssClean($data, true);
-        $data = $this->inputAdapter->stripTags($data, $this->getAllowedTags($allowHtml));
+        $data = $this->inputAdapter->__call('decodeEntities', [$data]);
+        $data = $this->inputAdapter->__call('xssClean', [$data, true]);
+        $data = $this->inputAdapter->__call('stripTags', [$data, $this->getAllowedTags($allowHtml)]);
 
         if (!$decodeEntities) {
-            $data = $this->inputAdapter->encodeSpecialChars($data);
+            $data = $this->inputAdapter->__call('encodeSpecialChars', [$data]);
         }
 
         if (!$this->scopeMatcher->isBackendRequest()) {
-            $data = $this->inputAdapter->encodeInsertTags($data);
+            $data = $this->inputAdapter->__call('encodeInsertTags', [$data]);
         }
 
         return $data;
@@ -114,7 +114,7 @@ class ContaoInputFilter
     private function getAllowedTags(bool $allowHtml): string
     {
         if ($allowHtml) {
-            return (string) $this->configAdapter->get('allowedTags');
+            return (string) $this->configAdapter->__call('get', ['allowedTags']);
         }
 
         return '';

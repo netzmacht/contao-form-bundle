@@ -8,6 +8,8 @@
     "Contao\\ManagerPlugin\\Bundle\\Parser\\ParserInterface",
     "Contao\\ManagerPlugin\\Config\\ContainerBuilder",
     "Contao\\ManagerPlugin\\Config\\ExtensionPluginInterface",
-    "Contao\\ManagerPlugin\\Dependency\\DependentPluginInterface"
+    "Contao\\ManagerPlugin\\Dependency\\DependentPluginInterface",
+    "TL_FILES",
+    "scan"
   ]
 }

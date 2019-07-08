@@ -2,4 +2,43 @@
 <project name="netzmacht/contao-workflow" default="build">
     <!-- import the main build system -->
     <import file="vendor/phpcq/phpcq/phpcq.main.xml" />
+
+    <import file="vendor/phpcq/phpcq/tasks/macrodefs.xml" />
+
+    <target name="phpstan">
+        <exec dir="${basedir}" executable="${phpcq.php-cli.bin}" failonerror="true" taskname="phpstan">
+            <arg value="vendor/bin/phpstan"/>
+            <arg line="analyse -l max -c phpstan.neon --no-progress ./src"/>
+        </exec>
+    </target>
+
+    <target name="-detect-composer-require-checker" unless="composer-require-checker.task.bin">
+        <find-file-in-path
+                name="composer-require-checker"
+                property="composer-require-checker.task.bin"
+        />
+    </target>
+
+    <target name="composer-require-checker" depends="-detect-composer-require-checker">
+        <exec dir="${basedir}" executable="${composer-require-checker.task.bin}" failonerror="true" taskname="composer-require-checker">
+            <arg line="check composer.json --config-file .composer-require-checker.json"/>
+        </exec>
+    </target>
+
+    <target
+            name="analyze"
+            depends="
+            phploc,
+            pdepend,
+            phpmd,
+            phpcs,
+            phpstan,
+            phpcpd,
+            phpunit,
+            phpspec,
+            composer-require-checker,
+            branch-alias-validation,
+            travis-configuration-check"
+            description="Do static analysis of the code"
+    />
 </project>

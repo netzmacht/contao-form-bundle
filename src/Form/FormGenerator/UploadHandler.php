@@ -21,7 +21,9 @@ use Contao\Dbafs;
 use Contao\FilesModel;
 use Contao\FormFieldModel;
 use Contao\FrontendUser;
+use Contao\Model;
 use Contao\StringUtil;
+use Netzmacht\Contao\Toolkit\Data\Model\ContaoRepository;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\UploadFieldMapper;
 use Psr\Log\LoggerInterface;
@@ -135,21 +137,28 @@ final class UploadHandler
 
         $fileName = $this->getFileName($fieldModel, $file, $uploadFolder);
         $target   = $file->move($uploadFolder, $fileName);
+
+        if ($target->getRealPath() === false) {
+            throw new \Exception('Target does not exist.');
+        }
+
         $this->filesystem->chmod($target->getRealPath(), 0666, umask());
 
-        /** @var Dbafs|Adapter $dbafs */
+        /** @var Dbafs&Adapter $dbafs */
         $dbafs     = $this->framework->getAdapter(Dbafs::class);
         $filePath  = Path::makeRelative($target->getRealPath(), $this->projectDir);
         $fileModel = null;
 
-        if ($dbafs->shouldBeSynchronized($target->getPath())) {
-            $fileModel = $this->repositoryManager->getRepository(FilesModel::class)->fomdByPath($filePath);
+        if ($dbafs->__call('shouldBeSynchronized', [$target->getPath()])) {
+            /** @var ContaoRepository $repository */
+            $repository = $this->repositoryManager->getRepository(FilesModel::class);
+            $fileModel  = $repository->__call('findByPath', [$filePath]);
 
-            if ($fieldModel === null) {
-                $fileModel = $dbafs->addResource($filePath);
+            if ($fileModel === null) {
+                $fileModel = $dbafs->__call('addResource', [$filePath]);
             }
 
-            $dbafs->updateFolderHashes($uploadFolderPath);
+            $dbafs->__call('updateFolderHashes', [$uploadFolderPath]);
         }
 
         $this->logger->info(
@@ -177,6 +186,7 @@ final class UploadHandler
      */
     public function handleForm(int $formId, array $data): array
     {
+        /** @var FormFieldModel $fieldModel */
         foreach ($this->loadUploadFormFields($formId) as $fieldModel) {
             if (!$this->uploadFieldMapper->supports($fieldModel)) {
                 continue;
@@ -200,7 +210,7 @@ final class UploadHandler
      *
      * @param int $formId The form id.
      *
-     * @return FormFieldModel[]|array
+     * @return FormFieldModel[]|Model[]|array
      */
     private function loadUploadFormFields(int $formId): array
     {
@@ -233,14 +243,16 @@ final class UploadHandler
 
         // Overwrite the upload folder with user's home directory
         if ($fieldModel->useHomeDir && defined('FE_USER_LOGGED_IN') && FE_USER_LOGGED_IN) {
+            /** @var FrontendUser $user */
             $user = $this->framework->createInstance(FrontendUser::class);
             if ($user->assignDir && $user->homeDir) {
                 $uploadFolderUuid = $user->homeDir;
             }
         }
 
+        /** @var ContaoRepository $repository */
         $repository   = $this->repositoryManager->getRepository(FilesModel::class);
-        $uploadFolder = $repository->findByUuid($uploadFolderUuid);
+        $uploadFolder = $repository->__call('findByUuid', [$uploadFolderUuid]);
 
         // The upload folder could not be found
         if ($uploadFolder === null) {
@@ -258,10 +270,13 @@ final class UploadHandler
      * @param string         $uploadFolder The upload folder as absolute path.
      *
      * @return string
+     *
+     * @throws \Exception If no original client name is given.
      */
     private function getFileName(FormFieldModel $fieldModel, UploadedFile $uploadedFile, string $uploadFolder): string
     {
-        $fileName = StringUtil::sanitizeFileName($uploadedFile->getClientOriginalName());
+        $fileName = $uploadedFile->getClientOriginalName() ?: $uploadedFile->getFilename();
+        $fileName = StringUtil::sanitizeFileName($fileName);
 
         if ($fieldModel->doNotOverwrite && file_exists($uploadFolder . '/' . $fileName)) {
             $extension = $uploadedFile->getClientOriginalExtension();

@@ -46,11 +46,11 @@ class TextareaFieldMapper extends AbstractFieldMapper
         $options = parent::getOptions($model, $typeBuilder, $next);
         $size    = StringUtil::deserialize($model->size);
 
-        if ($size[0]) {
+        if ($size[0] !== '') {
             $options['attr']['rows'] = $size[0];
         }
 
-        if ($size[1]) {
+        if ($size[1] !== '') {
             $options['attr']['cols'] = $size[1];
         }
 

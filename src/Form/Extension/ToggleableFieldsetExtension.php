@@ -20,31 +20,41 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class ToggleableFieldsetExtension
+ */
 final class ToggleableFieldsetExtension extends AbstractTypeExtension
 {
-    /** @inheritDoc */
+    /**
+     * {@inheritDoc}
+     */
     public function getExtendedType(): string
     {
         return FieldsetType::class;
     }
 
-    /** @inheritDoc */
+    /**
+     * {@inheritDoc}
+     */
     public function getExtendedTypes(): iterable
     {
         return [FieldsetType::class];
     }
 
-    /** @inheritDoc */
+    /**
+     * {@inheritDoc}
+     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['root_id']    = $form->getRoot()->getName();
         $view->vars['toggleable'] = ($options['toggleable'] ?? false);
     }
 
-    /** @inheritDoc */
+    /**
+     * {@inheritDoc}
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['toggleable' => false]);
     }
 }
-

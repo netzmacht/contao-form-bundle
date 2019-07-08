@@ -21,12 +21,12 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 /**
  * Class NetzmachtContaoFormBundle
  */
-class NetzmachtContaoFormBundle extends Bundle
+final class NetzmachtContaoFormBundle extends Bundle
 {
     /**
      * {@inheritDoc}
      */
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(
             new AddTaggedServicesAsArgumentPass(
