@@ -93,13 +93,17 @@
 
 {# Form #}
 
-{%- block form -%}
+{%- block form_start -%}
     <div class="tl_edit_form">
     <div class="tl_formbody_edit">
     {{- parent() -}}
+{%- endblock form_start -%}
+
+{%- block form_end -%}
+    {{- parent() -}}
     </div>
     </div>
-{%- endblock form -%}
+{%- endblock form_end -%}
 
 {# Form errors #}
 {%- block form_errors -%}
