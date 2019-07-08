@@ -13,7 +13,7 @@
    `netzmacht.contao_form.form_generator.upload_handler` to handle form uploads
  - Add File constraint for uploaded files recognizing supported extensions and max size settings
  - Added `contao_request_token()` function for twig
- - Start `contao_frontend` form theme: Containing REQUEST_TOKEN
+ - Add `contao_frontend` form theme
  
 ### Changed
 
