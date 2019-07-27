@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.1.0] - 2019-07-27
+
 ### Added
 
  - Render mandatory hint in the `contao_backend` theme
@@ -36,6 +38,7 @@
  - Do not include invisible form fields
  - Fix choices group for multiple select fields
 
-[Unreleased]: https://github.com/netzmacht/contao-form-bundle/compare/1.0.2...dev-develop
+[Unreleased]: https://github.com/netzmacht/contao-form-bundle/compare/1.1.0...dev-develop
+[1.1.0]: https://github.com/netzmacht/contao-form-bundle/compare/1.0.2...1.1.0
 [1.0.1]: https://github.com/netzmacht/contao-form-bundle/compare/1.0.1...1.0.2
 [1.0.1]: https://github.com/netzmacht/contao-form-bundle/compare/1.0.0...1.0.1
