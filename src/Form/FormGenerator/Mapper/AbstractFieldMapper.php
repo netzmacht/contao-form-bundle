@@ -56,7 +56,7 @@ abstract class AbstractFieldMapper implements FormFieldMapper
     /**
      * Optional mapping.
      *
-     * @var array
+     * @var bool[]
      */
     protected $options = [
         'label'     => true,

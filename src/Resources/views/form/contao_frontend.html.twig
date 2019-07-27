@@ -1,20 +1,18 @@
 {% use "form_div_layout.html.twig" %}
 
+
 {# Rows #}
 {%- block form_row -%}
     {% if 'form_generator' not in form.vars.block_prefixes and 'fieldset' not in form.vars.block_prefixes %}
-    <div class="widget{% if form.vars.widget.class %} {{ form.vars.widget.class }}{% endif %}">
+        <div class="widget{% if form.vars.widget.class %} {{ form.vars.widget.class }}{% endif %}">
     {% endif %}
     {% if label is not empty  %}
         <h3>{{- form_label(form) -}}</h3>
     {% endif %}
     {{- form_widget(form) -}}
-    {% if form.vars.help ?? false %}
-        <p class="tl_help tl_tip">{{ form.vars.help|trans({}, translation_domain) }}</p>
-    {% endif %}
     {{- form_errors(form) -}}
     {% if 'form_generator' not in form.vars.block_prefixes and 'fieldset' not in form.vars.block_prefixes %}
-    </div>
+        </div>
     {% endif %}
 {%- endblock form_row -%}
 
@@ -22,24 +20,24 @@
 {# Widgets #}
 
 {% block form_widget_simple -%}
-    {% set attr = attr|merge({class: (attr.class|default('') ~ ' tl_text')|trim}) %}
-        {{- parent() -}}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' widget-text')|trim}) %}
+    {{- parent() -}}
 {%- endblock form_widget_simple %}
 
 {% block textarea_widget -%}
-    {% set attr = attr|merge({class: (attr.class|default('') ~ ' tl_textarea')|trim}) %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' widget-textarea')|trim}) %}
     {{- parent() -}}
     {{ form.vars.rte|raw }}
 {%- endblock textarea_widget %}
 
 {% block choice_widget_collapsed -%}
-    {% set attr = attr|merge({class: (attr.class|default('') ~ ' tl_select')|trim}) %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' widget-select')|trim}) %}
     {{- parent() -}}
 {%- endblock choice_widget_collapsed %}
 
 {% block fieldset_widget %}
     {% set id = 'pal_' ~ form.vars.id %}
-    {% set attr = attr|merge({class: (attr.class|default('') ~ ' tl_box')|trim}) %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' widget-fieldset')|trim}) %}
     <fieldset {{ block('widget_container_attributes') }}>
         {% set id = form.vars.id %}
         {% if legend is defined and legend is not empty %}
@@ -51,11 +49,11 @@
 {% endblock fieldset_widget %}
 
 {%- block button_widget -%}
-    {% set attr = attr|merge({class: (attr.class|default('') ~ ' tl_submit')|trim}) %}
-    <div class="tl_submit_container">
+    <div class="widget widget-submit submit_container">
         {{- parent() -}}
     </div>
 {% endblock %}
+
 
 {# Form label #}
 {%- block form_label -%}
@@ -94,24 +92,17 @@
 {# Form #}
 
 {%- block form_start -%}
-    <div class="tl_edit_form">
-    <div class="tl_formbody_edit">
     {{- parent() -}}
+    <input type="hidden" name="REQUEST_TOKEN" value="{{ contao_request_token() }}"
 {%- endblock form_start -%}
 
-{%- block form_end -%}
-    {{- parent() -}}
-    </div>
-    </div>
-{%- endblock form_end -%}
 
 {# Form errors #}
 {%- block form_errors -%}
     {%- if errors|length > 0 -%}
-        <ul class="tl_error">
-            {%- for error in errors -%}
-                <li>{{ error.message }}</li>
-            {%- endfor -%}
-        </ul>
+        {%- for error in errors -%}
+        <p class="error">{{ error.message }}</p>
+        {%- endfor -%}
     {%- endif -%}
 {%- endblock form_errors -%}
+

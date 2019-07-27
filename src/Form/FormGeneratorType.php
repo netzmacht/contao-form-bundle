@@ -16,6 +16,7 @@ namespace Netzmacht\ContaoFormBundle\Form;
 
 use Contao\FormFieldModel;
 use Contao\FormModel;
+use Contao\Model;
 use Contao\StringUtil;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
@@ -83,7 +84,7 @@ class FormGeneratorType extends AbstractType
         $next       = $this->createNextCallback($formFields);
 
         while (($formField = $next())) {
-            if (in_array($formField->type, $options['ignore'])) {
+            if (in_array($formField->type, $options['ignore'], true)) {
                 continue;
             }
 
@@ -112,11 +113,11 @@ class FormGeneratorType extends AbstractType
 
         $attributes = StringUtil::deserialize($formModel->attributes, true);
 
-        if (!empty($attributes[0])) {
+        if (isset($attributes[0]) && $attributes[0] !== '') {
             $builder->setAttribute('id', $attributes[0]);
         }
 
-        if (!empty($attributes[1])) {
+        if (isset($attributes[1]) && $attributes[1] !== '') {
             $builder->setAttribute('class', $attributes[1]);
         }
     }
@@ -146,7 +147,7 @@ class FormGeneratorType extends AbstractType
      *
      * @param int $formId The form id.
      *
-     * @return FormFieldModel[]|array
+     * @return FormFieldModel[]|Model[]|array
      */
     private function loadFormFields(int $formId): array
     {

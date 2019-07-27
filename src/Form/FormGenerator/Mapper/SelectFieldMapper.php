@@ -43,7 +43,7 @@ class SelectFieldMapper extends AbstractChoicesFieldMapper
     {
         $options = parent::getOptions($model, $typeBuilder, $next);
 
-        if (($options['multiple'] ?? false) && $model->mSize > 0) {
+        if ((bool) ($options['multiple'] ?? false) && $model->mSize > 0) {
             $options['attr']['size'] = $model->mSize;
         }
 

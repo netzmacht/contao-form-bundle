@@ -13,6 +13,31 @@ services:
     tags:
       - { name: form.type, alias: html }
 
+  netzmacht.contao_form.extension.widget_class:
+    class: Netzmacht\ContaoFormBundle\Form\Extension\WidgetClassExtension
+    arguments:
+      - '@netzmacht.contao_toolkit.routing.scope_matcher'
+    tags:
+      - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+
+  netzmacht.contao_form.extension.help_message:
+    class: Netzmacht\ContaoFormBundle\Form\Extension\HelpMessageExtension
+    tags:
+      - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+
+  netzmacht.contao_form.extension.rte:
+    class: Netzmacht\ContaoFormBundle\Form\Extension\RichTextExtension
+    arguments:
+      - '@contao.picker.builder'
+      - '@netzmacht.contao_toolkit.routing.scope_matcher'
+    tags:
+      - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\TextareaType }
+
+  netzmacht.contao_form.extension.toggleable_fieldset:
+    class: Netzmacht\ContaoFormBundle\Form\Extension\ToggleableFieldsetExtension
+    tags:
+      - { name: form.type_extension, extended_type: AdamQuaile\Bundle\FieldsetBundle\Form\FieldsetType }
+
   netzmacht.contao_form.form_generator.type_builder:
     class: Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder
     arguments:
@@ -24,6 +49,16 @@ services:
       - '@netzmacht.contao_toolkit.contao.input_adapter'
       - '@netzmacht.contao_toolkit.contao.config_adapter'
       - '@netzmacht.contao_toolkit.routing.scope_matcher'
+
+  netzmacht.contao_form.form_generator.upload_handler:
+    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\UploadHandler
+    arguments:
+      - '@netzmacht.contao_toolkit.repository_manager'
+      - '@netzmacht.contao_form.form_generator.mapper.upload'
+      - '@filesystem'
+      - '@contao.framework'
+      - '@monolog.logger'
+      - '%kernel.project_dir%'
 
   netzmacht.contao_form.form_generator.mapper.checkbox:
     class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\CheckboxFieldMapper
@@ -84,5 +119,15 @@ services:
 
   netzmacht.contao_form.form_generator.mapper.upload:
     class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\UploadFieldMapper
+    arguments:
+      - '@netzmacht.contao_toolkit.contao.config_adapter'
     tags:
       - { name: netzmacht.contao_form.form_generator.mapper }
+
+  netzmacht.contao_form.twig.extension:
+    class: Netzmacht\ContaoFormBundle\Twig\TwigExtension
+    arguments:
+      - '@contao.csrf.token_manager'
+      - '%contao.csrf_token_name%'
+    tags:
+      - 'twig.extension'

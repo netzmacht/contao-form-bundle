@@ -1,0 +1,7 @@
+parameters:
+  autoload_files:
+    - %currentWorkingDirectory%/vendor/contao/core-bundle/src/Resources/contao/helper/functions.php
+
+  ignoreErrors:
+    - '#Used constant TL_FILES not found\.#'
+    - '#Constant TL_FILES not found\.#'
