@@ -127,7 +127,7 @@ services:
   netzmacht.contao_form.twig.extension:
     class: Netzmacht\ContaoFormBundle\Twig\TwigExtension
     arguments:
-      - '@contao.csrf.token_manager'
+      - '@security.csrf.token_manager'
       - '%contao.csrf_token_name%'
     tags:
       - 'twig.extension'
