@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [1.1.1] - 2019-09-02
+
+### Fixed
+
+ - Remove dependency of `contao.csrf.token_manager` which isn't available in Contao 4.4
+ 
 ## [1.1.0] - 2019-07-27
 
 ### Added
