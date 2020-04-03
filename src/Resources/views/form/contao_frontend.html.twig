@@ -89,14 +89,6 @@
 {%- endblock form_label -%}
 
 
-{# Form #}
-
-{%- block form_start -%}
-    {{- parent() -}}
-    <input type="hidden" name="REQUEST_TOKEN" value="{{ contao_request_token() }}">
-{%- endblock form_start -%}
-
-
 {# Form errors #}
 {%- block form_errors -%}
     {%- if errors|length > 0 -%}

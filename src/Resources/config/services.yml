@@ -7,11 +7,19 @@ services:
     tags:
       - { name: form.type }
 
-  netzumacht.contao_form.form_type.html:
+  netzmacht.contao_form.form_type.html:
     class: Netzmacht\ContaoFormBundle\Form\HtmlType
     arguments: []
     tags:
       - { name: form.type, alias: html }
+
+  netzmacht.contao_form.form_type.request_token:
+    class: Netzmacht\ContaoFormBundle\Form\ContaoRequestTokenType
+    arguments:
+      - '@netzmacht.contao_form.csrf.token_storage'
+      - '%contao.csrf_token_name%'
+    tags:
+      - { name: form.type, alias: contao_request_token }
 
   netzmacht.contao_form.extension.widget_class:
     class: Netzmacht\ContaoFormBundle\Form\Extension\WidgetClassExtension
@@ -32,6 +40,14 @@ services:
       - '@netzmacht.contao_toolkit.routing.scope_matcher'
     tags:
       - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\TextareaType }
+
+  netzmacht.contao_form.extension.contao_request_token:
+    class: Netzmacht\ContaoFormBundle\Form\Extension\ContaoRequestTokenExtension
+    arguments:
+      - '@netzmacht.contao_toolkit.routing.scope_matcher'
+      - '@request_stack'
+    tags:
+      - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
   netzmacht.contao_form.extension.toggleable_fieldset:
     class: Netzmacht\ContaoFormBundle\Form\Extension\ToggleableFieldsetExtension
