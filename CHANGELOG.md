@@ -2,11 +2,26 @@
 
 ## [Unreleased]
 
+### [1.2.0] - 2020-04-03
+
+### Improvements
+
+ - Auto detect if Contao request token should be added
+
+### Added
+
+ - Add new form type `ContaoRequestTokenType`
+ 
+### Fixed
+
+ - Support csrf token handling for Contao 4.4 and later on
+
+
 ## [1.1.1] - 2019-09-02
 
 ### Fixed
 
- - Support csrf token handling for Contao 4.4 and later on
+ - Remove dependency of contao.csrf.token_manager which isn't available in Contao 4.4
  
 ## [1.1.0] - 2019-07-27
 
@@ -44,7 +59,9 @@
  - Do not include invisible form fields
  - Fix choices group for multiple select fields
 
-[Unreleased]: https://github.com/netzmacht/contao-form-bundle/compare/1.1.0...dev-develop
+[Unreleased]: https://github.com/netzmacht/contao-form-bundle/compare/1.2.0...dev-develop
+[1.2.0]: https://github.com/netzmacht/contao-form-bundle/compare/1.1.1...1.2.0
+[1.1.1]: https://github.com/netzmacht/contao-form-bundle/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/netzmacht/contao-form-bundle/compare/1.0.2...1.1.0
 [1.0.1]: https://github.com/netzmacht/contao-form-bundle/compare/1.0.1...1.0.2
 [1.0.1]: https://github.com/netzmacht/contao-form-bundle/compare/1.0.0...1.0.1
