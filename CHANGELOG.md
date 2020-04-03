@@ -6,7 +6,7 @@
 
 ### Fixed
 
- - Remove dependency of `contao.csrf.token_manager` which isn't available in Contao 4.4
+ - Support csrf token handling for Contao 4.4 and later on
  
 ## [1.1.0] - 2019-07-27
 
