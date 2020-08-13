@@ -34,7 +34,8 @@ class NetzmachtContaoFormExtension extends Extension
             new FileLocator(dirname(__DIR__) . '/Resources/config')
         );
 
-        // Common config, services and listeners
         $loader->load('services.yml');
+        $loader->load('form_generator.yml');
+        $loader->load('dca_form.yml');
     }
 }

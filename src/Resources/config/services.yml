@@ -1,12 +1,4 @@
 services:
-  netzmacht.contao_form.form_type.form_generator:
-    class: Netzmacht\ContaoFormBundle\Form\FormGeneratorType
-    arguments:
-      - '@netzmacht.contao_toolkit.repository_manager'
-      - '@netzmacht.contao_form.form_generator.type_builder'
-    tags:
-      - { name: form.type }
-
   netzmacht.contao_form.form_type.html:
     class: Netzmacht\ContaoFormBundle\Form\HtmlType
     arguments: []
@@ -54,91 +46,12 @@ services:
     tags:
       - { name: form.type_extension, extended_type: AdamQuaile\Bundle\FieldsetBundle\Form\FieldsetType }
 
-  netzmacht.contao_form.form_generator.type_builder:
-    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder
-    arguments:
-      - []
-
   netzmacht.contao_form.input_filter:
     class: Netzmacht\ContaoFormBundle\Filter\ContaoInputFilter
     arguments:
       - '@netzmacht.contao_toolkit.contao.input_adapter'
       - '@netzmacht.contao_toolkit.contao.config_adapter'
       - '@netzmacht.contao_toolkit.routing.scope_matcher'
-
-  netzmacht.contao_form.form_generator.upload_handler:
-    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\UploadHandler
-    arguments:
-      - '@netzmacht.contao_toolkit.repository_manager'
-      - '@netzmacht.contao_form.form_generator.mapper.upload'
-      - '@filesystem'
-      - '@contao.framework'
-      - '@monolog.logger'
-      - '%kernel.project_dir%'
-
-  netzmacht.contao_form.form_generator.mapper.checkbox:
-    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\CheckboxFieldMapper
-    tags:
-      - { name: netzmacht.contao_form.form_generator.mapper }
-
-  netzmacht.contao_form.form_generator.mapper.fieldset:
-    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\FieldsetFieldMapper
-    tags:
-      - { name: netzmacht.contao_form.form_generator.mapper }
-
-  netzmacht.contao_form.form_generator.mapper.hidden:
-     class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\HiddenFieldMapper
-     tags:
-      - { name: netzmacht.contao_form.form_generator.mapper }
-
-  netzmacht.contao_form.form_generator.mapper.password:
-    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\PasswordFieldMapper
-    arguments:
-      - '@translator'
-    tags:
-      - { name: netzmacht.contao_form.form_generator.mapper }
-
-  netzmacht.contao_form.form_generator.mapper.radio:
-    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\RadioFieldMapper
-    tags:
-      - { name: netzmacht.contao_form.form_generator.mapper }
-
-  netzmacht.contao_form.form_generator.mapper.select:
-    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\SelectFieldMapper
-    tags:
-      - { name: netzmacht.contao_form.form_generator.mapper }
-
-  netzmacht.contao_form.form_generator.mapper.submit:
-    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\SubmitFieldMapper
-    tags:
-      - { name: netzmacht.contao_form.form_generator.mapper }
-
-  netzmacht.contao_form.form_generator.mapper.textarea:
-    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\TextareaFieldMapper
-    tags:
-      - { name: netzmacht.contao_form.form_generator.mapper }
-
-  netzmacht.contao_form.form_generator.mapper.text:
-    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\TextFieldMapper
-    tags:
-      - { name: netzmacht.contao_form.form_generator.mapper }
-
-  netzmacht.contao_form.form_generator.mapper.explanation:
-    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\ExplanationFieldMapper
-    tags:
-      - { name: netzmacht.contao_form.form_generator.mapper }
-
-  netzmacht.contao_form.form_generator.mapper.html:
-    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\HtmlFieldMapper
-    tags:
-      - { name: netzmacht.contao_form.form_generator.mapper }
-
-  netzmacht.contao_form.form_generator.mapper.upload:
-    class: Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\UploadFieldMapper
-    arguments:
-      - '@netzmacht.contao_toolkit.contao.config_adapter'
-    tags:
-      - { name: netzmacht.contao_form.form_generator.mapper }
 
   netzmacht.contao_form.twig.extension:
     class: Netzmacht\ContaoFormBundle\Twig\TwigExtension
