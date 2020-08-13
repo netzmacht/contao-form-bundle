@@ -1,0 +1,26 @@
+services:
+  _defaults:
+    autoconfigure: false
+    autowire: false
+    public: false
+
+  netzmacht.contao_form.form_type.dca_form:
+    class: Netzmacht\ContaoFormBundle\Form\DcaFormType
+    arguments:
+      - '@netzmacht.contao_toolkit.dca.manager'
+      - '@netzmacht.contao_form.dca_form.type_builder'
+    tags:
+      - { name: form.type }
+
+  Netzmacht\ContaoFormBundle\Form\DcaFormType:
+    alias: netzmacht.contao_form.form_type.dca_form
+
+  netzmacht.contao_form.dca_form.type_builder:
+    class: Netzmacht\ContaoFormBundle\Form\DcaForm\FieldTypeBuilder
+    arguments:
+      - []
+
+  netzmacht.contao_form.dca_form.mapper.text:
+    class: Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper\TextWidgetMapper
+    tags:
+      - { name: netzmacht.contao_form.dca_form.mapper }

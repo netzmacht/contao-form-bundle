@@ -36,6 +36,13 @@ final class NetzmachtContaoFormBundle extends Bundle
             )
         );
 
+        $container->addCompilerPass(
+            new AddTaggedServicesAsArgumentPass(
+                'netzmacht.contao_form.dca_form.type_builder',
+                'netzmacht.contao_form.dca_form.mapper'
+            )
+        );
+
         $container->addCompilerPass(new TokenStoragePass());
     }
 }
