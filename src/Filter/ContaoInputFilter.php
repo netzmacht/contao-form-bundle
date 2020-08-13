@@ -14,9 +14,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Filter;
 
-use Contao\Config;
 use Contao\CoreBundle\Framework\Adapter;
-use Contao\Input;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 
 /**
