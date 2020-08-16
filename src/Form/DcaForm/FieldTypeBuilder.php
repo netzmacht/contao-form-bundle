@@ -12,6 +12,8 @@
 
 namespace Netzmacht\ContaoFormBundle\Form\DcaForm;
 
+use Netzmacht\Contao\Toolkit\Dca\Definition;
+
 /**
  * Class FieldBuilder
  *
@@ -39,20 +41,21 @@ class FieldTypeBuilder
     /**
      * Build the form field type.
      *
-     * @param string $name
-     * @param array $config
-     * @param callable       $next       Callback to get the next form field model.
+     * @param string     $name     Form field name.
+     * @param array      $config     Form field config.
+     * @param Definition $definition Data container definition.
+     * @param callable   $next       Callback to get the next form field model.
      *
      * @return array|null
      */
-    public function build(string $name, array $config, $next): ?array
+    public function build(string $name, array $config, Definition $definition, callable $next): ?array
     {
         foreach ($this->mappers as $mapper) {
-            if ($mapper->supports($config)) {
+            if ($mapper->supports($name, $config)) {
                 return [
                     'name'    => $name,
-                    'type'    => $mapper->getTypeClass($config),
-                    'options' => $mapper->getOptions($config, $this, $next)
+                    'type'    => $mapper->getTypeClass($name, $config),
+                    'options' => $mapper->getOptions($name, $config, $definition, $this, $next)
                 ];
             }
         }

@@ -76,7 +76,7 @@ class DcaFormType extends AbstractType
         $next       = $this->createNextCallback($fields);
 
         while (($formField = $next())) {
-            $config = $this->typeBuilder->build($formField[0], $formField[1], $next);
+            $config = $this->typeBuilder->build($formField[0], $formField[1], $definition, $next);
 
             if ($config !== null) {
                 $builder->add(... array_values($config));
