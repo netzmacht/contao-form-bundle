@@ -2,7 +2,7 @@
 
 {# Rows #}
 {%- block form_row -%}
-    {% if 'form_generator' not in form.vars.block_prefixes and 'fieldset' not in form.vars.block_prefixes %}
+    {% if 'form_generator' not in form.vars.block_prefixes and 'dca_form' not in form.vars.block_prefixes and 'fieldset' not in form.vars.block_prefixes %}
     <div class="widget{% if form.vars.widget.class %} {{ form.vars.widget.class }}{% endif %}">
     {% endif %}
     {% if label is not empty  %}
@@ -18,6 +18,10 @@
     {% endif %}
 {%- endblock form_row -%}
 
+{%- block button_row -%}
+    {% set row_attr = row_attr|merge({class: (row_attr.class|default('') ~ ' clr')|trim}) %}
+    {{- parent() -}}
+{%- endblock button_row -%}
 
 {# Widgets #}
 
