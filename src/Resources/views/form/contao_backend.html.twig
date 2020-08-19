@@ -5,7 +5,7 @@
     {% if 'form_generator' not in form.vars.block_prefixes and 'dca_form' not in form.vars.block_prefixes and 'fieldset' not in form.vars.block_prefixes %}
     <div class="widget{% if form.vars.widget.class %} {{ form.vars.widget.class }}{% endif %}">
     {% endif %}
-    {% if label is not empty  %}
+    {% if label is not empty and 'checkbox' not in form.vars.block_prefixes  %}
         <h3>{{- form_label(form) -}}</h3>
     {% endif %}
     {{- form_widget(form) -}}
@@ -13,7 +13,7 @@
         <p class="tl_help tl_tip">{{ form.vars.help|trans({}, translation_domain) }}</p>
     {% endif %}
     {{- form_errors(form) -}}
-    {% if 'form_generator' not in form.vars.block_prefixes and 'fieldset' not in form.vars.block_prefixes %}
+    {% if 'form_generator' not in form.vars.block_prefixes and 'dca_form' not in form.vars.block_prefixes and 'fieldset' not in form.vars.block_prefixes %}
     </div>
     {% endif %}
 {%- endblock form_row -%}
@@ -53,6 +53,13 @@
 
     </fieldset>
 {% endblock fieldset_widget %}
+
+{% block checkbox_widget %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' tl_checkbox')|trim}) %}
+    <div class="tl_checkbox_single_container">
+    {{- parent() -}} {{- form_label(form) -}}
+    </div>
+{% endblock checkbox_widget %}
 
 {%- block button_widget -%}
     {% set attr = attr|merge({class: (attr.class|default('') ~ ' tl_submit')|trim}) %}

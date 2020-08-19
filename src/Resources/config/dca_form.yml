@@ -16,9 +16,30 @@ services:
     alias: netzmacht.contao_form.form_type.dca_form
 
   netzmacht.contao_form.dca_form.type_builder:
-    class: Netzmacht\ContaoFormBundle\Form\DcaForm\FieldTypeBuilder
+    class: Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetTypeBuilder
     arguments:
       - []
+
+  netzmacht.contao_form.dca_form.mapper.checkbox:
+    class: Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper\CheckboxWidgetMapper
+    tags:
+      - { name: netzmacht.contao_form.dca_form.mapper }
+
+  netzmacht.contao_form.dca_form.mapper.radio:
+    class: Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper\RadioWidgetMapper
+    arguments:
+      - '@netzmacht.contao_toolkit.dca.manager'
+      - '@netzmacht.contao_toolkit.callback_invoker'
+    tags:
+      - { name: netzmacht.contao_form.dca_form.mapper }
+
+  netzmacht.contao_form.dca_form.mapper.select:
+    class: Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper\SelectWidgetMapper
+    arguments:
+      - '@netzmacht.contao_toolkit.dca.manager'
+      - '@netzmacht.contao_toolkit.callback_invoker'
+    tags:
+      - { name: netzmacht.contao_form.dca_form.mapper }
 
   netzmacht.contao_form.dca_form.mapper.text:
     class: Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper\TextWidgetMapper
