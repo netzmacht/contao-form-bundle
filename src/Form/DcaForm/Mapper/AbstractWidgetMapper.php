@@ -17,15 +17,16 @@ namespace Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper;
 use Assert\Assert;
 use Assert\AssertionFailedException;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
-use Netzmacht\ContaoFormBundle\Form\DcaForm\FieldTypeBuilder;
-use Netzmacht\ContaoFormBundle\Form\DcaForm\FormFieldMapper;
+use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetTypeBuilder;
+use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetMapper;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * Class AbstractFieldMapper
  */
-abstract class AbstractFieldMapper implements FormFieldMapper
+abstract class AbstractWidgetMapper implements WidgetMapper
 {
     /**
      * The type class.
@@ -63,7 +64,7 @@ abstract class AbstractFieldMapper implements FormFieldMapper
         'mandatory' => true,
         'minlength' => true,
         'maxlength' => true,
-        'value'     => true,
+        'emptyData' => true,
     ];
 
     /**
@@ -82,7 +83,11 @@ abstract class AbstractFieldMapper implements FormFieldMapper
      */
     public function supports(string $name, array $config) : bool
     {
-        return $this->widgetType === $name;
+        if (! isset($config['inputType'])) {
+            return false;
+        }
+
+        return $this->widgetType === $config['inputType'];
     }
 
     /**
@@ -100,7 +105,7 @@ abstract class AbstractFieldMapper implements FormFieldMapper
         string $name,
         array $config,
         Definition $definition,
-        FieldTypeBuilder $fieldTypeBuilder,
+        WidgetTypeBuilder $fieldTypeBuilder,
         callable $next
     ): array {
         $options = [
@@ -117,31 +122,37 @@ abstract class AbstractFieldMapper implements FormFieldMapper
             $options['label'] = $config['label'][0] ?? $name;
         }
 
-        $required = (bool) ($config['mandatory'] ?? false);
+        $required = (bool) ($config['eval']['mandatory'] ?? false);
+        $options['required'] = $required;
         if ($this->options['mandatory'] && $required) {
-            $options['required']      = $required;
             $options['constraints'][] = new Required();
         }
 
-        if ($this->options['minlength'] && $model->maxlength > 0) {
-            $options['attr']['minlength'] = $model->maxlength;
-            $options['constraints'][]     = new Length(['min' => (int) $model->minlength]);
+        if ($this->options['minlength'] && isset($config['eval']['minlength'])) {
+            $options['attr']['minlength'] = $config['minlength'];
+            $options['constraints'][]     = new Length(['min' => (int) $config['minlength']]);
         }
 
-        if ($this->options['maxlength'] && $model->maxlength > 0) {
-            $options['attr']['maxlength'] = $model->maxlength;
-            $options['constraints'][]     = new Length(['max' => (int) $model->maxlength]);
+        if ($this->options['maxlength'] && isset($config['eval']['maxlength'])) {
+            $options['attr']['maxlength'] = $config['maxlength'] ;
+            $options['constraints'][]     = new Length(['max' => (int) $config['maxlength']]);
         }
 
-        if ($this->options['value'] && $model->value) {
-            $options['data'] = $model->value;
+        if ($this->options['emptyData']) {
+            $options['empty_data'] = empty($config['eval']['nullIfEmpty']) ? '' : null;
         }
 
         return $options;
     }
 
+    public function configure(FormBuilderInterface $formType, array $config, Definition $definition): void
+    {
+    }
+
     protected function getAttributes(array $config): array
     {
         $attributes = [];
+
+        return $attributes;
     }
 }

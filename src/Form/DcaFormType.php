@@ -16,7 +16,7 @@ namespace Netzmacht\ContaoFormBundle\Form;
 
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
-use Netzmacht\ContaoFormBundle\Form\DcaForm\FieldTypeBuilder;
+use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetTypeBuilder;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -34,17 +34,17 @@ class DcaFormType extends AbstractType
     private $dcaManager;
 
     /**
-     * @var FieldTypeBuilder
+     * @var WidgetTypeBuilder
      */
     private $typeBuilder;
 
     /**
      * DcaFormType constructor.
      *
-     * @param Manager          $dcaManager Data container manager.
-     * @param FieldTypeBuilder $typeBuilder Field type builder.
+     * @param Manager           $dcaManager  Data container manager.
+     * @param WidgetTypeBuilder $typeBuilder Field type builder.
      */
-    public function __construct(Manager $dcaManager, FieldTypeBuilder $typeBuilder)
+    public function __construct(Manager $dcaManager, WidgetTypeBuilder $typeBuilder)
     {
         $this->dcaManager  = $dcaManager;
         $this->typeBuilder = $typeBuilder;
@@ -76,11 +76,7 @@ class DcaFormType extends AbstractType
         $next       = $this->createNextCallback($fields);
 
         while (($formField = $next())) {
-            $config = $this->typeBuilder->build($formField[0], $formField[1], $definition, $next);
-
-            if ($config !== null) {
-                $builder->add(... array_values($config));
-            }
+            $this->typeBuilder->build($formField[0], $formField[1], $definition, $next, $builder);
         }
     }
 

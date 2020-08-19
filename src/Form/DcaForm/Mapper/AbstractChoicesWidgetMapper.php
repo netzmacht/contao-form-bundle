@@ -1,0 +1,129 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper;
+
+use Netzmacht\Contao\Toolkit\Callback\Invoker as CallbackInvoker;
+use Netzmacht\Contao\Toolkit\Dca\DcaManager;
+use Netzmacht\Contao\Toolkit\Dca\Definition;
+use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetTypeBuilder;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use function array_flip;
+use function is_array;
+
+abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
+{
+    /**
+     * The type class.
+     *
+     * @var string
+     */
+    protected $typeClass = ChoiceType::class;
+
+    /**
+     * Multiple. If null, the value is read from the model.
+     *
+     * @var bool|null
+     */
+    protected $multiple;
+
+    /**
+     * Display the choices expanded.
+     *
+     * @var bool
+     */
+    protected $expanded = true;
+
+    /**
+     * @var DcaManager
+     */
+    private $dcaManager;
+
+    /**
+     * @var CallbackInvoker
+     */
+    private $callbackInvoker;
+
+    /**
+     * Constructor.
+     *
+     * @param DcaManager $dcaManager Data container manager.
+     */
+    public function __construct(DcaManager $dcaManager, CallbackInvoker $callbackInvoker)
+    {
+        parent::__construct();
+
+        $this->options['maxlength'] = false;
+        $this->options['minlength'] = false;
+        $this->options['rgxp']      = false;
+
+        $this->dcaManager = $dcaManager;
+        $this->callbackInvoker = $callbackInvoker;
+    }
+
+    public function getOptions(
+        string $name,
+        array $config,
+        Definition $definition,
+        WidgetTypeBuilder $fieldTypeBuilder,
+        callable $next
+    ): array {
+        $options = parent::getOptions(
+            $name,
+            $config,
+            $definition,
+            $fieldTypeBuilder,
+            $next
+        );
+
+        $options['multiple']    = $this->multiple === null ? (bool) ($config['eval']['multiple'] ?? false) : $this->multiple;
+        $options['expanded']    = $this->expanded;
+        $options['placeholder'] = false;
+
+        if (!empty($config['eval']['includeBlankOption'])) {
+            $options['placeholder'] = $config['eval']['blankOptionLabel'] ?? '-';
+        }
+
+        $options = $this->parseOptionsConfig($name, $options, $config, $definition);
+
+        return $options;
+    }
+
+    /**
+     * Build the choices.
+     *
+     * @param string     $name       Field name.
+     * @param array      $options    Form type options.
+     * @param array      $config     Widget configuration.
+     * @param Definition $definition Data container definition.
+     *
+     * @return array
+     */
+    protected function parseOptionsConfig(string $name, array $options, array $config, Definition $definition): array
+    {
+        $options['choices'] = [];
+
+        if (!empty($config['options_callback'])) {
+            // Fixme: Pass instance of DataContainer
+            $choices = $this->callbackInvoker->invoke($config['options_callback']);
+            $options['choices'] = array_flip($choices);
+
+            return $options;
+        }
+
+        if (empty($config['options']) || !is_array($config['options'])) {
+            return $options;
+        }
+
+        $formatter = $this->dcaManager->getFormatter($definition->getName());
+
+        foreach ($config['options'] as $option) {
+            // Fixme: Pass data container for options callbacks
+            $label                      = $formatter->formatValue($name, $option);
+            $options['choices'][$label] = $option;
+        }
+
+        return $options;
+    }
+}
