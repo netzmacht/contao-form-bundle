@@ -15,7 +15,6 @@ declare(strict_types=1);
 namespace Netzmacht\ContaoFormBundle;
 
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\AddTaggedServicesAsArgumentPass;
-use Netzmacht\ContaoFormBundle\DependencyInjection\Compiler\TokenStoragePass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -35,7 +34,5 @@ final class NetzmachtContaoFormBundle extends Bundle
                 'netzmacht.contao_form.form_generator.mapper'
             )
         );
-
-        $container->addCompilerPass(new TokenStoragePass());
     }
 }
