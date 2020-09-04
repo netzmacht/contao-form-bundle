@@ -16,9 +16,12 @@ namespace Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper;
 
 use Assert\Assert;
 use Assert\AssertionFailedException;
+use Contao\CoreBundle\Framework\ContaoFrameworkInterface;
+use Contao\Widget;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetTypeBuilder;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetMapper;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Required;
@@ -68,14 +71,24 @@ abstract class AbstractWidgetMapper implements WidgetMapper
     ];
 
     /**
+     * Contao framework.
+     *
+     * @var ContaoFrameworkInterface
+     */
+    private $framework;
+
+    /**
      * Constructor.
      *
+     * @param ContaoFrameworkInterface $framework Contao framework.
      * @throws AssertionFailedException When type class or field type is not givvn.
      */
-    public function __construct()
+    public function __construct(ContaoFrameworkInterface $framework)
     {
         Assert::that($this->typeClass)->string()->notBlank();
         Assert::that($this->widgetType)->string()->notBlank();
+
+        $this->framework = $framework;
     }
 
     /**
@@ -147,6 +160,24 @@ abstract class AbstractWidgetMapper implements WidgetMapper
 
     public function configure(FormBuilderInterface $formType, array $config, Definition $definition): void
     {
+        $formType->addModelTransformer(
+            new CallbackTransformer(
+                static function ($value) {
+                    return $value;
+                },
+                function ($value) use ($config) {
+                    if ($value === null) {
+                        $this->framework->initialize();
+
+                        return $this->framework
+                            ->getAdapter(Widget::class)
+                            ->getEmptyValueByFieldType($config['sql']);
+                    }
+
+                    return $value;
+                }
+            )
+        );
     }
 
     protected function getAttributes(array $config): array

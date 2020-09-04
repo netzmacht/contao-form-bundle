@@ -47,6 +47,8 @@ final class CheckboxWidgetMapper extends AbstractWidgetMapper
 
     public function configure(FormBuilderInterface $formType, array $config, Definition $definition): void
     {
+        parent::configure($formType, $config, $definition);
+
         $formType->addModelTransformer(
             new CallbackTransformer(
                 static function ($value) {

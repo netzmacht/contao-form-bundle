@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper;
 
+use Contao\CoreBundle\Framework\ContaoFrameworkInterface;
 use Netzmacht\Contao\Toolkit\Callback\Invoker as CallbackInvoker;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
@@ -36,11 +37,15 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
     protected $expanded = true;
 
     /**
+     * Data container manager.
+     *
      * @var DcaManager
      */
     private $dcaManager;
 
     /**
+     * Callback invoker.
+     *
      * @var CallbackInvoker
      */
     private $callbackInvoker;
@@ -48,17 +53,21 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
     /**
      * Constructor.
      *
-     * @param DcaManager $dcaManager Data container manager.
+     * @param ContaoFrameworkInterface $framework       Contao framework.
+     * @param DcaManager               $dcaManager      Data container manager.
+     * @param CallbackInvoker          $callbackInvoker Callback invoker.
+     *
+     * @throws \Assert\AssertionFailedException
      */
-    public function __construct(DcaManager $dcaManager, CallbackInvoker $callbackInvoker)
+    public function __construct(ContaoFrameworkInterface $framework, DcaManager $dcaManager, CallbackInvoker $callbackInvoker)
     {
-        parent::__construct();
+        parent::__construct($framework);
 
         $this->options['maxlength'] = false;
         $this->options['minlength'] = false;
         $this->options['rgxp']      = false;
 
-        $this->dcaManager = $dcaManager;
+        $this->dcaManager      = $dcaManager;
         $this->callbackInvoker = $callbackInvoker;
     }
 
