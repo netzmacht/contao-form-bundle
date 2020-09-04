@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Removed
+
+ - Remove token storage alias but utilize crsrf token provider
+
 ### [1.2.0] - 2020-04-03
 
 ### Improvements

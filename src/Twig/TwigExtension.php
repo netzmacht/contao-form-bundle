@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Twig;
 
-use Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface;
+use Netzmacht\Contao\Toolkit\Security\Csrf\CsrfTokenProvider;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -23,22 +23,17 @@ use Twig\TwigFunction;
  */
 final class TwigExtension extends AbstractExtension
 {
-    /** @var TokenStorageInterface */
-    private $csrfTokenStorage;
-
-    /** @var string */
-    private $csrfTokenName;
+    /** @var CsrfTokenProvider */
+    private $csrfTokenProvider;
 
     /**
      * TwigExtension constructor.
      *
-     * @param TokenStorageInterface $csrfTokenStorage Csrf token storage.
-     * @param string                $csrfTokenName    Csrf token name.
+     * @param CsrfTokenProvider $csrfTokenProvider Csrf token manager.
      */
-    public function __construct(TokenStorageInterface $csrfTokenStorage, string $csrfTokenName)
+    public function __construct(CsrfTokenProvider $csrfTokenProvider)
     {
-        $this->csrfTokenStorage = $csrfTokenStorage;
-        $this->csrfTokenName    = $csrfTokenName;
+        $this->csrfTokenProvider = $csrfTokenProvider;
     }
 
     /**
@@ -56,6 +51,6 @@ final class TwigExtension extends AbstractExtension
      */
     public function requestToken() : string
     {
-        return $this->csrfTokenStorage->getToken($this->csrfTokenName);
+        return $this->csrfTokenProvider->getTokenValue();
     }
 }

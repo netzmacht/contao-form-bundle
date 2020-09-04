@@ -14,11 +14,11 @@ declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form;
 
+use Netzmacht\Contao\Toolkit\Security\Csrf\CsrfTokenProvider;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface;
 
 /**
  * Hidden input type for the Contao request token
@@ -28,27 +28,18 @@ final class ContaoRequestTokenType extends HiddenType
     /**
      * The csrf token storage.
      *
-     * @var TokenStorageInterface
+     * @var CsrfTokenProvider
      */
-    private $tokenManager;
-
-    /**
-     * The csrf token name.
-     *
-     * @var string
-     */
-    private $tokenName;
+    private $tokenProvider;
 
     /**
      * RequestTokenType constructor.
      *
-     * @param TokenStorageInterface $tokenStorage The csrf token storage.
-     * @param string                $tokenName    The csrf token name.
+     * @param CsrfTokenProvider $csrfTokenProvider The csrf token provider.
      */
-    public function __construct(TokenStorageInterface $tokenStorage, string $tokenName)
+    public function __construct(CsrfTokenProvider $csrfTokenProvider)
     {
-        $this->tokenManager = $tokenStorage;
-        $this->tokenName    = $tokenName;
+        $this->tokenProvider = $csrfTokenProvider;
     }
 
     /**
@@ -66,6 +57,6 @@ final class ContaoRequestTokenType extends HiddenType
      */
     public function configureOptions(OptionsResolver $resolver) : void
     {
-        $resolver->setDefaults(['data' => $this->tokenManager->getToken($this->tokenName)]);
+        $resolver->setDefaults(['data' => $this->tokenProvider->getTokenValue()]);
     }
 }
