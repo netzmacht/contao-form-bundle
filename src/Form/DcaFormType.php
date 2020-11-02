@@ -71,9 +71,14 @@ class DcaFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $definition = $this->dcaManager->getDefinition($options['dataContainer']);
-        $fields     = $this->getFieldConfigs($definition, $options);
-        $next       = $this->createNextCallback($fields);
+        if ($options['dataContainer'] instanceof Definition) {
+            $definition = $options['dataContainer'];
+        } else {
+            $definition = $this->dcaManager->getDefinition($options['dataContainer']);
+        }
+
+        $fields = $this->getFieldConfigs($definition, $options);
+        $next   = $this->createNextCallback($fields);
 
         while (($formField = $next())) {
             $this->typeBuilder->build($formField[0], $formField[1], $definition, $next, $builder);
