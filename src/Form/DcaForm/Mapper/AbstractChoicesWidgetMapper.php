@@ -115,7 +115,7 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
 
         if (!empty($config['options_callback'])) {
             // Fixme: Pass instance of DataContainer
-            $choices = $this->callbackInvoker->invoke($config['options_callback']);
+            $choices            = $this->callbackInvoker->invoke($config['options_callback']);
             $options['choices'] = array_flip($choices);
 
             return $options;
@@ -129,7 +129,7 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
 
         foreach ($config['options'] as $option) {
             // Fixme: Pass data container for options callbacks
-            $label                      = $formatter->formatValue($name, $option);
+            $label                      = $formatter->formatValue($name, $option) ?: $option;
             $options['choices'][$label] = $option;
         }
 
