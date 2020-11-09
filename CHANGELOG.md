@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+### [1.2.1] - 2020-11-09
+
 ### Removed
 
  - Remove token storage alias but utilize crsrf token provider
@@ -63,7 +65,8 @@
  - Do not include invisible form fields
  - Fix choices group for multiple select fields
 
-[Unreleased]: https://github.com/netzmacht/contao-form-bundle/compare/1.2.0...dev-develop
+[Unreleased]: https://github.com/netzmacht/contao-form-bundle/compare/master..develop
+[1.2.0]: https://github.com/netzmacht/contao-form-bundle/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/netzmacht/contao-form-bundle/compare/1.1.1...1.2.0
 [1.1.1]: https://github.com/netzmacht/contao-form-bundle/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/netzmacht/contao-form-bundle/compare/1.0.2...1.1.0
