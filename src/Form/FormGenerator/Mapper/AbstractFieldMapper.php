@@ -19,6 +19,7 @@ use Contao\FormFieldModel;
 use Contao\StringUtil;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FormFieldMapper;
+use Netzmacht\ContaoFormBundle\Validator\Constraints\Rgxp;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Required;
 
@@ -64,6 +65,7 @@ abstract class AbstractFieldMapper implements FormFieldMapper
         'minlength' => true,
         'maxlength' => true,
         'value'     => true,
+        'rgxp'      => true,
     ];
 
     /**
@@ -113,12 +115,12 @@ abstract class AbstractFieldMapper implements FormFieldMapper
         if ($this->options['label']) {
             $options['label'] = StringUtil::decodeEntities($model->label);
         }
-        
+
         if ($this->options['mandatory']) {
             $options['required']      = (bool) $model->mandatory;
             $options['constraints'][] = new Required();
         }
-        
+
         if ($this->options['minlength'] && $model->maxlength > 0) {
             $options['attr']['minlength'] = $model->maxlength;
             $options['constraints'][]     = new Length(['min' => (int) $model->minlength]);
@@ -131,6 +133,15 @@ abstract class AbstractFieldMapper implements FormFieldMapper
 
         if ($this->options['value'] && $model->value) {
             $options['data'] = $model->value;
+        }
+
+        if ($this->options['rgxp'] && $model->rgxp) {
+            $options['constraints'][] = new Rgxp(
+                [
+                    'rgxp'  => $model->rgxp,
+                    'label' => StringUtil::decodeEntities($model->label),
+                ]
+            );
         }
 
         return $options;

@@ -58,3 +58,12 @@ services:
       - '@netzmacht.contao_toolkit.csrf.token_provider'
     tags:
       - 'twig.extension'
+
+  netzmacht.contao_form.rgxp_validator:
+    class: Netzmacht\ContaoFormBundle\Validator\Constraints\RgxpValidator
+    arguments:
+      - '@translator'
+      - '@netzmacht.contao_toolkit.callback_invoker'
+      - '@contao.framework'
+    tags:
+      - 'validator.constraint_validator'

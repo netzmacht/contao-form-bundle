@@ -17,10 +17,12 @@ namespace Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper;
 use Assert\Assert;
 use Assert\AssertionFailedException;
 use Contao\CoreBundle\Framework\ContaoFrameworkInterface;
+use Contao\StringUtil;
 use Contao\Widget;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetTypeBuilder;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetMapper;
+use Netzmacht\ContaoFormBundle\Validator\Constraints\Rgxp;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
@@ -68,6 +70,7 @@ abstract class AbstractWidgetMapper implements WidgetMapper
         'minlength' => true,
         'maxlength' => true,
         'emptyData' => true,
+        'rgxp'      => true,
     ];
 
     /**
@@ -153,6 +156,24 @@ abstract class AbstractWidgetMapper implements WidgetMapper
 
         if ($this->options['emptyData']) {
             $options['empty_data'] = empty($config['eval']['nullIfEmpty']) ? '' : null;
+        }
+
+        $this->framework->initialize();
+        $widget = null;
+        if (isset($GLOBALS['BE_FFL'][$config['inputType']])) {
+            $widgetClass = $GLOBALS['BE_FFL'][$config['inputType']];
+            $attributes  = $widgetClass::getAttributesFromDca($config, $name, null, $name, $definition->getName());
+            $widget      = new $widgetClass($attributes);
+        }
+
+        if ($this->options['rgxp'] && isset($config['eval']['rgxp'])) {
+            $options['constraints'][] = new Rgxp(
+                [
+                    'rgxp'   => $config['eval']['rgxp'],
+                    'label'  => StringUtil::decodeEntities($config['label'][0] ?? $name),
+                    'widget' => $widget,
+                ]
+            );
         }
 
         return $options;

@@ -53,7 +53,7 @@ class DcaFormType extends AbstractType
     /**
      * {@inheritDoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(['dataContainer'])
@@ -69,7 +69,7 @@ class DcaFormType extends AbstractType
     /**
      * {@inheritDoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($options['dataContainer'] instanceof Definition) {
             $definition = $options['dataContainer'];
@@ -127,7 +127,7 @@ class DcaFormType extends AbstractType
      */
     private function createNextCallback(&$formFields): callable
     {
-        return function (?callable $condition = null) use (&$formFields) {
+        return static function (?callable $condition = null) use (&$formFields) {
             $current = current($formFields);
 
             if ($current === false) {

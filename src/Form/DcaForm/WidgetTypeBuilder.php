@@ -50,8 +50,13 @@ class WidgetTypeBuilder
      *
      * @return null
      */
-    public function build(string $name, array $config, Definition $definition, callable $next, FormBuilderInterface $builder): void
-    {
+    public function build(
+        string $name,
+        array $config,
+        Definition $definition,
+        callable $next,
+        FormBuilderInterface $builder
+    ): void {
         foreach ($this->mappers as $mapper) {
             if (! $mapper->supports($name, $config)) {
                 continue;
