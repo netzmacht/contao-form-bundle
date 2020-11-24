@@ -16,7 +16,7 @@ namespace Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper;
 
 use Assert\AssertionFailedException;
 use Contao\CoreBundle\Framework\ContaoFrameworkInterface;
-use Netzmacht\Contao\Toolkit\Dca\Definition;
+use Netzmacht\ContaoFormBundle\Form\DcaForm\Context;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetTypeBuilder;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -72,17 +72,11 @@ final class PasswordWidgetMapper extends AbstractWidgetMapper
     public function getOptions(
         string $name,
         array $config,
-        Definition $definition,
+        Context $context,
         WidgetTypeBuilder $fieldTypeBuilder,
         callable $next
     ): array {
-        $options = parent::getOptions(
-            $name,
-            $config,
-            $definition,
-            $fieldTypeBuilder,
-            $next
-        );
+        $options = parent::getOptions($name, $config, $context, $fieldTypeBuilder, $next);
 
         $options['type']           = PasswordType::class;
         $options['first_options']  = [

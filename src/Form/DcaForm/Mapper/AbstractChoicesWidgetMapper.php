@@ -17,10 +17,10 @@ namespace Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper;
 use Assert\AssertionFailedException;
 use Contao\CoreBundle\Framework\ContaoFrameworkInterface;
 use Netzmacht\Contao\Toolkit\Callback\Invoker as CallbackInvoker;
-use Netzmacht\Contao\Toolkit\Dca\DcaManager;
-use Netzmacht\Contao\Toolkit\Dca\Definition;
+use Netzmacht\ContaoFormBundle\Form\DcaForm\Context;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetTypeBuilder;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 use function array_flip;
 use function is_array;
 
@@ -51,13 +51,6 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
     protected $expanded = true;
 
     /**
-     * Data container manager.
-     *
-     * @var DcaManager
-     */
-    private $dcaManager;
-
-    /**
      * Callback invoker.
      *
      * @var CallbackInvoker
@@ -68,14 +61,12 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
      * Constructor.
      *
      * @param ContaoFrameworkInterface $framework       Contao framework.
-     * @param DcaManager               $dcaManager      Data container manager.
      * @param CallbackInvoker          $callbackInvoker Callback invoker.
      *
      * @throws AssertionFailedException When type class or field type is not given.
      */
     public function __construct(
         ContaoFrameworkInterface $framework,
-        DcaManager $dcaManager,
         CallbackInvoker $callbackInvoker
     ) {
         parent::__construct($framework);
@@ -84,7 +75,6 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
         $this->options['minlength'] = false;
         $this->options['rgxp']      = false;
 
-        $this->dcaManager      = $dcaManager;
         $this->callbackInvoker = $callbackInvoker;
     }
 
@@ -94,17 +84,11 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
     public function getOptions(
         string $name,
         array $config,
-        Definition $definition,
+        Context $context,
         WidgetTypeBuilder $fieldTypeBuilder,
         callable $next
     ): array {
-        $options = parent::getOptions(
-            $name,
-            $config,
-            $definition,
-            $fieldTypeBuilder,
-            $next
-        );
+        $options = parent::getOptions($name, $config, $context, $fieldTypeBuilder, $next);
 
         $options['multiple']    = $this->multiple === null
             ? (bool) ($config['eval']['multiple'] ?? false)
@@ -116,7 +100,7 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
             $options['placeholder'] = ($config['eval']['blankOptionLabel'] ?? '-');
         }
 
-        $options = $this->parseOptionsConfig($name, $options, $config, $definition);
+        $options = $this->parseOptionsConfig($name, $options, $config, $context);
 
         return $options;
     }
@@ -124,20 +108,21 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
     /**
      * Build the choices.
      *
-     * @param string     $name       Field name.
-     * @param array      $options    Form type options.
-     * @param array      $config     Widget configuration.
-     * @param Definition $definition Data container definition.
+     * @param string  $name    Field name.
+     * @param array   $options Form type options.
+     * @param array   $config  Widget configuration.
+     * @param Context $context Data container context.
      *
      * @return array
      */
-    protected function parseOptionsConfig(string $name, array $options, array $config, Definition $definition): array
+    protected function parseOptionsConfig(string $name, array $options, array $config, Context $context): array
     {
         $options['choices'] = [];
 
         if (!empty($config['options_callback'])) {
-            // Fixme: Pass instance of DataContainer
-            $choices            = $this->callbackInvoker->invoke($config['options_callback']);
+            $driver             = $context->getDriver();
+            $arguments          = $driver ? [$driver] : [];
+            $choices            = $this->callbackInvoker->invoke($config['options_callback'], $arguments);
             $options['choices'] = array_flip($choices);
 
             return $options;
@@ -147,11 +132,10 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
             return $options;
         }
 
-        $formatter = $this->dcaManager->getFormatter($definition->getName());
+        $formatter = $context->getFormatter();
 
         foreach ($config['options'] as $option) {
-            // Fixme: Pass data container for options callbacks
-            $label                      = $formatter->formatValue($name, $option) ?: $option;
+            $label                      = $formatter->formatValue($name, $option, $context->getDriver()) ?: $option;
             $options['choices'][$label] = $option;
         }
 

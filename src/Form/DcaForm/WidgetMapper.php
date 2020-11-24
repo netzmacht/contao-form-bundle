@@ -14,9 +14,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\DcaForm;
 
-use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 
 /**
  * Interface WidgetMapper
@@ -48,7 +46,7 @@ interface WidgetMapper
      *
      * @param string            $name             The form field name.
      * @param array             $config           The form field config.
-     * @param Definition        $definition       Data container definition.
+     * @param Context           $context          The data container context.
      * @param WidgetTypeBuilder $fieldTypeBuilder The field type builder.
      * @param callable          $next             Callable to fetch the next element.
      *
@@ -57,7 +55,7 @@ interface WidgetMapper
     public function getOptions(
         string $name,
         array $config,
-        Definition $definition,
+        Context $context,
         WidgetTypeBuilder $fieldTypeBuilder,
         callable $next
     ): array;
@@ -65,11 +63,11 @@ interface WidgetMapper
     /**
      * Configure the created form type
      *
-     * @param FormBuilderInterface $formType   The created form type builder.
-     * @param array                $config     The form field config.
-     * @param Definition           $definition Data container definition.
+     * @param FormBuilderInterface $formType The created form type builder.
+     * @param array                $config   The form field config.
+     * @param Context              $context  The data container context.
      *
      * @return void
      */
-    public function configure(FormBuilderInterface $formType, array $config, Definition $definition): void;
+    public function configure(FormBuilderInterface $formType, array $config, Context $context): void;
 }

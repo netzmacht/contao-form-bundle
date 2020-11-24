@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper;
 
-use Netzmacht\Contao\Toolkit\Dca\Definition;
+use Netzmacht\ContaoFormBundle\Form\DcaForm\Context;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetTypeBuilder;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -57,17 +57,11 @@ final class CheckboxWidgetMapper extends AbstractWidgetMapper
     public function getOptions(
         string $name,
         array $config,
-        Definition $definition,
+        Context $context,
         WidgetTypeBuilder $fieldTypeBuilder,
         callable $next
     ): array {
-        $options = parent::getOptions(
-            $name,
-            $config,
-            $definition,
-            $fieldTypeBuilder,
-            $next
-        );
+        $options = parent::getOptions($name, $config, $context, $fieldTypeBuilder, $next);
 
         $options['false_values'] = ['', false, 0, null];
 
@@ -77,9 +71,9 @@ final class CheckboxWidgetMapper extends AbstractWidgetMapper
     /**
      * {@inheritDoc}
      */
-    public function configure(FormBuilderInterface $formType, array $config, Definition $definition): void
+    public function configure(FormBuilderInterface $formType, array $config, Context $context): void
     {
-        parent::configure($formType, $config, $definition);
+        parent::configure($formType, $config, $context);
 
         $formType->addModelTransformer(
             new CallbackTransformer(

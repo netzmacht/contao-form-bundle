@@ -87,7 +87,7 @@ final class Rgxp extends Constraint
     /**
      * Get the widget is defined.
      *
-     * @return string
+     * @return Widget|null
      */
     public function getWidget(): ?Widget
     {

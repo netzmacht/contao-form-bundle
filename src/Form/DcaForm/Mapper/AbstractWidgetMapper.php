@@ -19,7 +19,7 @@ use Assert\AssertionFailedException;
 use Contao\CoreBundle\Framework\ContaoFrameworkInterface;
 use Contao\StringUtil;
 use Contao\Widget;
-use Netzmacht\Contao\Toolkit\Dca\Definition;
+use Netzmacht\ContaoFormBundle\Form\DcaForm\Context;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetTypeBuilder;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetMapper;
 use Netzmacht\ContaoFormBundle\Validator\Constraints\Rgxp;
@@ -124,7 +124,7 @@ abstract class AbstractWidgetMapper implements WidgetMapper
     public function getOptions(
         string $name,
         array $config,
-        Definition $definition,
+        Context $context,
         WidgetTypeBuilder $fieldTypeBuilder,
         callable $next
     ): array {
@@ -167,7 +167,7 @@ abstract class AbstractWidgetMapper implements WidgetMapper
                 [
                     'rgxp'   => $config['eval']['rgxp'],
                     'label'  => StringUtil::decodeEntities(($config['label'][0] ?? $name)),
-                    'widget' => $this->createWidget($name, $config, $definition),
+                    'widget' => $this->createWidget($name, $config, $context),
                 ]
             );
         }
@@ -178,7 +178,7 @@ abstract class AbstractWidgetMapper implements WidgetMapper
     /**
      * {@inheritDoc}
      */
-    public function configure(FormBuilderInterface $formType, array $config, Definition $definition): void
+    public function configure(FormBuilderInterface $formType, array $config, Context $context): void
     {
         $formType->addModelTransformer(
             new CallbackTransformer(
@@ -191,7 +191,7 @@ abstract class AbstractWidgetMapper implements WidgetMapper
 
                         return $this->framework
                             ->getAdapter(Widget::class)
-                            ->getEmptyValueByFieldType($config['sql']);
+                            ->__call('getEmptyValueByFieldType', [$config['sql']]);
                     }
 
                     return $value;
@@ -231,15 +231,15 @@ abstract class AbstractWidgetMapper implements WidgetMapper
     /**
      * Create the contao widget.
      *
-     * @param string     $name       The field name.
-     * @param array      $config     The configuration.
-     * @param Definition $definition The data container definition.
+     * @param string  $name    The field name.
+     * @param array   $config  The configuration.
+     * @param Context $context The Data container context.
      *
      * @return Widget|null
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    private function createWidget(string $name, array $config, Definition $definition): ?Widget
+    private function createWidget(string $name, array $config, Context $context): ?Widget
     {
         $this->framework->initialize();
 
@@ -248,7 +248,13 @@ abstract class AbstractWidgetMapper implements WidgetMapper
         }
 
         $widgetClass = $GLOBALS['BE_FFL'][$config['inputType']];
-        $attributes  = $widgetClass::getAttributesFromDca($config, $name, null, $name, $definition->getName());
+        $attributes  = $widgetClass::getAttributesFromDca(
+            $config,
+            $name,
+            null,
+            $name,
+            $context->getDefinition()->getName()
+        );
 
         return new $widgetClass($attributes);
     }

@@ -12,7 +12,6 @@
 
 namespace Netzmacht\ContaoFormBundle\Form\DcaForm;
 
-use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -42,18 +41,18 @@ class WidgetTypeBuilder
     /**
      * Build the form field type.
      *
-     * @param string               $name       Form field name.
-     * @param array                $config     Form field config.
-     * @param Definition           $definition Data container definition.
-     * @param callable             $next       Callback to get the next form field model.
-     * @param FormBuilderInterface $builder    Form builder.
+     * @param string               $name    Form field name.
+     * @param array                $config  Form field config.
+     * @param Context              $context Data container context.
+     * @param callable             $next    Callback to get the next form field model.
+     * @param FormBuilderInterface $builder Form builder.
      *
      * @return void
      */
     public function build(
         string $name,
         array $config,
-        Definition $definition,
+        Context $context,
         callable $next,
         FormBuilderInterface $builder
     ): void {
@@ -65,10 +64,10 @@ class WidgetTypeBuilder
             $builder->add(
                 $name,
                 $mapper->getTypeClass($name, $config),
-                $mapper->getOptions($name, $config, $definition, $this, $next)
+                $mapper->getOptions($name, $config, $context, $this, $next)
             );
 
-            $mapper->configure($builder->get($name), $config, $definition);
+            $mapper->configure($builder->get($name), $config, $context);
         }
     }
 }

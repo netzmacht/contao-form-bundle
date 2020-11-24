@@ -16,6 +16,7 @@ namespace Netzmacht\ContaoFormBundle\Form;
 
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
+use Netzmacht\ContaoFormBundle\Form\DcaForm\Context;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetTypeBuilder;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -61,8 +62,10 @@ class DcaFormType extends AbstractType
             ->setRequired(['dataContainer'])
             ->setDefaults(
                 [
-                    'fields'   => null,
-                    'callback' => null,
+                    'formatter' => null,
+                    'driver'    => null,
+                    'fields'    => null,
+                    'callback'  => null,
                 ]
             )
             ->setAllowedTypes('fields', 'array');
@@ -79,11 +82,17 @@ class DcaFormType extends AbstractType
             $definition = $this->dcaManager->getDefinition($options['dataContainer']);
         }
 
+        $context = new Context(
+            $definition,
+            $options['formatter'] ?: $this->dcaManager->getFormatter($definition->getName()),
+            $options['driver']
+        );
+
         $fields = $this->getFieldConfigs($definition, $options);
         $next   = $this->createNextCallback($fields);
 
         while (($formField = $next())) {
-            $this->typeBuilder->build($formField[0], $formField[1], $definition, $next, $builder);
+            $this->typeBuilder->build($formField[0], $formField[1], $context, $next, $builder);
         }
     }
 
