@@ -27,6 +27,14 @@ services:
     tags:
       - { name: netzmacht.contao_form.dca_form.mapper }
 
+  netzmacht.contao_form.dca_form.mapper.password:
+    class: Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper\PasswordWidgetMapper
+    arguments:
+      - '@contao.framework'
+      - '@translator'
+    tags:
+      - { name: netzmacht.contao_form.dca_form.mapper }
+
   netzmacht.contao_form.dca_form.mapper.radio:
     class: Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper\RadioWidgetMapper
     arguments:
