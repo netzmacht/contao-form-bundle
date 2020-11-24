@@ -51,3 +51,10 @@ services:
       - '@contao.framework'
     tags:
       - { name: netzmacht.contao_form.dca_form.mapper }
+
+  netzmacht.contao_form.dca_form.mapper.textarea:
+    class: Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper\TextareaWidgetMapper
+    arguments:
+      - '@contao.framework'
+    tags:
+      - { name: netzmacht.contao_form.dca_form.mapper }
