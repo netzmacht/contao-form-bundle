@@ -122,8 +122,8 @@ abstract class AbstractWidgetMapper implements WidgetMapper
         callable $next
     ): array {
         $options = [
-            'attr'  => $this->getAttributes($config),
-            'help'  => $config['label'][1] ?? null,
+            'attr'   => $this->getAttributes($config),
+            'help'   => $config['label'][1] ?? null,
             'widget' => [
                 'class'    => $config['eval']['class'] ?? null,
                 'be_class' => $config['eval']['tl_class'] ?? null,
@@ -183,6 +183,20 @@ abstract class AbstractWidgetMapper implements WidgetMapper
     protected function getAttributes(array $config): array
     {
         $attributes = [];
+
+        foreach ($this->attributes as $property => $attribute) {
+            if ($attribute === false) {
+                continue;
+            }
+
+            if ($attribute === true) {
+                $property = $attribute;
+            }
+
+            if (isset($config['eval'][$property])) {
+                $attributes[$attribute] = $config['eval'][$property];
+            }
+        }
 
         return $attributes;
     }
