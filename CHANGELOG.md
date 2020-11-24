@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Added
+
+ - Add experimental support for dca form mapping (checkbox, password, radio, select, textarea, text widgets)
+ - Provide an `Rgxp` constraint based on symfony constraints
+ - Recognize `rgxp` for form field model (Custom `rgxp` not supported)
+
 ### Removed
 
  - Remove token storage alias but utilize crsrf token provider

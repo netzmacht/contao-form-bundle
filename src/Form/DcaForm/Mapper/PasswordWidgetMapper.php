@@ -22,6 +22,9 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 
+/**
+ * Class PasswordWidgetMapper maps the password widget to the RepeatedType using the PasswordType
+ */
 final class PasswordWidgetMapper extends AbstractWidgetMapper
 {
     /**
@@ -83,7 +86,7 @@ final class PasswordWidgetMapper extends AbstractWidgetMapper
 
         $options['type']           = PasswordType::class;
         $options['first_options']  = [
-            'label' => $options['label'] = $config['label'][0] ?? $name,
+            'label' => ($config['label'][0] ?? $name),
         ];
         $options['second_options'] = [
             'label' => $this->translator->trans(

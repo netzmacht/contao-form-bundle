@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Netzmacht Contao Form Bundle.
+ *
+ * @package    contao-form-bundle
+ * @author     David Molineus <david.molineus@netzmacht.de>
+ * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
+ * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
+ * @filesource
+ */
+
 declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Validator\Constraints;
@@ -9,6 +19,7 @@ use Contao\Date;
 use Contao\Idna;
 use Contao\StringUtil;
 use Contao\Validator;
+use Exception;
 use InvalidArgumentException;
 use Netzmacht\Contao\Toolkit\Callback\Invoker;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -26,31 +37,51 @@ use function strncmp;
 use function strpos;
 use function substr_count;
 
+/**
+ * Class RgxpValidator performs the validation for the Rgxp constraint.
+ */
 final class RgxpValidator extends ConstraintValidator
 {
-    /** @var TranslatorInterface */
+    /**
+     * The translator.
+     *
+     * @var TranslatorInterface
+     */
     private $translator;
 
-    /** @var Invoker */
+    /**
+     * The callback invoker.
+     *
+     * @var Invoker
+     */
     private $invoker;
 
-    /** @var ContaoFrameworkInterface */
+    /**
+     * The contao framework.
+     *
+     * @var ContaoFrameworkInterface
+     */
     private $framework;
 
     /**
      * RgxpValidator constructor.
      *
-     * @param TranslatorInterface      $translator
-     * @param Invoker                  $invoker
-     * @param ContaoFrameworkInterface $framework
+     * @param TranslatorInterface      $translator The translator.
+     * @param Invoker                  $invoker    The callback invoker.
+     * @param ContaoFrameworkInterface $framework  The contao framework.
      */
     public function __construct(TranslatorInterface $translator, Invoker $invoker, ContaoFrameworkInterface $framework)
     {
         $this->translator = $translator;
         $this->invoker    = $invoker;
-        $this->framework = $framework;
+        $this->framework  = $framework;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws UnexpectedTypeException When a not supported constraint is given.
+     */
     public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof Rgxp) {
@@ -68,6 +99,20 @@ final class RgxpValidator extends ConstraintValidator
         }
     }
 
+    /**
+     * Validate the value following contao validation rules.
+     *
+     * @param mixed $value      The given value.
+     * @param Rgxp  $constraint The rgxp constraint.
+     *
+     * @return void
+     *
+     * @throws InvalidArgumentException Then an error occurs.
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.Superglobals)
+     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+     */
     private function doValidate($value, Rgxp $constraint): void
     {
         $rgxp = $constraint->getRgxp();
@@ -81,8 +126,8 @@ final class RgxpValidator extends ConstraintValidator
                 if (in_array($value, $textual, true) || strncmp($value, '$', 1) === 0) {
                     break;
                 }
-            // no break
 
+            // no break
             case 'digit':
                 // Support decimal commas and convert them automatically (see #3488)
                 if (substr_count($value, ',') === 1 && strpos($value, '.') === false) {
@@ -124,15 +169,14 @@ final class RgxpValidator extends ConstraintValidator
 
                 if (!Validator::isDate($value)) {
                     throw new InvalidArgumentException(
-                        $this->translateError('date'),
-                        Date::getInputFormat(Date::getNumericDateFormat())
+                        $this->translateError('date', [Date::getInputFormat(Date::getNumericDateFormat())]),
                     );
                 }
                 // Validate the date (see #5086)
                 try {
                     new Date($value, Date::getNumericDateFormat());
                 } catch (\OutOfBoundsException $e) {
-                    throw new InvalidArgumentException($this->translateError('invalidDate'), $value);
+                    throw new InvalidArgumentException($this->translateError('invalidDate', [$value]));
                 }
                 break;
 
@@ -142,8 +186,7 @@ final class RgxpValidator extends ConstraintValidator
 
                 if (!Validator::isTime($value)) {
                     throw new InvalidArgumentException(
-                        $this->translateError('time'),
-                        Date::getInputFormat(Date::getNumericTimeFormat())
+                        $this->translateError('time', [Date::getInputFormat(Date::getNumericTimeFormat())]),
                     );
                 }
                 break;
@@ -154,8 +197,7 @@ final class RgxpValidator extends ConstraintValidator
 
                 if (!Validator::isDatim($value)) {
                     throw new InvalidArgumentException(
-                        $this->translateError('dateTime'),
-                        Date::getInputFormat(Date::getNumericDatimFormat())
+                        $this->translateError('dateTime', [Date::getInputFormat(Date::getNumericDatimFormat())]),
                     );
                 }
 
@@ -163,14 +205,14 @@ final class RgxpValidator extends ConstraintValidator
                 try {
                     new Date($value, Date::getNumericDatimFormat());
                 } catch (\OutOfBoundsException $e) {
-                    throw new InvalidArgumentException($this->translateError('invalidDate'), $value);
+                    throw new InvalidArgumentException($this->translateError('invalidDate', [$value]));
                 }
                 break;
 
             case 'friendly':
                 [$name, $value] = StringUtil::splitFriendlyEmail($value);
-            // no break
 
+            // no break
             case 'email':
                 if (!Validator::isEmail($value)) {
                     $this->invalidValue($constraint);
@@ -284,6 +326,8 @@ final class RgxpValidator extends ConstraintValidator
     /**
      * Create an invalid argument exception with translated error message.
      *
+     * @param Rgxp $constraint The rgxp constraint.
+     *
      * @return void
      *
      * @throws InvalidArgumentException With the translated error message.
@@ -295,8 +339,16 @@ final class RgxpValidator extends ConstraintValidator
         );
     }
 
-    private function translateError(string $key): string
+    /**
+     * Translate the error for the given key.
+     *
+     * @param string $key        The error message key.
+     * @param array  $parameters The parameters passed to the translator.
+     *
+     * @return string
+     */
+    private function translateError(string $key, array $parameters = []): string
     {
-        return $this->translator->trans('ERR.' . $key, [], 'contao_default');
+        return $this->translator->trans('ERR.' . $key, $parameters, 'contao_default');
     }
 }

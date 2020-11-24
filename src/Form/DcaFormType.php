@@ -34,6 +34,8 @@ class DcaFormType extends AbstractType
     private $dcaManager;
 
     /**
+     * The widget type builder.
+     *
      * @var WidgetTypeBuilder
      */
     private $typeBuilder;
@@ -86,8 +88,10 @@ class DcaFormType extends AbstractType
     }
 
     /**
-     * @param Definition $definition
-     * @param array      $options
+     * Get the fields configurations.
+     *
+     * @param Definition $definition The given definition.
+     * @param array      $options    The given options.
      *
      * @return array
      */

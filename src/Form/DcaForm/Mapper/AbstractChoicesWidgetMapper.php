@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper;
 
+use Assert\AssertionFailedException;
 use Contao\CoreBundle\Framework\ContaoFrameworkInterface;
 use Netzmacht\Contao\Toolkit\Callback\Invoker as CallbackInvoker;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
@@ -23,6 +24,9 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use function array_flip;
 use function is_array;
 
+/**
+ * Class AbstractChoicesWidgetMapper is a base class for widgets being mapped to the symfony form ChoiceType
+ */
 abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
 {
     /**
@@ -67,10 +71,13 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
      * @param DcaManager               $dcaManager      Data container manager.
      * @param CallbackInvoker          $callbackInvoker Callback invoker.
      *
-     * @throws \Assert\AssertionFailedException
+     * @throws AssertionFailedException When type class or field type is not given.
      */
-    public function __construct(ContaoFrameworkInterface $framework, DcaManager $dcaManager, CallbackInvoker $callbackInvoker)
-    {
+    public function __construct(
+        ContaoFrameworkInterface $framework,
+        DcaManager $dcaManager,
+        CallbackInvoker $callbackInvoker
+    ) {
         parent::__construct($framework);
 
         $this->options['maxlength'] = false;
@@ -81,6 +88,9 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
         $this->callbackInvoker = $callbackInvoker;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getOptions(
         string $name,
         array $config,
@@ -96,12 +106,14 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
             $next
         );
 
-        $options['multiple']    = $this->multiple === null ? (bool) ($config['eval']['multiple'] ?? false) : $this->multiple;
+        $options['multiple']    = $this->multiple === null
+            ? (bool) ($config['eval']['multiple'] ?? false)
+            : $this->multiple;
         $options['expanded']    = $this->expanded;
         $options['placeholder'] = false;
 
         if (!empty($config['eval']['includeBlankOption'])) {
-            $options['placeholder'] = $config['eval']['blankOptionLabel'] ?? '-';
+            $options['placeholder'] = ($config['eval']['blankOptionLabel'] ?? '-');
         }
 
         $options = $this->parseOptionsConfig($name, $options, $config, $definition);

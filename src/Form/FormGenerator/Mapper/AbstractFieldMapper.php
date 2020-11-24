@@ -105,6 +105,9 @@ abstract class AbstractFieldMapper implements FormFieldMapper
 
     /**
      * {@inheritDoc}
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function getOptions(FormFieldModel $model, FieldTypeBuilder $typeBuilder, callable $next): array
     {

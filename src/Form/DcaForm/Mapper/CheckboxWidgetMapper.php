@@ -20,12 +20,28 @@ use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * Class CheckboxWidgetMapper maps the checkbox widget to the CheckboxType
+ */
 final class CheckboxWidgetMapper extends AbstractWidgetMapper
 {
+    /**
+     * The type class.
+     *
+     * @var string
+     */
     protected $widgetType = 'checkbox';
 
+    /**
+     * The field type.
+     *
+     * @var string
+     */
     protected $typeClass = CheckboxType::class;
 
+    /**
+     * {@inheritDoc}
+     */
     public function supports(string $name, array $config): bool
     {
         if (! parent::supports($name, $config)) {
@@ -35,6 +51,9 @@ final class CheckboxWidgetMapper extends AbstractWidgetMapper
         return empty($config['options']);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getOptions(
         string $name,
         array $config,
@@ -55,6 +74,9 @@ final class CheckboxWidgetMapper extends AbstractWidgetMapper
         return $options;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function configure(FormBuilderInterface $formType, array $config, Definition $definition): void
     {
         parent::configure($formType, $config, $definition);

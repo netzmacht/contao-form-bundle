@@ -48,7 +48,7 @@ class WidgetTypeBuilder
      * @param callable             $next       Callback to get the next form field model.
      * @param FormBuilderInterface $builder    Form builder.
      *
-     * @return null
+     * @return void
      */
     public function build(
         string $name,

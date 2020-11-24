@@ -84,7 +84,8 @@ abstract class AbstractWidgetMapper implements WidgetMapper
      * Constructor.
      *
      * @param ContaoFrameworkInterface $framework Contao framework.
-     * @throws AssertionFailedException When type class or field type is not givvn.
+     *
+     * @throws AssertionFailedException When type class or field type is not given.
      */
     public function __construct(ContaoFrameworkInterface $framework)
     {
@@ -116,6 +117,9 @@ abstract class AbstractWidgetMapper implements WidgetMapper
 
     /**
      * {@inheritDoc}
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function getOptions(
         string $name,
@@ -126,19 +130,19 @@ abstract class AbstractWidgetMapper implements WidgetMapper
     ): array {
         $options = [
             'attr'   => $this->getAttributes($config),
-            'help'   => $config['label'][1] ?? null,
+            'help'   => ($config['label'][1] ?? null),
             'widget' => [
-                'class'    => $config['eval']['class'] ?? null,
-                'be_class' => $config['eval']['tl_class'] ?? null,
-                'fe_class' => $config['eval']['fe_class'] ?? null,
+                'class'    => ($config['eval']['class'] ?? null),
+                'be_class' => ($config['eval']['tl_class'] ?? null),
+                'fe_class' => ($config['eval']['fe_class'] ?? null),
             ],
         ];
 
         if ($this->options['label']) {
-            $options['label'] = $config['label'][0] ?? $name;
+            $options['label'] = ($config['label'][0] ?? $name);
         }
 
-        $required = (bool) ($config['eval']['mandatory'] ?? false);
+        $required            = (bool) ($config['eval']['mandatory'] ?? false);
         $options['required'] = $required;
         if ($this->options['mandatory'] && $required) {
             $options['constraints'][] = new Required();
@@ -150,7 +154,7 @@ abstract class AbstractWidgetMapper implements WidgetMapper
         }
 
         if ($this->options['maxlength'] && isset($config['eval']['maxlength'])) {
-            $options['attr']['maxlength'] = $config['eval']['maxlength'] ;
+            $options['attr']['maxlength'] = $config['eval']['maxlength'];
             $options['constraints'][]     = new Length(['max' => (int) $config['eval']['maxlength']]);
         }
 
@@ -158,20 +162,12 @@ abstract class AbstractWidgetMapper implements WidgetMapper
             $options['empty_data'] = empty($config['eval']['nullIfEmpty']) ? '' : null;
         }
 
-        $this->framework->initialize();
-        $widget = null;
-        if (isset($GLOBALS['BE_FFL'][$config['inputType']])) {
-            $widgetClass = $GLOBALS['BE_FFL'][$config['inputType']];
-            $attributes  = $widgetClass::getAttributesFromDca($config, $name, null, $name, $definition->getName());
-            $widget      = new $widgetClass($attributes);
-        }
-
         if ($this->options['rgxp'] && isset($config['eval']['rgxp'])) {
             $options['constraints'][] = new Rgxp(
                 [
                     'rgxp'   => $config['eval']['rgxp'],
-                    'label'  => StringUtil::decodeEntities($config['label'][0] ?? $name),
-                    'widget' => $widget,
+                    'label'  => StringUtil::decodeEntities(($config['label'][0] ?? $name)),
+                    'widget' => $this->createWidget($name, $config, $definition),
                 ]
             );
         }
@@ -179,6 +175,9 @@ abstract class AbstractWidgetMapper implements WidgetMapper
         return $options;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function configure(FormBuilderInterface $formType, array $config, Definition $definition): void
     {
         $formType->addModelTransformer(
@@ -201,6 +200,13 @@ abstract class AbstractWidgetMapper implements WidgetMapper
         );
     }
 
+    /**
+     * Get the attributes based on the attributes configuration of the mapper.
+     *
+     * @param array $config The widget configuration.
+     *
+     * @return array
+     */
     protected function getAttributes(array $config): array
     {
         $attributes = [];
@@ -220,5 +226,30 @@ abstract class AbstractWidgetMapper implements WidgetMapper
         }
 
         return $attributes;
+    }
+
+    /**
+     * Create the contao widget.
+     *
+     * @param string     $name       The field name.
+     * @param array      $config     The configuration.
+     * @param Definition $definition The data container definition.
+     *
+     * @return Widget|null
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
+     */
+    private function createWidget(string $name, array $config, Definition $definition): ?Widget
+    {
+        $this->framework->initialize();
+
+        if (!isset($GLOBALS['BE_FFL'][$config['inputType']])) {
+            return null;
+        }
+
+        $widgetClass = $GLOBALS['BE_FFL'][$config['inputType']];
+        $attributes  = $widgetClass::getAttributesFromDca($config, $name, null, $name, $definition->getName());
+
+        return new $widgetClass($attributes);
     }
 }
