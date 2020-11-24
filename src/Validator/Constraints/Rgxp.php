@@ -61,7 +61,7 @@ final class Rgxp extends Constraint
      */
     public function getRequiredOptions(): array
     {
-        return array_merge(['rgpx'], parent::getRequiredOptions());
+        return array_merge(['rgxp'], parent::getRequiredOptions());
     }
 
     /**
