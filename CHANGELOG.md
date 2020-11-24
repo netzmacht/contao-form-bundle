@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+### [1.3.0] - 2020-11-24
+
 ### Added
 
  - Add experimental support for dca form mapping (checkbox, password, radio, select, textarea, text widgets)
@@ -73,7 +75,8 @@
  - Fix choices group for multiple select fields
 
 [Unreleased]: https://github.com/netzmacht/contao-form-bundle/compare/master..develop
-[1.2.0]: https://github.com/netzmacht/contao-form-bundle/compare/1.2.0...1.2.1
+[1.3.0]: https://github.com/netzmacht/contao-form-bundle/compare/1.2.1...1.3.0
+[1.2.1]: https://github.com/netzmacht/contao-form-bundle/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/netzmacht/contao-form-bundle/compare/1.1.1...1.2.0
 [1.1.1]: https://github.com/netzmacht/contao-form-bundle/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/netzmacht/contao-form-bundle/compare/1.0.2...1.1.0
