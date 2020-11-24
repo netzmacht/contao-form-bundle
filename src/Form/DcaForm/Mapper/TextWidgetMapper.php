@@ -12,9 +12,8 @@
 
 declare(strict_types=1);
 
-namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
+namespace Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper;
 
-use Contao\FormFieldModel;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -24,16 +23,16 @@ use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 
 /**
- * Class TextFieldMapper
+ * Class TextWidgetMapper maps the text widget to the TextType
  */
-class TextFieldMapper extends AbstractFieldMapper
+final class TextWidgetMapper extends AbstractWidgetMapper
 {
     /**
-     * The form field type.
+     * The type class.
      *
      * @var string
      */
-    protected $fieldType = 'text';
+    protected $widgetType = 'text';
 
     /**
      * The type class.
@@ -53,18 +52,19 @@ class TextFieldMapper extends AbstractFieldMapper
         'time'  => TimeType::class,
         'datim' => DateTimeType::class,
         'email' => EmailType::class,
-        'url'   => UrlType::class
+        'url'   => UrlType::class,
     ];
 
     /**
      * {@inheritDoc}
      */
-    public function getTypeClass(FormFieldModel $model): string
+    public function getTypeClass(string $name, array $config): string
     {
-        if (isset(static::$mapping[$model->rgxp])) {
-            return static::$mapping[$model->rgxp];
+        $rgxp = ($config['eval']['rgxp'] ?? null);
+        if (isset(static::$mapping[$rgxp])) {
+            return static::$mapping[$rgxp];
         }
 
-        return parent::getTypeClass($model);
+        return parent::getTypeClass($name, $config);
     }
 }

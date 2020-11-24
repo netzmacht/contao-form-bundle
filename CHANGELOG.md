@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### [1.3.0] - 2020-11-24
+
+### Added
+
+ - Add experimental support for dca form mapping (checkbox, password, radio, select, textarea, text widgets)
+ - Provide an `Rgxp` constraint based on symfony constraints
+ - Recognize `rgxp` for form field model (Custom `rgxp` not supported)
+
 ### [1.2.1] - 2020-11-09
 
 ### Removed
@@ -28,6 +36,7 @@
 ### Fixed
 
  - Remove dependency of contao.csrf.token_manager which isn't available in Contao 4.4
+ - Force `clear:both` for button rows
  
 ## [1.1.0] - 2019-07-27
 
@@ -66,7 +75,8 @@
  - Fix choices group for multiple select fields
 
 [Unreleased]: https://github.com/netzmacht/contao-form-bundle/compare/master..develop
-[1.2.0]: https://github.com/netzmacht/contao-form-bundle/compare/1.2.0...1.2.1
+[1.3.0]: https://github.com/netzmacht/contao-form-bundle/compare/1.2.1...1.3.0
+[1.2.1]: https://github.com/netzmacht/contao-form-bundle/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/netzmacht/contao-form-bundle/compare/1.1.1...1.2.0
 [1.1.1]: https://github.com/netzmacht/contao-form-bundle/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/netzmacht/contao-form-bundle/compare/1.0.2...1.1.0

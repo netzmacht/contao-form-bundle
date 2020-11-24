@@ -5,8 +5,8 @@
  *
  * @package    contao-form-bundle
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0 https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
+ * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
+ * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
  * @filesource
  */
 
@@ -32,6 +32,13 @@ final class NetzmachtContaoFormBundle extends Bundle
             new AddTaggedServicesAsArgumentPass(
                 'netzmacht.contao_form.form_generator.type_builder',
                 'netzmacht.contao_form.form_generator.mapper'
+            )
+        );
+
+        $container->addCompilerPass(
+            new AddTaggedServicesAsArgumentPass(
+                'netzmacht.contao_form.dca_form.type_builder',
+                'netzmacht.contao_form.dca_form.mapper'
             )
         );
     }

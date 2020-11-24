@@ -1,0 +1,75 @@
+services:
+  _defaults:
+    autoconfigure: false
+    autowire: false
+    public: false
+
+  netzmacht.contao_form.form_type.dca_form:
+    class: Netzmacht\ContaoFormBundle\Form\DcaFormType
+    arguments:
+      - '@netzmacht.contao_toolkit.dca.manager'
+      - '@netzmacht.contao_form.dca_form.type_builder'
+    tags:
+      - { name: form.type }
+
+  Netzmacht\ContaoFormBundle\Form\DcaFormType:
+    alias: netzmacht.contao_form.form_type.dca_form
+
+  netzmacht.contao_form.dca_form.type_builder:
+    class: Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetTypeBuilder
+    arguments:
+      - []
+
+  netzmacht.contao_form.dca_form.mapper.checkbox:
+    class: Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper\CheckboxWidgetMapper
+    arguments:
+      - '@contao.framework'
+    tags:
+      - { name: netzmacht.contao_form.dca_form.mapper }
+
+  netzmacht.contao_form.dca_form.mapper.multiple_checkboxes:
+    class: Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper\MultipleCheckboxesWizard
+    arguments:
+      - '@contao.framework'
+      - '@netzmacht.contao_toolkit.callback_invoker'
+    tags:
+      - { name: netzmacht.contao_form.dca_form.mapper }
+
+
+  netzmacht.contao_form.dca_form.mapper.password:
+    class: Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper\PasswordWidgetMapper
+    arguments:
+      - '@contao.framework'
+      - '@translator'
+    tags:
+      - { name: netzmacht.contao_form.dca_form.mapper }
+
+  netzmacht.contao_form.dca_form.mapper.radio:
+    class: Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper\RadioWidgetMapper
+    arguments:
+      - '@contao.framework'
+      - '@netzmacht.contao_toolkit.callback_invoker'
+    tags:
+      - { name: netzmacht.contao_form.dca_form.mapper }
+
+  netzmacht.contao_form.dca_form.mapper.select:
+    class: Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper\SelectWidgetMapper
+    arguments:
+      - '@contao.framework'
+      - '@netzmacht.contao_toolkit.callback_invoker'
+    tags:
+      - { name: netzmacht.contao_form.dca_form.mapper }
+
+  netzmacht.contao_form.dca_form.mapper.text:
+    class: Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper\TextWidgetMapper
+    arguments:
+      - '@contao.framework'
+    tags:
+      - { name: netzmacht.contao_form.dca_form.mapper }
+
+  netzmacht.contao_form.dca_form.mapper.textarea:
+    class: Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper\TextareaWidgetMapper
+    arguments:
+      - '@contao.framework'
+    tags:
+      - { name: netzmacht.contao_form.dca_form.mapper }

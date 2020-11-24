@@ -30,6 +30,32 @@ $form = $formFactory->create(Netzmacht\ContaoFormBundle\Form\FormGeneratorType::
 
 ```
 
+### DCA forms
+
+If you want to create forms based on the data container arrays - you can do it. The extension ships a DcaFormType.
+
+**Usage**
+
+```php
+// Symfony form generator, provided as service form.factory
+assert($dc instanceof Contao\DataContainer);
+$form = $formFactory->create(
+    Netzmacht\ContaoFormBundle\Form\DcaFormType::class, 
+    null, 
+    ['dataContainer' => 'tl_content', 'fields' => ['text'], 'driver' => $dc]
+);
+```
+
+**Warning** The support for dca forms is experimental and might have some unforseen issues. It's highly recommended to 
+pass the data container driver as callbacks might need them. Following types are supported so far:
+
+ - `checkbox`
+ - `password`
+ - `radio`
+ - `select`
+ - `text`
+ - `textarea`
+
 ### Backend form theme
 
 This bundle also provides a form theme for the Contao backend. You can enable it in your twig template where the form is
@@ -55,8 +81,6 @@ class provided as service `netzmacht.contao_form.form_generator.upload_handler`.
 Roadmap
 -------
 
- - Provide a form theme for Contao backend and frontend standards.
- - Provide DcaType for data container based forms
  - Support popular 3rd party form fields
  
 Known limitations

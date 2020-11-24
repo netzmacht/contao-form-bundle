@@ -5,8 +5,8 @@
  *
  * @package    contao-form-bundle
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2019 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0 https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
+ * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
+ * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
  * @filesource
  */
 

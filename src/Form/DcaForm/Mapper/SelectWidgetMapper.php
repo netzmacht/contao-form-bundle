@@ -12,24 +12,24 @@
 
 declare(strict_types=1);
 
-namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
+namespace Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper;
 
 /**
- * Class CheckboxFieldMapper
+ * Class SelectWidgetMapper maps the select widget to the ChoicesType
  */
-class CheckboxFieldMapper extends AbstractChoicesFieldMapper
+final class SelectWidgetMapper extends AbstractChoicesWidgetMapper
 {
     /**
-     * The form field type.
+     * The type class.
      *
      * @var string
      */
-    protected $fieldType = 'checkbox';
+    protected $widgetType = 'select';
 
     /**
-     * Multiple. If null, the value is read from the model.
+     * Display the choices expanded.
      *
-     * @var bool|null
+     * @var bool
      */
-    protected $multiple = true;
+    protected $expanded = false;
 }
