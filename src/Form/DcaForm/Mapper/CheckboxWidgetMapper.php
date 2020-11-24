@@ -48,7 +48,7 @@ final class CheckboxWidgetMapper extends AbstractWidgetMapper
             return false;
         }
 
-        return empty($config['options']);
+        return empty($config['eval']['multiple']);
     }
 
     /**

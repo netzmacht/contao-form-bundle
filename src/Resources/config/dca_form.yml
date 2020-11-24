@@ -27,6 +27,15 @@ services:
     tags:
       - { name: netzmacht.contao_form.dca_form.mapper }
 
+  netzmacht.contao_form.dca_form.mapper.multiple_checkboxes:
+    class: Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper\MultipleCheckboxesWizard
+    arguments:
+      - '@contao.framework'
+      - '@netzmacht.contao_toolkit.callback_invoker'
+    tags:
+      - { name: netzmacht.contao_form.dca_form.mapper }
+
+
   netzmacht.contao_form.dca_form.mapper.password:
     class: Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper\PasswordWidgetMapper
     arguments:
