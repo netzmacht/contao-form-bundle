@@ -30,7 +30,7 @@
         "symfony/options-resolver": "~3.4 || ^4.0 || ^5.0",
         "symfony/security-csrf": "~3.4 || ^4.0 || ^5.0",
         "symfony/translation": "~3.4 || ^4.0",
-        "symfony/validator": "~3.4 || ^4.0",
+        "symfony/validator": "~3.4 || ^4.0 || ^5.0",
         "twig/twig": "^2.10",
         "webmozart/path-util": "^2.3"
     },
