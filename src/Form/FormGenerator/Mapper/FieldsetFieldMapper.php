@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Netzmacht Contao Form Bundle.
- *
- * @package    contao-form-bundle
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
@@ -20,14 +10,8 @@ use Contao\StringUtil;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FormFieldMapper;
 
-/**
- * Class FieldsetFieldMapper
- */
 class FieldsetFieldMapper implements FormFieldMapper
 {
-    /**
-     * {@inheritDoc}
-     */
     public function supports(FormFieldModel $model): bool
     {
         if ($model->type === 'fieldsetStart') {
@@ -35,20 +19,14 @@ class FieldsetFieldMapper implements FormFieldMapper
         }
 
         // Fallback for Contao 4.4
-        return ($model->type === 'fieldset' && $model->fsType === 'fsStart');
+        return $model->type === 'fieldset' && $model->fsType === 'fsStart';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getName(FormFieldModel $model): ?string
     {
         return 'fieldset_' . $model->id;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTypeClass(FormFieldModel $model): string
     {
         return FieldsetType::class;
@@ -57,41 +35,39 @@ class FieldsetFieldMapper implements FormFieldMapper
     /**
      * {@inheritDoc}
      */
-    public function getOptions(FormFieldModel $model, FieldTypeBuilder $typeBuilder, callable $next): array
+    public function getOptions(FormFieldModel $model, FieldTypeBuilder $fieldTypeBuilder, callable $next): array
     {
         $options = [
             'label'  => false,
             'legend' => StringUtil::decodeEntities($model->label),
             'attr'   => [],
-            'fields' => []
+            'fields' => [],
         ];
 
         if ($model->class) {
             $options['attr']['class'] = $model->class;
         }
 
-        $condition = function (FormFieldModel $model) {
+        $condition = static function (FormFieldModel $model): bool {
             if ($model->type === 'fieldsetStop') {
                 return false;
             }
 
-            if ($model->type === 'fieldset' && $model->fsType === 'fsStop') {
-                return false;
-            }
-
-            return true;
+            return $model->type !== 'fieldset' || $model->fsType !== 'fsStop';
         };
 
         while (($child = $next($condition)) !== null) {
-            $field = $typeBuilder->build($child, $next);
+            $field = $fieldTypeBuilder->build($child, $next);
 
-            if ($field) {
-                $options['fields'][] = [
-                    'name' => $field['name'],
-                    'type' => $field['type'],
-                    'attr' => $field['options'],
-                ];
+            if (! $field) {
+                continue;
             }
+
+            $options['fields'][] = [
+                'name' => $field['name'],
+                'type' => $field['type'],
+                'attr' => $field['options'],
+            ];
         }
 
         return $options;

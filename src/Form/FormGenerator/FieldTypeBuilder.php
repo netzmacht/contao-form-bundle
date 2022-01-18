@@ -1,24 +1,11 @@
 <?php
 
-/**
- * Netzmacht Contao Form Bundle.
- *
- * @package    contao-form-bundle
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
- * @filesource
- */
+declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\FormGenerator;
 
 use Contao\FormFieldModel;
 
-/**
- * Class FieldBuilder
- *
- * @package Netzmacht\ContaoFormBundle\Form\FormGenerator
- */
 class FieldTypeBuilder
 {
     /**
@@ -29,8 +16,6 @@ class FieldTypeBuilder
     private $mappers;
 
     /**
-     * FieldTypeBuilder constructor.
-     *
      * @param FormFieldMapper[] $mappers Form field mappers.
      */
     public function __construct(array $mappers)
@@ -44,7 +29,7 @@ class FieldTypeBuilder
      * @param FormFieldModel $fieldModel The field model.
      * @param callable       $next       Callback to get the next form field model.
      *
-     * @return array|null
+     * @return array<string,mixed>|null
      */
     public function build(FormFieldModel $fieldModel, $next): ?array
     {
@@ -53,7 +38,7 @@ class FieldTypeBuilder
                 return [
                     'name'    => $mapper->getName($fieldModel),
                     'type'    => $mapper->getTypeClass($fieldModel),
-                    'options' => $mapper->getOptions($fieldModel, $this, $next)
+                    'options' => $mapper->getOptions($fieldModel, $this, $next),
                 ];
             }
         }

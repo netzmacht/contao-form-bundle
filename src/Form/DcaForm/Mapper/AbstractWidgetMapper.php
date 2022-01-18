@@ -1,42 +1,30 @@
 <?php
 
-/**
- * Netzmacht Contao Form Bundle.
- *
- * @package    contao-form-bundle
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper;
 
 use Assert\Assert;
 use Assert\AssertionFailedException;
-use Contao\CoreBundle\Framework\ContaoFrameworkInterface;
+use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\StringUtil;
 use Contao\Widget;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\Context;
-use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetTypeBuilder;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetMapper;
+use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetTypeBuilder;
 use Netzmacht\ContaoFormBundle\Validator\Constraints\Rgxp;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Required;
 
-/**
- * Class AbstractFieldMapper
- */
 abstract class AbstractWidgetMapper implements WidgetMapper
 {
     /**
      * The type class.
      *
      * @var string
+     * @psalm-suppress PropertyNotSetInConstructor
      */
     protected $typeClass;
 
@@ -44,13 +32,14 @@ abstract class AbstractWidgetMapper implements WidgetMapper
      * The field type.
      *
      * @var string
+     * @psalm-suppress PropertyNotSetInConstructor
      */
     protected $widgetType;
 
     /**
      * Attributes which should be handled.
      *
-     * @var array
+     * @var array<string,bool|string>
      */
     protected $attributes = [
         'accesskey'   => true,
@@ -62,7 +51,7 @@ abstract class AbstractWidgetMapper implements WidgetMapper
     /**
      * Optional mapping.
      *
-     * @var bool[]
+     * @var array<string,bool>
      */
     protected $options = [
         'label'     => true,
@@ -76,20 +65,20 @@ abstract class AbstractWidgetMapper implements WidgetMapper
     /**
      * Contao framework.
      *
-     * @var ContaoFrameworkInterface
+     * @var ContaoFramework
      */
     private $framework;
 
     /**
-     * Constructor.
-     *
-     * @param ContaoFrameworkInterface $framework Contao framework.
+     * @param ContaoFramework $framework Contao framework.
      *
      * @throws AssertionFailedException When type class or field type is not given.
      */
-    public function __construct(ContaoFrameworkInterface $framework)
+    public function __construct(ContaoFramework $framework)
     {
+        /** @psalm-suppress UninitializedProperty */
         Assert::that($this->typeClass)->string()->notBlank();
+        /** @psalm-suppress UninitializedProperty */
         Assert::that($this->widgetType)->string()->notBlank();
 
         $this->framework = $framework;
@@ -98,7 +87,7 @@ abstract class AbstractWidgetMapper implements WidgetMapper
     /**
      * {@inheritDoc}
      */
-    public function supports(string $name, array $config) : bool
+    public function supports(string $name, array $config): bool
     {
         if (! isset($config['inputType'])) {
             return false;
@@ -182,9 +171,19 @@ abstract class AbstractWidgetMapper implements WidgetMapper
     {
         $formType->addModelTransformer(
             new CallbackTransformer(
+                /**
+                 * @param mixed $value
+                 *
+                 * @return mixed
+                 */
                 static function ($value) {
                     return $value;
                 },
+                /**
+                 * @param mixed $value
+                 *
+                 * @return mixed
+                 */
                 function ($value) use ($config) {
                     if ($value === null) {
                         $this->framework->initialize();
@@ -203,9 +202,9 @@ abstract class AbstractWidgetMapper implements WidgetMapper
     /**
      * Get the attributes based on the attributes configuration of the mapper.
      *
-     * @param array $config The widget configuration.
+     * @param array<string,mixed> $config The widget configuration.
      *
-     * @return array
+     * @return array<string,mixed>
      */
     protected function getAttributes(array $config): array
     {
@@ -217,12 +216,14 @@ abstract class AbstractWidgetMapper implements WidgetMapper
             }
 
             if ($attribute === true) {
-                $property = $attribute;
+                $attribute = $property;
             }
 
-            if (isset($config['eval'][$property])) {
-                $attributes[$attribute] = $config['eval'][$property];
+            if (! isset($config['eval'][$property])) {
+                continue;
             }
+
+            $attributes[$attribute] = $config['eval'][$property];
         }
 
         return $attributes;
@@ -231,11 +232,9 @@ abstract class AbstractWidgetMapper implements WidgetMapper
     /**
      * Create the contao widget.
      *
-     * @param string  $name    The field name.
-     * @param array   $config  The configuration.
-     * @param Context $context The Data container context.
-     *
-     * @return Widget|null
+     * @param string              $name    The field name.
+     * @param array<string,mixed> $config  The configuration.
+     * @param Context             $context The Data container context.
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
@@ -243,10 +242,11 @@ abstract class AbstractWidgetMapper implements WidgetMapper
     {
         $this->framework->initialize();
 
-        if (!isset($GLOBALS['BE_FFL'][$config['inputType']])) {
+        if (! isset($GLOBALS['BE_FFL'][$config['inputType']])) {
             return null;
         }
 
+        /** @var class-string<Widget> $widgetClass */
         $widgetClass = $GLOBALS['BE_FFL'][$config['inputType']];
         $attributes  = $widgetClass::getAttributesFromDca(
             $config,
@@ -256,6 +256,7 @@ abstract class AbstractWidgetMapper implements WidgetMapper
             $context->getDefinition()->getName()
         );
 
+        /** @psalm-suppress UnsafeInstantiation */
         return new $widgetClass($attributes);
     }
 }

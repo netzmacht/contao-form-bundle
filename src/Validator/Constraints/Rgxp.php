@@ -1,22 +1,14 @@
 <?php
 
-/**
- * Netzmacht Contao Form Bundle.
- *
- * @package    contao-form-bundle
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
- * @filesource
- */
-
-
 declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Validator\Constraints;
 
 use Contao\Widget;
 use Symfony\Component\Validator\Constraint;
+
+use function array_merge;
+use function is_array;
 
 /**
  * Class Rgxp is a symfony validator constraint for the Contao rgxp setting
@@ -46,14 +38,21 @@ final class Rgxp extends Constraint
 
     /**
      * {@inheritDoc}
+     *
+     * @psalm-param mixed $options
      */
     public function __construct($options = null)
     {
         parent::__construct($options);
 
-        if (!$this->label && $this->widget instanceof Widget) {
-            $this->label = $this->widget->label;
+        $this->groups = [];
+        $this->rgxp   = is_array($options) ? ($options['rgxp'] ?? '') : '';
+
+        if ($this->label || ! ($this->widget instanceof Widget)) {
+            return;
         }
+
+        $this->label = $this->widget->label;
     }
 
     /**
@@ -66,8 +65,6 @@ final class Rgxp extends Constraint
 
     /**
      * Get the rgxp.
-     *
-     * @return string
      */
     public function getRgxp(): string
     {
@@ -76,8 +73,6 @@ final class Rgxp extends Constraint
 
     /**
      * Get the label if defined.
-     *
-     * @return string
      */
     public function getLabel(): ?string
     {
@@ -86,8 +81,6 @@ final class Rgxp extends Constraint
 
     /**
      * Get the widget is defined.
-     *
-     * @return Widget|null
      */
     public function getWidget(): ?Widget
     {

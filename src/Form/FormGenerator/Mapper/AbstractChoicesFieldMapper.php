@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Netzmacht Contao Form Bundle.
- *
- * @package    contao-form-bundle
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
@@ -19,9 +9,8 @@ use Contao\StringUtil;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-/**
- * Class AbstractChoicesFieldMapper
- */
+use function is_array;
+
 abstract class AbstractChoicesFieldMapper extends AbstractFieldMapper
 {
     /**
@@ -60,10 +49,10 @@ abstract class AbstractChoicesFieldMapper extends AbstractFieldMapper
     /**
      * {@inheritDoc}
      */
-    public function getOptions(FormFieldModel $model, FieldTypeBuilder $typeBuilder, callable $next): array
+    public function getOptions(FormFieldModel $model, FieldTypeBuilder $fieldTypeBuilder, callable $next): array
     {
-        $options                = parent::getOptions($model, $typeBuilder, $next);
-        $options['multiple']    = $this->multiple === null ? (bool) $model->multiple : $this->multiple;
+        $options                = parent::getOptions($model, $fieldTypeBuilder, $next);
+        $options['multiple']    = $this->multiple ?? (bool) $model->multiple;
         $options['expanded']    = $this->expanded;
         $options['placeholder'] = false;
 
@@ -75,17 +64,17 @@ abstract class AbstractChoicesFieldMapper extends AbstractFieldMapper
     /**
      * Build the choices.
      *
-     * @param array $options Form type options.
-     * @param mixed $values  Given options.
+     * @param array<string,mixed> $options Form type options.
+     * @param mixed               $values  Given options.
      *
-     * @return array
+     * @return array<string,mixed>
      */
     private function parseOptionsConfig(array $options, $values): array
     {
         $values             = StringUtil::deserialize($values);
         $options['choices'] = [];
 
-        if (empty($values) || !is_array($values)) {
+        if (empty($values) || ! is_array($values)) {
             return $options;
         }
 
@@ -103,12 +92,14 @@ abstract class AbstractChoicesFieldMapper extends AbstractFieldMapper
                 $options['choices'][$option['label']] = $option['value'];
             }
 
-            if ($option['default']) {
-                if ($options['multiple']) {
-                    $options['data'][] = $option['value'];
-                } else {
-                    $options['data'] = $option['value'];
-                }
+            if (! $option['default']) {
+                continue;
+            }
+
+            if ($options['multiple']) {
+                $options['data'][] = $option['value'];
+            } else {
+                $options['data'] = $option['value'];
             }
         }
 

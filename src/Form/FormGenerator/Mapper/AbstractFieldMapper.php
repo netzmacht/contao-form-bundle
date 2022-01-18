@@ -1,20 +1,11 @@
 <?php
 
-/**
- * Netzmacht Contao Form Bundle.
- *
- * @package    contao-form-bundle
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
 
-use Assert\Assertion;
+use Assert\Assert;
+use Assert\AssertionFailedException;
 use Contao\FormFieldModel;
 use Contao\StringUtil;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
@@ -23,15 +14,13 @@ use Netzmacht\ContaoFormBundle\Validator\Constraints\Rgxp;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Required;
 
-/**
- * Class AbstractFieldMapper
- */
 abstract class AbstractFieldMapper implements FormFieldMapper
 {
     /**
      * The type class.
      *
      * @var string
+     * @psalm-suppress PropertyNotSetInConstructor
      */
     protected $typeClass;
 
@@ -39,13 +28,14 @@ abstract class AbstractFieldMapper implements FormFieldMapper
      * The field type.
      *
      * @var string
+     * @psalm-suppress PropertyNotSetInConstructor
      */
     protected $fieldType;
 
     /**
      * Attributes which should be handled.
      *
-     * @var array
+     * @var array<string,bool|string>
      */
     protected $attributes = [
         'accesskey'   => true,
@@ -57,7 +47,7 @@ abstract class AbstractFieldMapper implements FormFieldMapper
     /**
      * Optional mapping.
      *
-     * @var bool[]
+     * @var array<string,bool|string>
      */
     protected $options = [
         'label'     => true,
@@ -69,35 +59,26 @@ abstract class AbstractFieldMapper implements FormFieldMapper
     ];
 
     /**
-     * Constructor.
-     *
-     * @throws \Assert\AssertionFailedException When type class or field type is not givvn.
+     * @throws AssertionFailedException When type class or field type is not givvn.
      */
     public function __construct()
     {
-        Assertion::string($this->typeClass);
-        Assertion::string($this->fieldType);
+        /** @psalm-suppress UninitializedProperty */
+        Assert::that($this->typeClass)->string()->notBlank();
+        /** @psalm-suppress UninitializedProperty */
+        Assert::that($this->fieldType)->string()->notBlank();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function supports(FormFieldModel $model): bool
     {
         return $model->type === $this->fieldType;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getName(FormFieldModel $model): ?string
     {
         return $model->name;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getTypeClass(FormFieldModel $model): string
     {
         return $this->typeClass;
@@ -109,7 +90,7 @@ abstract class AbstractFieldMapper implements FormFieldMapper
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function getOptions(FormFieldModel $model, FieldTypeBuilder $typeBuilder, callable $next): array
+    public function getOptions(FormFieldModel $model, FieldTypeBuilder $fieldTypeBuilder, callable $next): array
     {
         $options = [
             'attr' => $this->getAttributes($model),
@@ -155,7 +136,7 @@ abstract class AbstractFieldMapper implements FormFieldMapper
      *
      * @param FormFieldModel $formFieldModel The form field model.
      *
-     * @return array
+     * @return array<string,mixed>
      */
     private function getAttributes(FormFieldModel $formFieldModel): array
     {
@@ -167,12 +148,14 @@ abstract class AbstractFieldMapper implements FormFieldMapper
             }
 
             if ($attribute === true) {
-                $property = $attribute;
+                $attribute = $property;
             }
 
-            if ($formFieldModel->$property) {
-                $attributes[$attribute] = $formFieldModel->$property;
+            if (! $formFieldModel->$property) {
+                continue;
             }
+
+            $attributes[$attribute] = $formFieldModel->$property;
         }
 
         return $attributes;

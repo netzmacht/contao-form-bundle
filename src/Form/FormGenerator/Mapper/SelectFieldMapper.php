@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Netzmacht Contao Form Bundle.
- *
- * @package    contao-form-bundle
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
@@ -17,9 +7,6 @@ namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
 use Contao\FormFieldModel;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
 
-/**
- * Class SelectFieldMapper
- */
 class SelectFieldMapper extends AbstractChoicesFieldMapper
 {
     /**
@@ -39,9 +26,9 @@ class SelectFieldMapper extends AbstractChoicesFieldMapper
     /**
      * {@inheritdoc}
      */
-    public function getOptions(FormFieldModel $model, FieldTypeBuilder $typeBuilder, callable $next): array
+    public function getOptions(FormFieldModel $model, FieldTypeBuilder $fieldTypeBuilder, callable $next): array
     {
-        $options = parent::getOptions($model, $typeBuilder, $next);
+        $options = parent::getOptions($model, $fieldTypeBuilder, $next);
 
         if ((bool) ($options['multiple'] ?? false) && $model->mSize > 0) {
             $options['attr']['size'] = $model->mSize;

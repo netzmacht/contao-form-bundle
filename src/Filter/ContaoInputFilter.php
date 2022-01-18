@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Netzmacht Contao Form Bundle.
- *
- * @package    contao-form-bundle
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Filter;
@@ -17,9 +7,6 @@ namespace Netzmacht\ContaoFormBundle\Filter;
 use Contao\CoreBundle\Framework\Adapter;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 
-/**
- * Class ContaoInputFilter
- */
 class ContaoInputFilter
 {
     /**
@@ -44,8 +31,6 @@ class ContaoInputFilter
     private $scopeMatcher;
 
     /**
-     * ContaoInputFilter constructor.
-     *
      * @param Adapter             $inputAdapter  The input adapter.
      * @param Adapter             $configAdapter The config adapter.
      * @param RequestScopeMatcher $scopeMatcher  Scope matcher.
@@ -69,7 +54,7 @@ class ContaoInputFilter
         $data = $this->inputAdapter->__call('preserveBasicEntities', [$data]);
         $data = $this->inputAdapter->__call('xssClean', [$data, true]);
 
-        if (!$this->scopeMatcher->isBackendRequest()) {
+        if (! $this->scopeMatcher->isBackendRequest()) {
             $data = $this->inputAdapter->__call('encodeInsertTags', [$data]);
         }
 
@@ -91,11 +76,11 @@ class ContaoInputFilter
         $data = $this->inputAdapter->__call('xssClean', [$data, true]);
         $data = $this->inputAdapter->__call('stripTags', [$data, $this->getAllowedTags($allowHtml)]);
 
-        if (!$decodeEntities) {
+        if (! $decodeEntities) {
             $data = $this->inputAdapter->__call('encodeSpecialChars', [$data]);
         }
 
-        if (!$this->scopeMatcher->isBackendRequest()) {
+        if (! $this->scopeMatcher->isBackendRequest()) {
             $data = $this->inputAdapter->__call('encodeInsertTags', [$data]);
         }
 
@@ -106,8 +91,6 @@ class ContaoInputFilter
      * Get all allowed tags as string.
      *
      * @param bool $allowHtml Allowed html.
-     *
-     * @return string
      */
     private function getAllowedTags(bool $allowHtml): string
     {

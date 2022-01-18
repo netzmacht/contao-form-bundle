@@ -1,21 +1,11 @@
 <?php
 
-/**
- * Netzmacht Contao Form Bundle.
- *
- * @package    contao-form-bundle
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper;
 
 use Assert\AssertionFailedException;
-use Contao\CoreBundle\Framework\ContaoFrameworkInterface;
+use Contao\CoreBundle\Framework\ContaoFramework;
 use Netzmacht\Contao\Toolkit\Callback\Invoker as CallbackInvoker;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\Context;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetTypeBuilder;
@@ -26,6 +16,8 @@ use function is_array;
 
 /**
  * Class AbstractChoicesWidgetMapper is a base class for widgets being mapped to the symfony form ChoiceType
+ *
+ * @psalm-suppress PropertyNotSetInConstructor
  */
 abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
 {
@@ -58,15 +50,13 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
     private $callbackInvoker;
 
     /**
-     * Constructor.
-     *
-     * @param ContaoFrameworkInterface $framework       Contao framework.
-     * @param CallbackInvoker          $callbackInvoker Callback invoker.
+     * @param ContaoFramework $framework       Contao framework.
+     * @param CallbackInvoker $callbackInvoker Callback invoker.
      *
      * @throws AssertionFailedException When type class or field type is not given.
      */
     public function __construct(
-        ContaoFrameworkInterface $framework,
+        ContaoFramework $framework,
         CallbackInvoker $callbackInvoker
     ) {
         parent::__construct($framework);
@@ -90,13 +80,11 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
     ): array {
         $options = parent::getOptions($name, $config, $context, $fieldTypeBuilder, $next);
 
-        $options['multiple']    = $this->multiple === null
-            ? (bool) ($config['eval']['multiple'] ?? false)
-            : $this->multiple;
+        $options['multiple']    = $this->multiple ?? (bool) ($config['eval']['multiple'] ?? false);
         $options['expanded']    = $this->expanded;
         $options['placeholder'] = false;
 
-        if (!empty($config['eval']['includeBlankOption'])) {
+        if (! empty($config['eval']['includeBlankOption'])) {
             $options['placeholder'] = ($config['eval']['blankOptionLabel'] ?? '-');
         }
 
@@ -108,18 +96,18 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
     /**
      * Build the choices.
      *
-     * @param string  $name    Field name.
-     * @param array   $options Form type options.
-     * @param array   $config  Widget configuration.
-     * @param Context $context Data container context.
+     * @param string              $name    Field name.
+     * @param array<string,mixed> $options Form type options.
+     * @param array<string,mixed> $config  Widget configuration.
+     * @param Context             $context Data container context.
      *
-     * @return array
+     * @return array<string,mixed>
      */
     protected function parseOptionsConfig(string $name, array $options, array $config, Context $context): array
     {
         $options['choices'] = [];
 
-        if (!empty($config['options_callback'])) {
+        if (! empty($config['options_callback'])) {
             $driver             = $context->getDriver();
             $arguments          = $driver ? [$driver] : [];
             $choices            = $this->callbackInvoker->invoke($config['options_callback'], $arguments);
@@ -128,7 +116,7 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
             return $options;
         }
 
-        if (empty($config['options']) || !is_array($config['options'])) {
+        if (empty($config['options']) || ! is_array($config['options'])) {
             return $options;
         }
 

@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Netzmacht Contao Form Bundle.
- *
- * @package    contao-form-bundle
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\Extension;
@@ -45,8 +35,6 @@ final class ContaoRequestTokenExtension extends AbstractTypeExtension
     private $requestStack;
 
     /**
-     * ContaoRequestTokenExtension constructor.
-     *
      * @param RequestScopeMatcher $requestTokenMatcher Request scope matcher.
      * @param RequestStack        $requestStack        Request stack.
      */
@@ -56,10 +44,7 @@ final class ContaoRequestTokenExtension extends AbstractTypeExtension
         $this->requestStack        = $requestStack;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getExtendedType() : string
+    public function getExtendedType(): string
     {
         return FormType::class;
     }
@@ -67,20 +52,17 @@ final class ContaoRequestTokenExtension extends AbstractTypeExtension
     /**
      * {@inheritDoc}
      */
-    public function getExtendedTypes() : array
+    public function getExtendedTypes(): array
     {
         return [FormType::class];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $checkToken = $this->isCheckRequestTokenEnabled();
 
         $resolver->setDefault('contao_request_token', $checkToken);
-        $resolver->setDefault('csrf_protection', !$checkToken);
+        $resolver->setDefault('csrf_protection', ! $checkToken);
 
         $resolver->setAllowedTypes('contao_request_token', 'bool');
     }
@@ -90,24 +72,24 @@ final class ContaoRequestTokenExtension extends AbstractTypeExtension
      */
     public function finishView(FormView $view, FormInterface $form, array $options): void
     {
-        if ($options['contao_request_token'] && !$view->parent && $options['compound']) {
-            $factory = $form->getConfig()->getFormFactory();
-
-            $csrfForm = $factory->createNamed(
-                'REQUEST_TOKEN',
-                ContaoRequestTokenType::class,
-                null,
-                ['mapped' => false,]
-            );
-
-            $view->children['REQUEST_TOKEN'] = $csrfForm->createView($view);
+        if (! $options['contao_request_token'] || $view->parent || ! $options['compound']) {
+            return;
         }
+
+        $factory = $form->getConfig()->getFormFactory();
+
+        $csrfForm = $factory->createNamed(
+            'REQUEST_TOKEN',
+            ContaoRequestTokenType::class,
+            null,
+            ['mapped' => false]
+        );
+
+        $view->children['REQUEST_TOKEN'] = $csrfForm->createView($view);
     }
 
     /**
      * Check if contao request token checking is disabled.
-     *
-     * @return bool
      */
     private function isCheckRequestTokenEnabled(): bool
     {

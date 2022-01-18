@@ -1,21 +1,10 @@
 <?php
 
-/**
- * Netzmacht Contao Form Bundle.
- *
- * @package    contao-form-bundle
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\FormGenerator;
 
-use Contao\CoreBundle\Framework\Adapter;
-use Contao\CoreBundle\Framework\ContaoFrameworkInterface;
+use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Monolog\ContaoContext;
 use Contao\Dbafs;
 use Contao\FilesModel;
@@ -23,6 +12,7 @@ use Contao\FormFieldModel;
 use Contao\FrontendUser;
 use Contao\Model;
 use Contao\StringUtil;
+use Exception;
 use Netzmacht\Contao\Toolkit\Data\Model\ContaoRepository;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper\UploadFieldMapper;
@@ -30,15 +20,24 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Webmozart\PathUtil\Path;
+
+use function assert;
 use function basename;
 use function defined;
 use function file_exists;
+use function max;
+use function preg_grep;
+use function preg_match;
+use function preg_quote;
+use function scan;
+use function sprintf;
+use function str_replace;
+use function strrpos;
+use function substr;
 use function umask;
+
 use const TL_FILES;
 
-/**
- * Class UploadHandler
- */
 final class UploadHandler
 {
     /**
@@ -65,7 +64,7 @@ final class UploadHandler
     /**
      * Contao framework.
      *
-     * @var ContaoFrameworkInterface
+     * @var ContaoFramework
      */
     private $framework;
 
@@ -84,20 +83,18 @@ final class UploadHandler
     private $projectDir;
 
     /**
-     * UploadHandler constructor.
-     *
-     * @param RepositoryManager        $repositoryManager Repository manager.
-     * @param UploadFieldMapper        $uploadFieldMapper Upload field mapper.
-     * @param Filesystem               $filesystem        Filesystem.
-     * @param ContaoFrameworkInterface $framework         Contao framework.
-     * @param LoggerInterface          $logger            Logger.
-     * @param string                   $projectDir        Project root dir.
+     * @param RepositoryManager $repositoryManager Repository manager.
+     * @param UploadFieldMapper $uploadFieldMapper Upload field mapper.
+     * @param Filesystem        $filesystem        Filesystem.
+     * @param ContaoFramework   $framework         Contao framework.
+     * @param LoggerInterface   $logger            Logger.
+     * @param string            $projectDir        Project root dir.
      */
     public function __construct(
         RepositoryManager $repositoryManager,
         UploadFieldMapper $uploadFieldMapper,
         Filesystem $filesystem,
-        ContaoFrameworkInterface $framework,
+        ContaoFramework $framework,
         LoggerInterface $logger,
         string $projectDir
     ) {
@@ -117,13 +114,13 @@ final class UploadHandler
      * @param FormFieldModel $fieldModel The form field model.
      * @param UploadedFile   $file       The uploaded file.
      *
-     * @return array|null
+     * @return array<string,string|FilesModel|null>|null
      *
-     * @throws \Exception When upload folder does not exists in the dbafs.
+     * @throws Exception When upload folder does not exists in the dbafs.
      */
     public function handleFormField(FormFieldModel $fieldModel, UploadedFile $file): ?array
     {
-        if (!$fieldModel->storeFile) {
+        if (! $fieldModel->storeFile) {
             return null;
         }
 
@@ -131,7 +128,7 @@ final class UploadHandler
         $uploadFolder     = $this->projectDir . '/' . $uploadFolderPath;
 
         // Only store if folder exists. This is the same behaviour like the Contao upload form element has.
-        if (!$this->filesystem->exists($uploadFolder)) {
+        if (! $this->filesystem->exists($uploadFolder)) {
             return null;
         }
 
@@ -139,20 +136,19 @@ final class UploadHandler
         $target   = $file->move($uploadFolder, $fileName);
 
         if ($target->getRealPath() === false) {
-            throw new \Exception('Target does not exist.');
+            throw new Exception('Target does not exist.');
         }
 
         $this->filesystem->chmod($target->getRealPath(), 0666, umask());
 
-        /** @var Dbafs&Adapter $dbafs */
         $dbafs     = $this->framework->getAdapter(Dbafs::class);
         $filePath  = Path::makeRelative($target->getRealPath(), $this->projectDir);
         $fileModel = null;
 
         if ($dbafs->__call('shouldBeSynchronized', [$target->getPath()])) {
-            /** @var ContaoRepository $repository */
             $repository = $this->repositoryManager->getRepository(FilesModel::class);
-            $fileModel  = $repository->__call('findByPath', [$filePath]);
+            assert($repository instanceof ContaoRepository);
+            $fileModel = $repository->__call('findByPath', [$filePath]);
 
             if ($fileModel === null) {
                 $fileModel = $dbafs->__call('addResource', [$filePath]);
@@ -177,25 +173,25 @@ final class UploadHandler
      *
      * Replace instances of UploadedFile with the related FilesModel.
      *
-     * @param int   $formId The form id.
-     * @param array $data   The form data as array.
+     * @param int                 $formId The form id.
+     * @param array<string,mixed> $data   The form data as array.
      *
-     * @return array
+     * @return array<string,mixed>
      *
-     * @throws \Exception When upload folder does not exists in the dbafs.
+     * @throws Exception When upload folder does not exists in the dbafs.
      */
     public function handleForm(int $formId, array $data): array
     {
-        /** @var FormFieldModel $fieldModel */
         foreach ($this->loadUploadFormFields($formId) as $fieldModel) {
-            if (!$this->uploadFieldMapper->supports($fieldModel)) {
+            assert($fieldModel instanceof FormFieldModel);
+            if (! $this->uploadFieldMapper->supports($fieldModel)) {
                 continue;
             }
 
-            $name  = $this->uploadFieldMapper->getName($fieldModel);
+            $name  = (string) $this->uploadFieldMapper->getName($fieldModel);
             $value = ($data[$name] ?? null);
 
-            if (!$value instanceof UploadedFile) {
+            if (! $value instanceof UploadedFile) {
                 continue;
             }
 
@@ -233,9 +229,7 @@ final class UploadHandler
      *
      * @param FormFieldModel $fieldModel The form field model.
      *
-     * @return string
-     *
-     * @throws \Exception When upload folder does not exists in the dbafs.
+     * @throws Exception When upload folder does not exists in the dbafs.
      */
     private function getUploadFolder(FormFieldModel $fieldModel): string
     {
@@ -243,20 +237,20 @@ final class UploadHandler
 
         // Overwrite the upload folder with user's home directory
         if ($fieldModel->useHomeDir && defined('FE_USER_LOGGED_IN') && FE_USER_LOGGED_IN) {
-            /** @var FrontendUser $user */
             $user = $this->framework->createInstance(FrontendUser::class);
+            assert($user instanceof FrontendUser);
             if ($user->assignDir && $user->homeDir) {
                 $uploadFolderUuid = $user->homeDir;
             }
         }
 
-        /** @var ContaoRepository $repository */
-        $repository   = $this->repositoryManager->getRepository(FilesModel::class);
+        $repository = $this->repositoryManager->getRepository(FilesModel::class);
+        assert($repository instanceof ContaoRepository);
         $uploadFolder = $repository->__call('findByUuid', [$uploadFolderUuid]);
 
         // The upload folder could not be found
         if ($uploadFolder === null) {
-            throw new \Exception(sprintf('Invalid upload folder ID %s', $uploadFolder));
+            throw new Exception(sprintf('Invalid upload folder ID %s', StringUtil::binToUuid($uploadFolderUuid)));
         }
 
         return $uploadFolder->path;
@@ -269,9 +263,7 @@ final class UploadHandler
      * @param UploadedFile   $uploadedFile The uploaded file.
      * @param string         $uploadFolder The upload folder as absolute path.
      *
-     * @return string
-     *
-     * @throws \Exception If no original client name is given.
+     * @throws Exception If no original client name is given.
      */
     private function getFileName(FormFieldModel $fieldModel, UploadedFile $uploadedFile, string $uploadFolder): string
     {
@@ -288,11 +280,13 @@ final class UploadHandler
             );
 
             foreach ($files as $file) {
-                if (preg_match('/__[0-9]+\.' . preg_quote($extension, '/') . '$/', $file)) {
-                    $file   = str_replace('.' . $extension, '', $file);
-                    $value  = (int) substr($file, (strrpos($file, '_') + 1));
-                    $offset = max($offset, $value);
+                if (! preg_match('/__[0-9]+\.' . preg_quote($extension, '/') . '$/', $file)) {
+                    continue;
                 }
+
+                $file   = str_replace('.' . $extension, '', $file);
+                $value  = (int) substr($file, (int) strrpos($file, '_') + 1);
+                $offset = max($offset, $value);
             }
 
             $fileName = str_replace($baseName, $baseName . '__' . (++$offset), $fileName);

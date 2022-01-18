@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Netzmacht Contao Form Bundle.
- *
- * @package    contao-form-bundle
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form;
@@ -20,9 +10,16 @@ use Contao\Model;
 use Contao\StringUtil;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
+use RuntimeException;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface as FormBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
+use function array_values;
+use function current;
+use function in_array;
+use function next;
+use function sprintf;
 
 /**
  * Form type based on the form generator of Contao.
@@ -44,8 +41,6 @@ class FormGeneratorType extends AbstractType
     private $fieldTypeBuilder;
 
     /**
-     * FormGeneratorType constructor.
-     *
      * @param RepositoryManager $repositoryManager Contao model repository manager.
      * @param FieldTypeBuilder  $fieldTypeBuilder  Contao form type builder.
      */
@@ -55,9 +50,6 @@ class FormGeneratorType extends AbstractType
         $this->fieldTypeBuilder  = $fieldTypeBuilder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
@@ -89,9 +81,11 @@ class FormGeneratorType extends AbstractType
             }
 
             $config = $this->fieldTypeBuilder->build($formField, $next);
-            if ($config !== null) {
-                $builder->add(... array_values($config));
+            if ($config === null) {
+                continue;
             }
+
+            $builder->add(...array_values($config));
         }
     }
 
@@ -100,8 +94,6 @@ class FormGeneratorType extends AbstractType
      *
      * @param FormModel   $formModel The form model.
      * @param FormBuilder $builder   The form builder.
-     *
-     * @return void
      */
     private function applyFormModelSettings(FormModel $formModel, FormBuilder $builder): void
     {
@@ -117,9 +109,11 @@ class FormGeneratorType extends AbstractType
             $builder->setAttribute('id', $attributes[0]);
         }
 
-        if (isset($attributes[1]) && $attributes[1] !== '') {
-            $builder->setAttribute('class', $attributes[1]);
+        if (! isset($attributes[1]) || $attributes[1] === '') {
+            return;
         }
+
+        $builder->setAttribute('class', $attributes[1]);
     }
 
     /**
@@ -127,16 +121,14 @@ class FormGeneratorType extends AbstractType
      *
      * @param int $formId The form id.
      *
-     * @return FormModel
-     *
-     * @throws \RuntimeException When form could not be found.
+     * @throws RuntimeException When form could not be found.
      */
     private function loadFormModel(int $formId): FormModel
     {
         $formModel = $this->repositoryManager->getRepository(FormModel::class)->find($formId);
 
-        if (!$formModel instanceof FormModel) {
-            throw new \RuntimeException(sprintf('Form ID "%s" does not exist.', $formId));
+        if (! $formModel instanceof FormModel) {
+            throw new RuntimeException(sprintf('Form ID "%s" does not exist.', $formId));
         }
 
         return $formModel;
@@ -165,19 +157,17 @@ class FormGeneratorType extends AbstractType
      * Crate the next callback.
      *
      * @param FormFieldModel[]|array $formFields Form fields array.
-     *
-     * @return callable
      */
     private function createNextCallback(&$formFields): callable
     {
-        return function (?callable $condition = null) use (&$formFields) {
+        return static function (?callable $condition = null) use (&$formFields) {
             $current = current($formFields);
 
             if ($current === false) {
                 return null;
             }
 
-            if (!$condition || $condition($current)) {
+            if (! $condition || $condition($current)) {
                 next($formFields);
 
                 return $current;

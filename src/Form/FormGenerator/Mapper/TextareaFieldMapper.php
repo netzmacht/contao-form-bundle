@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Netzmacht Contao Form Bundle.
- *
- * @package    contao-form-bundle
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
@@ -19,9 +9,6 @@ use Contao\StringUtil;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-/**
- * Class TextareaFieldMapper
- */
 class TextareaFieldMapper extends AbstractFieldMapper
 {
     /**
@@ -41,9 +28,9 @@ class TextareaFieldMapper extends AbstractFieldMapper
     /**
      * {@inheritDoc}
      */
-    public function getOptions(FormFieldModel $model, FieldTypeBuilder $typeBuilder, callable $next): array
+    public function getOptions(FormFieldModel $model, FieldTypeBuilder $fieldTypeBuilder, callable $next): array
     {
-        $options = parent::getOptions($model, $typeBuilder, $next);
+        $options = parent::getOptions($model, $fieldTypeBuilder, $next);
         $size    = StringUtil::deserialize($model->size);
 
         if ($size[0] !== '') {

@@ -1,27 +1,19 @@
 <?php
 
-/**
- * Netzmacht Contao Form Bundle.
- *
- * @package    contao-form-bundle
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
 
-use Contao\Config;
+use Assert\AssertionFailedException;
 use Contao\CoreBundle\Framework\Adapter;
 use Contao\FormFieldModel;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints\File;
+
 use function explode;
+use function min;
 
 /**
  * Class UploadFieldMapper maps the upload form field to the FileType
@@ -54,7 +46,7 @@ final class UploadFieldMapper extends AbstractFieldMapper
      *
      * @param Adapter $configAdapter Config adapter.
      *
-     * @throws \Assert\AssertionFailedException When mapper is misconfigured.
+     * @throws AssertionFailedException When mapper is misconfigured.
      */
     public function __construct($configAdapter)
     {
@@ -70,9 +62,9 @@ final class UploadFieldMapper extends AbstractFieldMapper
     /**
      * {@inheritdoc}
      */
-    public function getOptions(FormFieldModel $model, FieldTypeBuilder $typeBuilder, callable $next): array
+    public function getOptions(FormFieldModel $model, FieldTypeBuilder $fieldTypeBuilder, callable $next): array
     {
-        $options                  = parent::getOptions($model, $typeBuilder, $next);
+        $options                  = parent::getOptions($model, $fieldTypeBuilder, $next);
         $options['constraints'][] = [
             new File($this->buildConstraintOptions($model)),
         ];
@@ -85,7 +77,7 @@ final class UploadFieldMapper extends AbstractFieldMapper
      *
      * @param FormFieldModel $model The form field model.
      *
-     * @return array
+     * @return array<string,mixed>
      */
     private function buildConstraintOptions(FormFieldModel $model): array
     {
@@ -95,9 +87,7 @@ final class UploadFieldMapper extends AbstractFieldMapper
             $maxSize = min(UploadedFile::getMaxFilesize(), (int) $this->configAdapter->__call('get', ['maxFileSize']));
         }
 
-        $options = [
-            'maxSize' => $maxSize
-        ];
+        $options = ['maxSize' => $maxSize];
 
         if ($model->extensions) {
             $options['mimeTypes'] = $this->getSupportedMimeTypes($model->extensions);
@@ -111,7 +101,7 @@ final class UploadFieldMapper extends AbstractFieldMapper
      *
      * @param string $extensions Allowed file extensions as csv value.
      *
-     * @return array
+     * @return list<string>
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
@@ -120,9 +110,11 @@ final class UploadFieldMapper extends AbstractFieldMapper
         $mimeTypes = [];
 
         foreach (explode(',', $extensions) as $extension) {
-            if (isset($GLOBALS['TL_MIME'][$extension])) {
-                $mimeTypes[] = $GLOBALS['TL_MIME'][$extension];
+            if (! isset($GLOBALS['TL_MIME'][$extension])) {
+                continue;
             }
+
+            $mimeTypes[] = $GLOBALS['TL_MIME'][$extension];
         }
 
         return $mimeTypes;

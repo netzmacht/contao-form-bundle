@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Netzmacht Contao Form Bundle.
- *
- * @package    contao-form-bundle
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Filter;
@@ -29,8 +19,6 @@ final class DataContainerBasedInputFilter
     private $inputFilter;
 
     /**
-     * Constructor.
-     *
      * @param ContaoInputFilter $inputFilter The input filter.
      */
     public function __construct(ContaoInputFilter $inputFilter)
@@ -41,10 +29,10 @@ final class DataContainerBasedInputFilter
     /**
      * Filter the given input.
      *
-     * @param Definition $definition The data container definition.
-     * @param array      $data       The given data.
+     * @param Definition          $definition The data container definition.
+     * @param array<string,mixed> $data       The given data.
      *
-     * @return array
+     * @return array<string,mixed>
      */
     public function filter(Definition $definition, array $data): array
     {
@@ -85,10 +73,8 @@ final class DataContainerBasedInputFilter
      *
      * @param Definition $definition The data container definition.
      * @param string     $field      The field name.
-     *
-     * @return bool
      */
-    private function useRawRequestData(Definition $definition, string $field) : bool
+    private function useRawRequestData(Definition $definition, string $field): bool
     {
         if ($definition->get(['config', 'useRawRequestData'])) {
             return true;

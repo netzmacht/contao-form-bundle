@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### Changed
+
+ - Use `Symfony\Contracts\Translation\TranslatorInterface` insteadof `Symfony\Component\Translation\TranslatorInterface`
+ - Use `Contao\CoreBundle\Framework\ContaoFramework` insteadof `Contao\CoreBundle\Framework\ContaoFrameworkInterface`
+
 ### [1.3.0] - 2020-11-24
 
 ### Added

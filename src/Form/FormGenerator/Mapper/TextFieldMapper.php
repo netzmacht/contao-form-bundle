@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Netzmacht Contao Form Bundle.
- *
- * @package    contao-form-bundle
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
@@ -23,9 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 
-/**
- * Class TextFieldMapper
- */
 class TextFieldMapper extends AbstractFieldMapper
 {
     /**
@@ -45,7 +32,7 @@ class TextFieldMapper extends AbstractFieldMapper
     /**
      * Mapping of rgxp to form type.
      *
-     * @var array
+     * @var array<string,class-string>
      */
     private static $mapping = [
         'digit' => NumberType::class,
@@ -53,12 +40,9 @@ class TextFieldMapper extends AbstractFieldMapper
         'time'  => TimeType::class,
         'datim' => DateTimeType::class,
         'email' => EmailType::class,
-        'url'   => UrlType::class
+        'url'   => UrlType::class,
     ];
 
-    /**
-     * {@inheritDoc}
-     */
     public function getTypeClass(FormFieldModel $model): string
     {
         if (isset(static::$mapping[$model->rgxp])) {

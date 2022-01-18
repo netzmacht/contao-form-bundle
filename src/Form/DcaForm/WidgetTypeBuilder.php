@@ -1,24 +1,11 @@
 <?php
 
-/**
- * Netzmacht Contao Form Bundle.
- *
- * @package    contao-form-bundle
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
- * @filesource
- */
+declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\DcaForm;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
-/**
- * Class FieldBuilder
- *
- * @package Netzmacht\ContaoFormBundle\Form\FormGenerator
- */
 class WidgetTypeBuilder
 {
     /**
@@ -29,8 +16,6 @@ class WidgetTypeBuilder
     private $mappers;
 
     /**
-     * FieldTypeBuilder constructor.
-     *
      * @param WidgetMapper[] $mappers Form field mappers.
      */
     public function __construct(array $mappers)
@@ -42,12 +27,10 @@ class WidgetTypeBuilder
      * Build the form field type.
      *
      * @param string               $name    Form field name.
-     * @param array                $config  Form field config.
+     * @param array<string,mixed>  $config  Form field config.
      * @param Context              $context Data container context.
      * @param callable             $next    Callback to get the next form field model.
      * @param FormBuilderInterface $builder Form builder.
-     *
-     * @return void
      */
     public function build(
         string $name,

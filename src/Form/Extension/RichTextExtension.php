@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Netzmacht Contao Form Bundle.
- *
- * @package    contao-form-bundle
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\Extension;
@@ -23,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
 use function explode;
 
 /**
@@ -45,8 +36,6 @@ final class RichTextExtension extends AbstractTypeExtension
     private $scopeMatcher;
 
     /**
-     * RichTextExtension constructor.
-     *
      * @param PickerBuilderInterface $pickerBuilder Picker builder.
      * @param RequestScopeMatcher    $scopeMatcher  Scope matcher.
      */
@@ -57,9 +46,9 @@ final class RichTextExtension extends AbstractTypeExtension
     }
 
     /** @inheritDoc */
-    public function buildView(FormView $view, FormInterface $form, array $options) : void
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        if ($options['rte'] === false || !$this->scopeMatcher->isBackendRequest()) {
+        if ($options['rte'] === false || ! $this->scopeMatcher->isBackendRequest()) {
             $view->vars['rte'] = '';
 
             return;
@@ -68,10 +57,12 @@ final class RichTextExtension extends AbstractTypeExtension
         [$file, $type] = explode('|', $options['rte'], 2);
 
         $fileBrowserTypes = [];
-        foreach (array('file' => 'image', 'link' => 'file') as $context => $fileBrowserType) {
-            if ($this->pickerBuilder->supportsContext($context)) {
-                $fileBrowserTypes[] = $fileBrowserType;
+        foreach (['file' => 'image', 'link' => 'file'] as $context => $fileBrowserType) {
+            if (! $this->pickerBuilder->supportsContext($context)) {
+                continue;
             }
+
+            $fileBrowserTypes[] = $fileBrowserType;
         }
 
         $template = new BackendTemplate('be_' . $file);
@@ -81,22 +72,20 @@ final class RichTextExtension extends AbstractTypeExtension
                 'type'     => $type,
                 'fileBrowserTypes' => $fileBrowserTypes,
                 'source' => $options['rte_source'],
-                'language' => Backend::getTinyMceLanguage()
+                'language' => Backend::getTinyMceLanguage(),
             ]
         );
 
         $view->vars['rte'] = $template->parse();
     }
 
-    /** @inheritDoc */
-    public function configureOptions(OptionsResolver $resolver) : void
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefault('rte', false);
         $resolver->setDefault('rte_source', '');
     }
 
-    /** @inheritDoc */
-    public function getExtendedType() : string
+    public function getExtendedType(): string
     {
         return TextareaType::class;
     }

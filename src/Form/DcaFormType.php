@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Netzmacht Contao Form Bundle.
- *
- * @package    contao-form-bundle
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017-2020 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-form-bundle/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form;
@@ -22,9 +12,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * Class DcaFormType
- */
+use function current;
+use function key;
+use function next;
+
 class DcaFormType extends AbstractType
 {
     /**
@@ -42,8 +33,6 @@ class DcaFormType extends AbstractType
     private $typeBuilder;
 
     /**
-     * DcaFormType constructor.
-     *
      * @param Manager           $dcaManager  Data container manager.
      * @param WidgetTypeBuilder $typeBuilder Field type builder.
      */
@@ -53,9 +42,6 @@ class DcaFormType extends AbstractType
         $this->typeBuilder = $typeBuilder;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -99,10 +85,10 @@ class DcaFormType extends AbstractType
     /**
      * Get the fields configurations.
      *
-     * @param Definition $definition The given definition.
-     * @param array      $options    The given options.
+     * @param Definition          $definition The given definition.
+     * @param array<string,mixed> $options    The given options.
      *
-     * @return array
+     * @return array<string,mixed>
      */
     private function getFieldConfigs(Definition $definition, array $options): array
     {
@@ -117,15 +103,18 @@ class DcaFormType extends AbstractType
         }
 
         $fields = $definition->get('fields') ?: [];
-        if (!$options['callback']) {
+        if (! $options['callback']) {
             return $fields;
         }
 
         $filtered = [];
         foreach ($fields as $name => $config) {
-            if ($config = $options['callback']($config, $name)) {
-                $filtered[$name] = $config;
+            $config = $options['callback']($config, $name);
+            if (! $config) {
+                continue;
             }
+
+            $filtered[$name] = $config;
         }
 
         return $filtered;
@@ -134,9 +123,7 @@ class DcaFormType extends AbstractType
     /**
      * Crate the next callback.
      *
-     * @param array[] $formFields Form fields array.
-     *
-     * @return callable
+     * @param array<string,array<string,mixed>> $formFields Form fields array.
      */
     private function createNextCallback(&$formFields): callable
     {
@@ -147,7 +134,7 @@ class DcaFormType extends AbstractType
                 return null;
             }
 
-            if (!$condition || $condition($current)) {
+            if (! $condition || $condition($current)) {
                 $key = key($formFields);
                 next($formFields);
 
