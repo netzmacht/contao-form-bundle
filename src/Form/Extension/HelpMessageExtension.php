@@ -21,7 +21,7 @@ final class HelpMessageExtension extends AbstractTypeExtension
     }
 
     /** @inheritDoc */
-    public function getExtendedTypes(): iterable
+    public static function getExtendedTypes(): iterable
     {
         return [FormType::class];
     }

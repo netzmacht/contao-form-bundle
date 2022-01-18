@@ -52,7 +52,7 @@ final class ContaoRequestTokenExtension extends AbstractTypeExtension
     /**
      * {@inheritDoc}
      */
-    public function getExtendedTypes(): array
+    public static function getExtendedTypes(): array
     {
         return [FormType::class];
     }

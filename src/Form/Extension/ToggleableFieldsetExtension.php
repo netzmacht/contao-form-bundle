@@ -20,7 +20,7 @@ final class ToggleableFieldsetExtension extends AbstractTypeExtension
     /**
      * {@inheritDoc}
      */
-    public function getExtendedTypes(): iterable
+    public static function getExtendedTypes(): iterable
     {
         return [FieldsetType::class];
     }
