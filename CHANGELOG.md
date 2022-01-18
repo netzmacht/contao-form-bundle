@@ -2,8 +2,11 @@
 
 ## [Unreleased]
 
+### [1.4.0] - 2022-01-18
+
 ### Changed
 
+ - Bump dependencies for Contao and Symfony
  - Use `Symfony\Contracts\Translation\TranslatorInterface` insteadof `Symfony\Component\Translation\TranslatorInterface`
  - Use `Contao\CoreBundle\Framework\ContaoFramework` insteadof `Contao\CoreBundle\Framework\ContaoFrameworkInterface`
 
