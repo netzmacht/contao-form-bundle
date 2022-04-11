@@ -36,23 +36,23 @@ final class WidgetClassExtension extends AbstractTypeExtension
     /** @inheritDoc */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        $classes = [$options['widget']['class']];
+        $classes = [$options['contaoWidget']['class']];
 
         if ($this->scopeMatcher->isBackendRequest()) {
-            $classes[] = $options['widget']['be_class'];
+            $classes[] = $options['contaoWidget']['be_class'];
         }
 
         if ($this->scopeMatcher->isFrontendRequest()) {
-            $classes[] = $options['widget']['fe_class'];
+            $classes[] = $options['contaoWidget']['fe_class'];
         }
 
-        $view->vars['widget']['class'] = implode(' ', array_filter($classes));
+        $view->vars['contaoWidget']['class'] = implode(' ', array_filter($classes));
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefault(
-            'widget',
+            'contaoWidget',
             // @codingStandardsIgnoreStart - static function is not supported
             static function (OptionsResolver $widgetResolver) : void {
                 $widgetResolver->setDefaults(

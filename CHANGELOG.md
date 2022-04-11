@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### [2.0.0] - 2022-XX-XX
+
+### Changed
+
+- Use `contaoWidget` instead of `widget`for Contao settings
+
 ### [1.4.0] - 2022-01-18
 
 ### Changed

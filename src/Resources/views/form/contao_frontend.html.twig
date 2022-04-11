@@ -4,7 +4,7 @@
 {# Rows #}
 {%- block form_row -%}
     {% if 'form_generator' not in form.vars.block_prefixes and 'fieldset' not in form.vars.block_prefixes %}
-        <div class="widget{% if form.vars.widget.class %} {{ form.vars.widget.class }}{% endif %}">
+        <div class="widget{% if form.vars.contaoWidget.class %} {{ form.vars.contaoWidget.class }}{% endif %}">
     {% endif %}
     {% if label is not empty  %}
         <h3>{{- form_label(form) -}}</h3>

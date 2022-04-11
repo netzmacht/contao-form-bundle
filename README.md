@@ -66,6 +66,23 @@ used:
 {{ form(form) }}
 ```
 
+### CSS attributes
+
+Inside the form theme you can use additional classes to add specific styles, this is done by the `contaoWidget` option 
+inside a FormType, there is a generic key `class` and context specific keys for frontend 
+`fe_class` and backend `be_class`:
+
+```php
+$builder
+    ->add(
+        'field',
+        FieldType::class,
+        [
+            'contaoWidget' => ['class' => 'generic-class', 'be_class' => 'clr w50', 'fe_class' => 'frontend-class'],
+        ]
+    )
+```
+
 ### Input filtering
 
 Be aware that the **Contao input sanitizing is bypassed by default**. If you need the data filtered, especially when 
