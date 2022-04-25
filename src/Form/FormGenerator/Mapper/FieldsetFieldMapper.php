@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
 
-use AdamQuaile\Bundle\FieldsetBundle\Form\FieldsetType;
+use Netzmacht\ContaoFormBundle\Form\FieldsetType;
 use Contao\FormFieldModel;
 use Contao\StringUtil;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;

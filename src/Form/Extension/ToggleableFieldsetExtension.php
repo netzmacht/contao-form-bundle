@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\Extension;
 
-use AdamQuaile\Bundle\FieldsetBundle\Form\FieldsetType;
+use Netzmacht\ContaoFormBundle\Form\FieldsetType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
