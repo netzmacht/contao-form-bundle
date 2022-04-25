@@ -12,6 +12,11 @@ services:
     tags:
       - { name: form.type, alias: contao_request_token }
 
+  netzmacht.contao_form.form_type.fieldset:
+    class: Netzmacht\ContaoFormBundle\Form\FieldsetType
+    tags:
+      - { name: form.type, alias: contao_fieldset }
+
   netzmacht.contao_form.extension.widget_class:
     class: Netzmacht\ContaoFormBundle\Form\Extension\WidgetClassExtension
     arguments:
