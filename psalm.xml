@@ -27,11 +27,6 @@
                 <file name="src/Form/FormGenerator/UploadHandler.php" />
             </errorLevel>
         </UndefinedConstant>
-        <UndefinedFunction>
-            <errorLevel type="suppress">
-                <referencedFunction name="scan"/>
-            </errorLevel>
-        </UndefinedFunction>
     </issueHandlers>
 
     <universalObjectCrates>

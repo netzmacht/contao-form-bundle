@@ -224,12 +224,12 @@ final class RgxpValidator extends ConstraintValidator
 
             case 'emails':
                 // Check whether the current value is list of valid e-mail addresses
-                $arrEmails = StringUtil::trimsplit(',', $value);
+                $emails = StringUtil::trimsplit(',', $value);
 
-                foreach ($arrEmails as $strEmail) {
-                    $strEmail = Idna::encodeEmail($strEmail);
+                foreach ($emails as $email) {
+                    $email = Idna::encodeEmail($email);
 
-                    if (! Validator::isEmail($strEmail)) {
+                    if (! Validator::isEmail($email)) {
                         $this->invalidValue($constraint);
                         break;
                     }

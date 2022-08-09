@@ -8,6 +8,7 @@ use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Monolog\ContaoContext;
 use Contao\Dbafs;
 use Contao\FilesModel;
+use Contao\Folder;
 use Contao\FormFieldModel;
 use Contao\FrontendUser;
 use Contao\Model;
@@ -29,7 +30,6 @@ use function max;
 use function preg_grep;
 use function preg_match;
 use function preg_quote;
-use function scan;
 use function sprintf;
 use function str_replace;
 use function strrpos;
@@ -263,7 +263,7 @@ final class UploadHandler
             $offset    = 1;
             $files     = preg_grep(
                 '/^' . preg_quote($baseName, '/') . '.*\.' . preg_quote($extension, '/') . '$/',
-                scan($uploadFolder)
+                Folder::scan($uploadFolder)
             );
 
             foreach ($files as $file) {

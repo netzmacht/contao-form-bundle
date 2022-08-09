@@ -22,7 +22,7 @@
   "require": {
     "php": "^7.4 || ^8.0",
     "beberlei/assert": "^2.0 || ^3.0",
-    "contao/core-bundle": "^4.9",
+    "contao/core-bundle": "^4.13",
     "netzmacht/contao-toolkit": "^3.8",
     "psr/log": "^1.1",
     "symfony/config": "^4.4 || ^5.1",
@@ -40,9 +40,8 @@
   },
   "require-dev": {
     "contao/manager-plugin": "^2.1",
-    "doctrine/coding-standard": "^9.0.",
-    "phpcq/runner-bootstrap": "^1.0@dev",
-    "rector/rector": "^0.13.9"
+    "doctrine/coding-standard": "^9.0",
+    "phpcq/runner-bootstrap": "^1.0@dev"
   },
   "autoload": {
     "psr-4": {
@@ -59,7 +58,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-develop": "1.5.x-dev",
+      "dev-develop": "2.0.x-dev",
       "dev-master": "1.4.x-dev"
     },
     "contao-manager-plugin": "Netzmacht\\ContaoFormBundle\\ContaoManager\\Plugin"
