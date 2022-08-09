@@ -172,7 +172,7 @@ abstract class AbstractWidgetMapper implements WidgetMapper
                  *
                  * @return mixed
                  */
-                static fn($value) => $value,
+                static fn ($value) => $value,
                 /**
                  * @param mixed $value
                  *

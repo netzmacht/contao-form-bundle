@@ -104,9 +104,11 @@ final class FormGeneratorType extends AbstractType
         if (isset($attributes[0]) && $attributes[0] !== '') {
             $builder->setAttribute('id', $attributes[0]);
         }
+
         if (! isset($attributes[1])) {
             return;
         }
+
         if ($attributes[1] === '') {
             return;
         }

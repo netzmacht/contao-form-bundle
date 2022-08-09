@@ -68,6 +68,7 @@ abstract class AbstractChoicesFieldMapper extends AbstractFieldMapper
         if (empty($values)) {
             return $options;
         }
+
         if (! is_array($values)) {
             return $options;
         }

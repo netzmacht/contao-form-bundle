@@ -44,6 +44,7 @@ final class Rgxp extends Constraint
         if ($this->label) {
             return;
         }
+
         if (! ($this->widget instanceof Widget)) {
             return;
         }

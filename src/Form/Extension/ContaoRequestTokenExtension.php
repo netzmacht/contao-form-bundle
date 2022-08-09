@@ -71,12 +71,15 @@ final class ContaoRequestTokenExtension extends AbstractTypeExtension
         if (! $options['contao_request_token']) {
             return;
         }
+
         if ($view->parent) {
             return;
         }
+
         if (! $options['compound']) {
             return;
         }
+
         $factory = $form->getConfig()->getFormFactory();
 
         $csrfForm = $factory->createNamed(
