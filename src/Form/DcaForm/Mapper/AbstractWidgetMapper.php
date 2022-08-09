@@ -120,7 +120,7 @@ abstract class AbstractWidgetMapper implements WidgetMapper
         $options = [
             'attr'   => $this->getAttributes($config),
             'help'   => ($config['label'][1] ?? null),
-            'widget' => [
+            'contaoWidget' => [
                 'class'    => ($config['eval']['class'] ?? null),
                 'be_class' => ($config['eval']['tl_class'] ?? null),
                 'fe_class' => ($config['eval']['fe_class'] ?? null),
