@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 use function dirname;
 
-class NetzmachtContaoFormExtension extends Extension
+final class NetzmachtContaoFormExtension extends Extension
 {
     /**
      * {@inheritdoc}

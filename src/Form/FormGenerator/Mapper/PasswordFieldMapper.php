@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
-class PasswordFieldMapper extends AbstractFieldMapper
+final class PasswordFieldMapper extends AbstractFieldMapper
 {
     /**
      * The form field type.

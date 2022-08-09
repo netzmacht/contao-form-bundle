@@ -6,7 +6,7 @@ namespace Netzmacht\ContaoFormBundle\Form\FormGenerator;
 
 use Contao\FormFieldModel;
 
-class FieldTypeBuilder
+final class FieldTypeBuilder
 {
     /**
      * Form field mappers.

@@ -9,7 +9,7 @@ use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FormFieldMapper;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 
-class SubmitFieldMapper implements FormFieldMapper
+final class SubmitFieldMapper implements FormFieldMapper
 {
     public function supports(FormFieldModel $model): bool
     {

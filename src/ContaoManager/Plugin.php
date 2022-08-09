@@ -15,12 +15,12 @@ use Netzmacht\ContaoFormBundle\NetzmachtContaoFormBundle;
 
 use function dirname;
 
-class Plugin implements BundlePluginInterface, ExtensionPluginInterface
+final class Plugin implements BundlePluginInterface, ExtensionPluginInterface
 {
     /**
      * {@inheritdoc}
      */
-    public function getBundles(ParserInterface $parser)
+    public function getBundles(ParserInterface $parser): array
     {
         return [
             BundleConfig::create(NetzmachtContaoFormBundle::class)

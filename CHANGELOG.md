@@ -6,7 +6,9 @@
 
 ### Changed
 
-- Use `contaoWidget` instead of `widget`for Contao settings
+ - Use `contaoWidget` instead of `widget`for Contao settings
+ - Introduce an own implementation of the fieldset type
+ - Make all classes final
 
 ### [1.4.0] - 2022-01-18
 

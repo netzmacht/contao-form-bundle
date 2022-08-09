@@ -9,7 +9,7 @@ use Contao\StringUtil;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-class TextareaFieldMapper extends AbstractFieldMapper
+final class TextareaFieldMapper extends AbstractFieldMapper
 {
     /**
      * The form field type.

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
 
-class RadioFieldMapper extends AbstractChoicesFieldMapper
+final class RadioFieldMapper extends AbstractChoicesFieldMapper
 {
     /**
      * The form field type.

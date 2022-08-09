@@ -10,7 +10,7 @@ use Netzmacht\ContaoFormBundle\Form\FieldsetType;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FormFieldMapper;
 
-class FieldsetFieldMapper implements FormFieldMapper
+final class FieldsetFieldMapper implements FormFieldMapper
 {
     public function supports(FormFieldModel $model): bool
     {

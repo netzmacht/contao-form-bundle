@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
 
-class CheckboxFieldMapper extends AbstractChoicesFieldMapper
+final class CheckboxFieldMapper extends AbstractChoicesFieldMapper
 {
     /**
      * The form field type.

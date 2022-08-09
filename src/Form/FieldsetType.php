@@ -16,7 +16,7 @@ use function is_callable;
 /**
  * Originally a part of https://github.com/adamquaile/AdamQuaileFieldsetBundle by Adam Quaile
  */
-class FieldsetType extends AbstractType
+final class FieldsetType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver): void
     {

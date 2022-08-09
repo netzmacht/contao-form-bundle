@@ -16,7 +16,7 @@ use function current;
 use function key;
 use function next;
 
-class DcaFormType extends AbstractType
+final class DcaFormType extends AbstractType
 {
     /**
      * Data container manager.

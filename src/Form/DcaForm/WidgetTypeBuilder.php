@@ -6,7 +6,7 @@ namespace Netzmacht\ContaoFormBundle\Form\DcaForm;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
-class WidgetTypeBuilder
+final class WidgetTypeBuilder
 {
     /**
      * Form field mappers.

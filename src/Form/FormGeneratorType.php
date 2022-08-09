@@ -24,7 +24,7 @@ use function sprintf;
 /**
  * Form type based on the form generator of Contao.
  */
-class FormGeneratorType extends AbstractType
+final class FormGeneratorType extends AbstractType
 {
     /**
      * Contao model repository manager.

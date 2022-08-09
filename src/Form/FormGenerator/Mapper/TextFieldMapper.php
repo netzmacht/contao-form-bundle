@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 
-class TextFieldMapper extends AbstractFieldMapper
+final class TextFieldMapper extends AbstractFieldMapper
 {
     /**
      * The form field type.

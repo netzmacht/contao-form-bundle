@@ -7,7 +7,7 @@ namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
 use Contao\FormFieldModel;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
 
-class SelectFieldMapper extends AbstractChoicesFieldMapper
+final class SelectFieldMapper extends AbstractChoicesFieldMapper
 {
     /**
      * The form field type.

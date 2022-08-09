@@ -6,7 +6,7 @@ namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
 
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
-class HiddenFieldMapper extends AbstractFieldMapper
+final class HiddenFieldMapper extends AbstractFieldMapper
 {
     /**
      * The form field type.

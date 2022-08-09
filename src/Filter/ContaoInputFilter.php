@@ -9,7 +9,7 @@ use Contao\CoreBundle\Framework\Adapter;
 use Contao\Input;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 
-class ContaoInputFilter
+final class ContaoInputFilter
 {
     /**
      * Contao input adapter.
