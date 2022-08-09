@@ -36,7 +36,7 @@
     "symfony/security-csrf": "^4.4 || ^5.1",
     "symfony/translation-contracts": "^1.1 || ^2",
     "symfony/validator": "^4.4 || ^5.1",
-    "twig/twig": "^2.10",
+    "twig/twig": "^3.0",
     "webmozart/path-util": "^2.3"
   },
   "require-dev": {
