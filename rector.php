@@ -12,21 +12,19 @@ use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictNewArrayRector
 use Rector\Set\ValueObject\LevelSetList;
 
 return static function (RectorConfig $rectorConfig): void {
+    $rectorConfig->importNames();
+
     $rectorConfig->paths([
         __DIR__ . '/src'
-    ]);
-
-    $rectorConfig->sets([
-        SetList::DEAD_CODE
     ]);
 
     // register a single rule
     $rectorConfig->rule(InlineConstructorDefaultToPropertyRector::class);
 
     // define sets of rules
-    //    $rectorConfig->sets([
-    //        LevelSetList::UP_TO_PHP_74
-    //    ]);
+    $rectorConfig->sets([
+        LevelSetList::UP_TO_PHP_74
+    ]);
 
     $rectorConfig->rules([
         ReturnTypeFromStrictBoolReturnExprRector::class,

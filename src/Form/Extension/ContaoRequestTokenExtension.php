@@ -68,10 +68,15 @@ final class ContaoRequestTokenExtension extends AbstractTypeExtension
      */
     public function finishView(FormView $view, FormInterface $form, array $options): void
     {
-        if (! $options['contao_request_token'] || $view->parent || ! $options['compound']) {
+        if (! $options['contao_request_token']) {
             return;
         }
-
+        if ($view->parent) {
+            return;
+        }
+        if (! $options['compound']) {
+            return;
+        }
         $factory = $form->getConfig()->getFormFactory();
 
         $csrfForm = $factory->createNamed(

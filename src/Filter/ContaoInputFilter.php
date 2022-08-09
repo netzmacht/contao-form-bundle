@@ -55,7 +55,7 @@ final class ContaoInputFilter
         $data = $this->inputAdapter->__call('xssClean', [$data, true]);
 
         if (! $this->scopeMatcher->isBackendRequest()) {
-            $data = $this->inputAdapter->__call('encodeInsertTags', [$data]);
+            return $this->inputAdapter->__call('encodeInsertTags', [$data]);
         }
 
         return $data;
@@ -81,7 +81,7 @@ final class ContaoInputFilter
         }
 
         if (! $this->scopeMatcher->isBackendRequest()) {
-            $data = $this->inputAdapter->__call('encodeInsertTags', [$data]);
+            return $this->inputAdapter->__call('encodeInsertTags', [$data]);
         }
 
         return $data;

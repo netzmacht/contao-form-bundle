@@ -74,8 +74,10 @@ final class RgxpValidator extends ConstraintValidator
         if (! $constraint instanceof Rgxp) {
             throw new UnexpectedTypeException($constraint, Rgxp::class);
         }
-
-        if ($value === null || $value === '') {
+        if ($value === null) {
+            return;
+        }
+        if ($value === '') {
             return;
         }
 

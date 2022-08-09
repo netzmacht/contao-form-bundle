@@ -65,8 +65,10 @@ abstract class AbstractChoicesFieldMapper extends AbstractFieldMapper
     {
         $values             = StringUtil::deserialize($values);
         $options['choices'] = [];
-
-        if (empty($values) || ! is_array($values)) {
+        if (empty($values)) {
+            return $options;
+        }
+        if (! is_array($values)) {
             return $options;
         }
 

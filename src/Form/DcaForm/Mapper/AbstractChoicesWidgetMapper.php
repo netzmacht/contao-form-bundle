@@ -105,8 +105,10 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
 
             return $options;
         }
-
-        if (empty($config['options']) || ! is_array($config['options'])) {
+        if (empty($config['options'])) {
+            return $options;
+        }
+        if (! is_array($config['options'])) {
             return $options;
         }
 

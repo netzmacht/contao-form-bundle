@@ -64,13 +64,9 @@ final class CheckboxWidgetMapper extends AbstractWidgetMapper
         $formType->addModelTransformer(
             new CallbackTransformer(
                 /** @param mixed $value */
-                static function ($value): bool {
-                    return (bool) $value;
-                },
+                static fn($value): bool => (bool) $value,
                 /** @param mixed $value */
-                static function ($value): string {
-                    return $value ? '1' : '';
-                }
+                static fn($value): string => $value ? '1' : ''
             )
         );
     }
