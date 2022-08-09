@@ -48,7 +48,7 @@ services:
   netzmacht.contao_form.extension.toggleable_fieldset:
     class: Netzmacht\ContaoFormBundle\Form\Extension\ToggleableFieldsetExtension
     tags:
-      - { name: form.type_extension, extended_type: AdamQuaile\Bundle\FieldsetBundle\Form\FieldsetType }
+      - { name: form.type_extension, extended_type: Netzmacht\ContaoFormBundle\Form\FieldsetType }
 
   netzmacht.contao_form.input_filter:
     class: Netzmacht\ContaoFormBundle\Filter\ContaoInputFilter
