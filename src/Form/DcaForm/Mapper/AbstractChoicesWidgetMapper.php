@@ -80,9 +80,7 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
             $options['placeholder'] = ($config['eval']['blankOptionLabel'] ?? '-');
         }
 
-        $options = $this->parseOptionsConfig($name, $options, $config, $context);
-
-        return $options;
+        return $this->parseOptionsConfig($name, $options, $config, $context);
     }
 
     /**

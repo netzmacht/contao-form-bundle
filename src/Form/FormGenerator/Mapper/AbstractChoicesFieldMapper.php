@@ -50,9 +50,7 @@ abstract class AbstractChoicesFieldMapper extends AbstractFieldMapper
         $options['expanded']    = $this->expanded;
         $options['placeholder'] = false;
 
-        $options = $this->parseOptionsConfig($options, $model->options);
-
-        return $options;
+        return $this->parseOptionsConfig($options, $model->options);
     }
 
     /**
