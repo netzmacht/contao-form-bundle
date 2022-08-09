@@ -22,24 +22,18 @@ final class UploadFieldMapper extends AbstractFieldMapper
 {
     /**
      * The form field type.
-     *
-     * @var string
      */
-    protected $fieldType = 'upload';
+    protected string $fieldType = 'upload';
 
     /**
      * The type class.
-     *
-     * @var string
      */
-    protected $typeClass = FileType::class;
+    protected string $typeClass = FileType::class;
 
     /**
      * Config adapter.
-     *
-     * @var Adapter
      */
-    private $configAdapter;
+    private Adapter $configAdapter;
 
     /**
      * Construct.

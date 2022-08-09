@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Filter;
 
+use Contao\Config;
 use Contao\CoreBundle\Framework\Adapter;
+use Contao\Input;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 
 class ContaoInputFilter
@@ -12,30 +14,28 @@ class ContaoInputFilter
     /**
      * Contao input adapter.
      *
-     * @var Adapter
+     * @var Adapter<Input>
      */
-    private $inputAdapter;
+    private Adapter $inputAdapter;
 
     /**
      * Config adapter.
      *
-     * @var Adapter
+     * @var Adapter<Config>
      */
-    private $configAdapter;
+    private Adapter $configAdapter;
 
     /**
      * Request scope matcher.
-     *
-     * @var RequestScopeMatcher
      */
-    private $scopeMatcher;
+    private RequestScopeMatcher $scopeMatcher;
 
     /**
-     * @param Adapter             $inputAdapter  The input adapter.
-     * @param Adapter             $configAdapter The config adapter.
+     * @param Adapter<Input>      $inputAdapter  The input adapter.
+     * @param Adapter<Config>     $configAdapter The config adapter.
      * @param RequestScopeMatcher $scopeMatcher  Scope matcher.
      */
-    public function __construct($inputAdapter, $configAdapter, RequestScopeMatcher $scopeMatcher)
+    public function __construct(Adapter $inputAdapter, Adapter $configAdapter, RequestScopeMatcher $scopeMatcher)
     {
         $this->inputAdapter  = $inputAdapter;
         $this->scopeMatcher  = $scopeMatcher;

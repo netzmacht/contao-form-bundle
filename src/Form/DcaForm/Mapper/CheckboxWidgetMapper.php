@@ -17,17 +17,13 @@ final class CheckboxWidgetMapper extends AbstractWidgetMapper
 {
     /**
      * The type class.
-     *
-     * @var string
      */
-    protected $widgetType = 'checkbox';
+    protected string $widgetType = 'checkbox';
 
     /**
      * The field type.
-     *
-     * @var string
      */
-    protected $typeClass = CheckboxType::class;
+    protected string $typeClass = CheckboxType::class;
 
     /**
      * {@inheritDoc}

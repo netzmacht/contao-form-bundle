@@ -14,17 +14,13 @@ final class TextareaWidgetMapper extends AbstractWidgetMapper
 {
     /**
      * The type class.
-     *
-     * @var string
      */
-    protected $widgetType = 'textarea';
+    protected string $widgetType = 'textarea';
 
     /**
      * The type class.
-     *
-     * @var string
      */
-    protected $typeClass = TextareaType::class;
+    protected string $typeClass = TextareaType::class;
 
     /**
      * {@inheritDoc}

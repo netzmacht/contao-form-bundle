@@ -13,7 +13,7 @@ class WidgetTypeBuilder
      *
      * @var WidgetMapper[]
      */
-    private $mappers;
+    private array $mappers;
 
     /**
      * @param WidgetMapper[] $mappers Form field mappers.

@@ -17,24 +17,18 @@ final class Rgxp extends Constraint
 {
     /**
      * The rgxp.
-     *
-     * @var string
      */
-    protected $rgxp;
+    protected string $rgxp;
 
     /**
      * The widget.
-     *
-     * @var Widget|null
      */
-    protected $widget;
+    protected ?Widget $widget = null;
 
     /**
      * The label.
-     *
-     * @var string|null
      */
-    protected $label;
+    protected ?string $label = null;
 
     /**
      * {@inheritDoc}

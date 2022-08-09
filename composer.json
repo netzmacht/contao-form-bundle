@@ -20,7 +20,7 @@
     "source": "https://github.com/netzmacht/contao-form-bundle"
   },
   "require": {
-    "php": "^7.1 || ^8.0",
+    "php": "^7.4 || ^8.0",
     "beberlei/assert": "^2.0 || ^3.0",
     "contao/core-bundle": "^4.9",
     "netzmacht/contao-toolkit": "^3.8",

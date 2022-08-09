@@ -20,17 +20,13 @@ class DcaFormType extends AbstractType
 {
     /**
      * Data container manager.
-     *
-     * @var Manager
      */
-    private $dcaManager;
+    private Manager $dcaManager;
 
     /**
      * The widget type builder.
-     *
-     * @var WidgetTypeBuilder
      */
-    private $typeBuilder;
+    private WidgetTypeBuilder $typeBuilder;
 
     /**
      * @param Manager           $dcaManager  Data container manager.

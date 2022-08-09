@@ -13,17 +13,13 @@ class TextareaFieldMapper extends AbstractFieldMapper
 {
     /**
      * The form field type.
-     *
-     * @var string
      */
-    protected $fieldType = 'textarea';
+    protected string $fieldType = 'textarea';
 
     /**
      * The type class.
-     *
-     * @var string
      */
-    protected $typeClass = TextareaType::class;
+    protected string $typeClass = TextareaType::class;
 
     /**
      * {@inheritDoc}

@@ -17,24 +17,20 @@ class TextFieldMapper extends AbstractFieldMapper
 {
     /**
      * The form field type.
-     *
-     * @var string
      */
-    protected $fieldType = 'text';
+    protected string $fieldType = 'text';
 
     /**
      * The type class.
-     *
-     * @var string
      */
-    protected $typeClass = TextType::class;
+    protected string $typeClass = TextType::class;
 
     /**
      * Mapping of rgxp to form type.
      *
      * @var array<string,class-string>
      */
-    private static $mapping = [
+    private static array $mapping = [
         'digit' => NumberType::class,
         'date'  => DateType::class,
         'time'  => TimeType::class,

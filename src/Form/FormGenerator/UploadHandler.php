@@ -42,45 +42,33 @@ final class UploadHandler
 {
     /**
      * Repository manager.
-     *
-     * @var RepositoryManager
      */
-    private $repositoryManager;
+    private RepositoryManager $repositoryManager;
 
     /**
      * The upload field mapper.
-     *
-     * @var UploadFieldMapper
      */
-    private $uploadFieldMapper;
+    private UploadFieldMapper $uploadFieldMapper;
 
     /**
      * The file system.
-     *
-     * @var Filesystem
      */
-    private $filesystem;
+    private Filesystem $filesystem;
 
     /**
      * Contao framework.
-     *
-     * @var ContaoFramework
      */
-    private $framework;
+    private ContaoFramework $framework;
 
     /**
      * Logger.
-     *
-     * @var LoggerInterface
      */
-    private $logger;
+    private LoggerInterface $logger;
 
     /**
      * The project root dir.
-     *
-     * @var string
      */
-    private $projectDir;
+    private string $projectDir;
 
     /**
      * @param RepositoryManager $repositoryManager Repository manager.
@@ -238,7 +226,6 @@ final class UploadHandler
         // Overwrite the upload folder with user's home directory
         if ($fieldModel->useHomeDir && defined('FE_USER_LOGGED_IN') && FE_USER_LOGGED_IN) {
             $user = $this->framework->createInstance(FrontendUser::class);
-            assert($user instanceof FrontendUser);
             if ($user->assignDir && $user->homeDir) {
                 $uploadFolderUuid = $user->homeDir;
             }

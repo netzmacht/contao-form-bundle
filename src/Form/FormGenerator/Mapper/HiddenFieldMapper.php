@@ -10,17 +10,13 @@ class HiddenFieldMapper extends AbstractFieldMapper
 {
     /**
      * The form field type.
-     *
-     * @var string
      */
-    protected $fieldType = 'hidden';
+    protected string $fieldType = 'hidden';
 
     /**
      * The type class.
-     *
-     * @var string
      */
-    protected $typeClass = HiddenType::class;
+    protected string $typeClass = HiddenType::class;
 
     /**
      * {@inheritdoc}

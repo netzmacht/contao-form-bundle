@@ -13,10 +13,8 @@ final class DataContainerBasedInputFilter
 {
     /**
      * The input filter.
-     *
-     * @var ContaoInputFilter
      */
-    private $inputFilter;
+    private ContaoInputFilter $inputFilter;
 
     /**
      * @param ContaoInputFilter $inputFilter The input filter.

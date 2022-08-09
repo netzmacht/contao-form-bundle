@@ -11,8 +11,6 @@ final class RadioWidgetMapper extends AbstractChoicesWidgetMapper
 {
     /**
      * The type class.
-     *
-     * @var string
      */
-    protected $widgetType = 'radio';
+    protected string $widgetType = 'radio';
 }

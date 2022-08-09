@@ -11,15 +11,11 @@ final class SelectWidgetMapper extends AbstractChoicesWidgetMapper
 {
     /**
      * The type class.
-     *
-     * @var string
      */
-    protected $widgetType = 'select';
+    protected string $widgetType = 'select';
 
     /**
      * Display the choices expanded.
-     *
-     * @var bool
      */
-    protected $expanded = false;
+    protected bool $expanded = false;
 }

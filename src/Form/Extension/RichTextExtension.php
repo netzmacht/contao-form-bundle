@@ -23,17 +23,13 @@ final class RichTextExtension extends AbstractTypeExtension
 {
     /**
      * Contao picker builder.
-     *
-     * @var PickerBuilderInterface
      */
-    private $pickerBuilder;
+    private PickerBuilderInterface $pickerBuilder;
 
     /**
      * Request Scope matcher.
-     *
-     * @var RequestScopeMatcher
      */
-    private $scopeMatcher;
+    private RequestScopeMatcher $scopeMatcher;
 
     /**
      * @param PickerBuilderInterface $pickerBuilder Picker builder.

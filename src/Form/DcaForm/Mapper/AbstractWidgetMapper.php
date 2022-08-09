@@ -23,25 +23,23 @@ abstract class AbstractWidgetMapper implements WidgetMapper
     /**
      * The type class.
      *
-     * @var string
      * @psalm-suppress PropertyNotSetInConstructor
      */
-    protected $typeClass;
+    protected string $typeClass;
 
     /**
      * The field type.
      *
-     * @var string
      * @psalm-suppress PropertyNotSetInConstructor
      */
-    protected $widgetType;
+    protected string $widgetType;
 
     /**
      * Attributes which should be handled.
      *
      * @var array<string,bool|string>
      */
-    protected $attributes = [
+    protected array $attributes = [
         'accesskey'   => true,
         'tabindex'    => true,
         'class'       => true,
@@ -53,7 +51,7 @@ abstract class AbstractWidgetMapper implements WidgetMapper
      *
      * @var array<string,bool>
      */
-    protected $options = [
+    protected array $options = [
         'label'     => true,
         'mandatory' => true,
         'minlength' => true,
@@ -64,10 +62,8 @@ abstract class AbstractWidgetMapper implements WidgetMapper
 
     /**
      * Contao framework.
-     *
-     * @var ContaoFramework
      */
-    private $framework;
+    private ContaoFramework $framework;
 
     /**
      * @param ContaoFramework $framework Contao framework.

@@ -19,24 +19,20 @@ final class TextWidgetMapper extends AbstractWidgetMapper
 {
     /**
      * The type class.
-     *
-     * @var string
      */
-    protected $widgetType = 'text';
+    protected string $widgetType = 'text';
 
     /**
      * The type class.
-     *
-     * @var string
      */
-    protected $typeClass = TextType::class;
+    protected string $typeClass = TextType::class;
 
     /**
      * Mapping of rgxp to form type.
      *
      * @var array<string,class-string>
      */
-    private static $mapping = [
+    private static array $mapping = [
         'digit' => NumberType::class,
         'date'  => DateType::class,
         'time'  => TimeType::class,

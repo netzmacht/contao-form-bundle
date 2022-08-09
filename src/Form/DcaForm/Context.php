@@ -16,24 +16,18 @@ final class Context
 {
     /**
      * The data container definition.
-     *
-     * @var Definition
      */
-    private $definition;
+    private Definition $definition;
 
     /**
      * The formatter.
-     *
-     * @var Formatter
      */
-    private $formatter;
+    private Formatter $formatter;
 
     /**
      * The data container driver.
-     *
-     * @var DataContainer|null
      */
-    private $driver;
+    private ?DataContainer $driver = null;
 
     /**
      * @param Definition         $definition The data container definition.

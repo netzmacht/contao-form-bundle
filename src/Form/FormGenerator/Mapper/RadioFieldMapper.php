@@ -8,15 +8,11 @@ class RadioFieldMapper extends AbstractChoicesFieldMapper
 {
     /**
      * The form field type.
-     *
-     * @var string
      */
-    protected $fieldType = 'radio';
+    protected string $fieldType = 'radio';
 
     /**
      * Multiple. If null, the value is read from the model.
-     *
-     * @var bool|null
      */
-    protected $multiple = false;
+    protected ?bool $multiple = false;
 }

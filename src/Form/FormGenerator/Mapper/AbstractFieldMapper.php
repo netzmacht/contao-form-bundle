@@ -19,25 +19,23 @@ abstract class AbstractFieldMapper implements FormFieldMapper
     /**
      * The type class.
      *
-     * @var string
      * @psalm-suppress PropertyNotSetInConstructor
      */
-    protected $typeClass;
+    protected string $typeClass;
 
     /**
      * The field type.
      *
-     * @var string
      * @psalm-suppress PropertyNotSetInConstructor
      */
-    protected $fieldType;
+    protected string $fieldType;
 
     /**
      * Attributes which should be handled.
      *
      * @var array<string,bool|string>
      */
-    protected $attributes = [
+    protected array $attributes = [
         'accesskey'   => true,
         'tabindex'    => true,
         'class'       => true,
@@ -49,7 +47,7 @@ abstract class AbstractFieldMapper implements FormFieldMapper
      *
      * @var array<string,bool|string>
      */
-    protected $options = [
+    protected array $options = [
         'label'     => true,
         'mandatory' => true,
         'minlength' => true,

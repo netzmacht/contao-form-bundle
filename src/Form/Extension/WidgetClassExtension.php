@@ -23,10 +23,8 @@ final class WidgetClassExtension extends AbstractTypeExtension
 {
     /**
      * Request scope matcher.
-     *
-     * @var RequestScopeMatcher
      */
-    private $scopeMatcher;
+    private RequestScopeMatcher $scopeMatcher;
 
     public function __construct(RequestScopeMatcher $scopeMatcher)
     {

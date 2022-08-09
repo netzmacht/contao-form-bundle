@@ -11,17 +11,13 @@ class SelectFieldMapper extends AbstractChoicesFieldMapper
 {
     /**
      * The form field type.
-     *
-     * @var string
      */
-    protected $fieldType = 'select';
+    protected string $fieldType = 'select';
 
     /**
      * Display the choices expanded.
-     *
-     * @var bool
      */
-    protected $expanded = false;
+    protected bool $expanded = false;
 
     /**
      * {@inheritdoc}

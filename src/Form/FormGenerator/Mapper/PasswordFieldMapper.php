@@ -15,24 +15,18 @@ class PasswordFieldMapper extends AbstractFieldMapper
 {
     /**
      * The form field type.
-     *
-     * @var string
      */
-    protected $fieldType = 'password';
+    protected string $fieldType = 'password';
 
     /**
      * The type class.
-     *
-     * @var string
      */
-    protected $typeClass = RepeatedType::class;
+    protected string $typeClass = RepeatedType::class;
 
     /**
      * Translator.
-     *
-     * @var Translator
      */
-    private $translator;
+    private Translator $translator;
 
     /**
      * @param Translator $translator Translator.

@@ -37,24 +37,18 @@ final class RgxpValidator extends ConstraintValidator
 {
     /**
      * The translator.
-     *
-     * @var TranslatorInterface
      */
-    private $translator;
+    private TranslatorInterface $translator;
 
     /**
      * The callback invoker.
-     *
-     * @var Invoker
      */
-    private $invoker;
+    private Invoker $invoker;
 
     /**
      * The contao framework.
-     *
-     * @var ContaoFramework
      */
-    private $framework;
+    private ContaoFramework $framework;
 
     /**
      * @param TranslatorInterface $translator The translator.

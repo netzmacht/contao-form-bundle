@@ -11,17 +11,13 @@ final class MultipleCheckboxesWizard extends AbstractChoicesWidgetMapper
 {
     /**
      * The widget type.
-     *
-     * @var string
      */
-    protected $widgetType = 'checkbox';
+    protected string $widgetType = 'checkbox';
 
     /**
      * Multiple options are allowed.
-     *
-     * @var bool|null
      */
-    protected $multiple = true;
+    protected ?bool $multiple = true;
 
     /**
      * {@inheritDoc}

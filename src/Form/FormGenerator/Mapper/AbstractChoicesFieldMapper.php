@@ -15,24 +15,18 @@ abstract class AbstractChoicesFieldMapper extends AbstractFieldMapper
 {
     /**
      * The type class.
-     *
-     * @var string
      */
-    protected $typeClass = ChoiceType::class;
+    protected string $typeClass = ChoiceType::class;
 
     /**
      * Multiple. If null, the value is read from the model.
-     *
-     * @var bool|null
      */
-    protected $multiple;
+    protected ?bool $multiple = null;
 
     /**
      * Display the choices expanded.
-     *
-     * @var bool
      */
-    protected $expanded = true;
+    protected bool $expanded = true;
 
     /**
      * {@inheritdoc}

@@ -10,8 +10,7 @@ use Twig\TwigFunction;
 
 final class TwigExtension extends AbstractExtension
 {
-    /** @var CsrfTokenProvider */
-    private $csrfTokenProvider;
+    private CsrfTokenProvider $csrfTokenProvider;
 
     /**
      * @param CsrfTokenProvider $csrfTokenProvider Csrf token manager.

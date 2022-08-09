@@ -28,17 +28,13 @@ class FormGeneratorType extends AbstractType
 {
     /**
      * Contao model repository manager.
-     *
-     * @var RepositoryManager
      */
-    private $repositoryManager;
+    private RepositoryManager $repositoryManager;
 
     /**
      * Contao form generator field type builder.
-     *
-     * @var FieldTypeBuilder
      */
-    private $fieldTypeBuilder;
+    private FieldTypeBuilder $fieldTypeBuilder;
 
     /**
      * @param RepositoryManager $repositoryManager Contao model repository manager.

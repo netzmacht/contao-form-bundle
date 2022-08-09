@@ -19,24 +19,18 @@ final class PasswordWidgetMapper extends AbstractWidgetMapper
 {
     /**
      * The widget type.
-     *
-     * @var string
      */
-    protected $widgetType = 'password';
+    protected string $widgetType = 'password';
 
     /**
      * The type class.
-     *
-     * @var string
      */
-    protected $typeClass = RepeatedType::class;
+    protected string $typeClass = RepeatedType::class;
 
     /**
      * Translator.
-     *
-     * @var Translator
      */
-    private $translator;
+    private Translator $translator;
 
     /**
      * @param ContaoFramework $framework  Contao framework.

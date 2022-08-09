@@ -13,7 +13,7 @@ class FieldTypeBuilder
      *
      * @var FormFieldMapper[]
      */
-    private $mappers;
+    private array $mappers;
 
     /**
      * @param FormFieldMapper[] $mappers Form field mappers.

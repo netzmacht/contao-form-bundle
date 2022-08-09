@@ -22,17 +22,13 @@ final class ContaoRequestTokenExtension extends AbstractTypeExtension
 {
     /**
      * Request scope matcher.
-     *
-     * @var RequestScopeMatcher
      */
-    private $requestTokenMatcher;
+    private RequestScopeMatcher $requestTokenMatcher;
 
     /**
      * Request stack.
-     *
-     * @var RequestStack
      */
-    private $requestStack;
+    private RequestStack $requestStack;
 
     /**
      * @param RequestScopeMatcher $requestTokenMatcher Request scope matcher.

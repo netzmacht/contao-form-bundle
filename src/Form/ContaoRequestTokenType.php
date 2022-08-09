@@ -17,10 +17,8 @@ final class ContaoRequestTokenType extends HiddenType
 {
     /**
      * The csrf token storage.
-     *
-     * @var CsrfTokenProvider
      */
-    private $tokenProvider;
+    private CsrfTokenProvider $tokenProvider;
 
     /**
      * @param CsrfTokenProvider $csrfTokenProvider The csrf token provider.
