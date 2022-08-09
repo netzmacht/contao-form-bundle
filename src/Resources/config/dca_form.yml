@@ -18,7 +18,7 @@ services:
   netzmacht.contao_form.dca_form.type_builder:
     class: Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetTypeBuilder
     arguments:
-      - []
+      - !tagged_iterator 'netzmacht.contao_form.dca_form.mapper'
 
   netzmacht.contao_form.dca_form.mapper.checkbox:
     class: Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper\CheckboxWidgetMapper

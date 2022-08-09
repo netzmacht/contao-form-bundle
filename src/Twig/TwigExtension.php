@@ -31,6 +31,6 @@ final class TwigExtension extends AbstractExtension
 
     public function requestToken(): string
     {
-        return (string) $this->csrfTokenProvider->getTokenValue();
+        return $this->csrfTokenProvider->getTokenValue();
     }
 }

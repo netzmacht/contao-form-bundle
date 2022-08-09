@@ -32,7 +32,7 @@ class FieldsetType extends AbstractType
     }
 
     /**
-     * @param array $options
+     * {@inheritDoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -50,7 +50,7 @@ class FieldsetType extends AbstractType
     }
 
     /**
-     * @param array $options
+     * {@inheritDoc}
      */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {

@@ -18,7 +18,7 @@ class WidgetTypeBuilder
     /**
      * @param WidgetMapper[] $mappers Form field mappers.
      */
-    public function __construct(array $mappers)
+    public function __construct(iterable $mappers)
     {
         $this->mappers = $mappers;
     }
