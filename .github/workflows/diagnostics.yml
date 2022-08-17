@@ -20,7 +20,10 @@ jobs:
             output: '-o github-action -o default'
             phpcq_install: 'install'
           - php: 8.0
-            output: '-o default'
+            output: '-o github-action -o default'
+            phpcq_install: 'update'
+          - php: 8.1
+            output: '-o github-action -o default'
             phpcq_install: 'update'
 
     steps:
