@@ -40,7 +40,7 @@ interface WidgetMapper
         array $config,
         Context $context,
         WidgetTypeBuilder $fieldTypeBuilder,
-        callable $next
+        callable $next,
     ): array;
 
     /**

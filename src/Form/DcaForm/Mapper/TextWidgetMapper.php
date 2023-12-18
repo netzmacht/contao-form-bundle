@@ -41,9 +41,7 @@ final class TextWidgetMapper extends AbstractWidgetMapper
         'url'   => UrlType::class,
     ];
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function getTypeClass(string $name, array $config): string
     {
         $rgxp = ($config['eval']['rgxp'] ?? null);

@@ -15,16 +15,11 @@ final class HtmlType extends AbstractType
     {
         parent::configureOptions($resolver);
 
-        $resolver->setDefaults(
-            ['class' => '']
-        );
-
+        $resolver->setDefaults(['class' => '']);
         $resolver->setRequired(['html']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);

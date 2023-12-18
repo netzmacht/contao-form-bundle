@@ -80,9 +80,7 @@ abstract class AbstractWidgetMapper implements WidgetMapper
         $this->framework = $framework;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function supports(string $name, array $config): bool
     {
         if (! isset($config['inputType'])) {
@@ -92,9 +90,7 @@ abstract class AbstractWidgetMapper implements WidgetMapper
         return $this->widgetType === $config['inputType'];
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function getTypeClass(string $name, array $config): string
     {
         return $this->typeClass;
@@ -111,7 +107,7 @@ abstract class AbstractWidgetMapper implements WidgetMapper
         array $config,
         Context $context,
         WidgetTypeBuilder $fieldTypeBuilder,
-        callable $next
+        callable $next,
     ): array {
         $options = [
             'attr'   => $this->getAttributes($config),
@@ -153,16 +149,14 @@ abstract class AbstractWidgetMapper implements WidgetMapper
                     'rgxp'   => $config['eval']['rgxp'],
                     'label'  => StringUtil::decodeEntities(($config['label'][0] ?? $name)),
                     'widget' => $this->createWidget($name, $config, $context),
-                ]
+                ],
             );
         }
 
         return $options;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function configure(FormBuilderInterface $formType, array $config, Context $context): void
     {
         $formType->addModelTransformer(
@@ -172,13 +166,13 @@ abstract class AbstractWidgetMapper implements WidgetMapper
                  *
                  * @return mixed
                  */
-                static fn ($value) => $value,
+                static fn (mixed $value): mixed => $value,
                 /**
                  * @param mixed $value
                  *
                  * @return mixed
                  */
-                function ($value) use ($config) {
+                function (mixed $value) use ($config): mixed {
                     if ($value === null) {
                         $this->framework->initialize();
 
@@ -188,8 +182,8 @@ abstract class AbstractWidgetMapper implements WidgetMapper
                     }
 
                     return $value;
-                }
-            )
+                },
+            ),
         );
     }
 
@@ -232,7 +226,7 @@ abstract class AbstractWidgetMapper implements WidgetMapper
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    private function createWidget(string $name, array $config, Context $context): ?Widget
+    private function createWidget(string $name, array $config, Context $context): Widget|null
     {
         $this->framework->initialize();
 
@@ -247,7 +241,7 @@ abstract class AbstractWidgetMapper implements WidgetMapper
             $name,
             null,
             $name,
-            $context->getDefinition()->getName()
+            $context->getDefinition()->getName(),
         );
 
         /** @psalm-suppress UnsafeInstantiation */

@@ -56,9 +56,7 @@ abstract class AbstractFieldMapper implements FormFieldMapper
         'rgxp'      => true,
     ];
 
-    /**
-     * @throws AssertionFailedException When type class or field type is not givvn.
-     */
+    /** @throws AssertionFailedException When type class or field type is not given. */
     public function __construct()
     {
         /** @psalm-suppress UninitializedProperty */
@@ -72,7 +70,7 @@ abstract class AbstractFieldMapper implements FormFieldMapper
         return $model->type === $this->fieldType;
     }
 
-    public function getName(FormFieldModel $model): ?string
+    public function getName(FormFieldModel $model): string|null
     {
         return $model->name;
     }
@@ -122,7 +120,7 @@ abstract class AbstractFieldMapper implements FormFieldMapper
                 [
                     'rgxp'  => $model->rgxp,
                     'label' => StringUtil::decodeEntities($model->label),
-                ]
+                ],
             );
         }
 

@@ -53,9 +53,7 @@ final class UploadFieldMapper extends AbstractFieldMapper
         $this->configAdapter = $configAdapter;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function getOptions(FormFieldModel $model, FieldTypeBuilder $fieldTypeBuilder, callable $next): array
     {
         $options                  = parent::getOptions($model, $fieldTypeBuilder, $next);

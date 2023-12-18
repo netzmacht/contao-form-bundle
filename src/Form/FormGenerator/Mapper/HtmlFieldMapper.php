@@ -16,7 +16,7 @@ final class HtmlFieldMapper implements FormFieldMapper
         return $model->type === 'html';
     }
 
-    public function getName(FormFieldModel $model): ?string
+    public function getName(FormFieldModel $model): string|null
     {
         return 'field_' . $model->id;
     }
@@ -26,9 +26,7 @@ final class HtmlFieldMapper implements FormFieldMapper
         return HtmlType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function getOptions(FormFieldModel $model, FieldTypeBuilder $fieldTypeBuilder, callable $next): array
     {
         return [

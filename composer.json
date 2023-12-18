@@ -20,29 +20,31 @@
     "source": "https://github.com/netzmacht/contao-form-bundle"
   },
   "require": {
-    "php": "^7.4 || ^8.0",
-    "beberlei/assert": "^2.0 || ^3.0",
-    "contao/core-bundle": "^4.13",
-    "netzmacht/contao-toolkit": "^3.8",
-    "psr/log": "^1.1",
-    "symfony/config": "^4.4 || ^5.1",
-    "symfony/dependency-injection": "^4.4 || ^5.1",
-    "symfony/filesystem": "^4.4 || ^5.1",
-    "symfony/form": "^4.4 || ^5.1",
-    "symfony/http-foundation": "^4.4 || ^5.1",
-    "symfony/http-kernel": "^4.4 || ^5.1",
-    "symfony/options-resolver": "^4.4 || ^5.1",
-    "symfony/security-csrf": "^4.4 || ^5.1",
+    "php": "^8.1",
+    "beberlei/assert": "^3.0",
+    "contao/core-bundle": "^4.13 || ^5.2",
+    "netzmacht/contao-toolkit": "^4.0",
+    "psr/log": "^1.1 || ^2.0",
+    "symfony/config": "^5.4 || ^6.0",
+    "symfony/dependency-injection": "^5.4 || ^6.0",
+    "symfony/filesystem": "^5.4 || ^6.0",
+    "symfony/form": "^5.4 || ^6.0",
+    "symfony/http-foundation": "^5.4 || ^6.0",
+    "symfony/http-kernel": "^5.4 || ^6.0",
+    "symfony/options-resolver": "^5.4 || ^6.0",
+    "symfony/security-csrf": "^5.4 || ^6.0",
     "symfony/translation-contracts": "^1.1 || ^2",
-    "symfony/validator": "^4.4 || ^5.1",
+    "symfony/validator": "^5.4 || ^6.0",
     "twig/twig": "^3.0",
     "webmozart/path-util": "^2.3"
   },
   "require-dev": {
     "contao/manager-plugin": "^2.1",
-    "doctrine/coding-standard": "^9.0",
+    "doctrine/coding-standard": "^12.0",
     "phpcq/runner-bootstrap": "^1.0@dev"
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "autoload": {
     "psr-4": {
       "Netzmacht\\ContaoFormBundle\\": "src/"
@@ -53,7 +55,8 @@
       "composer/package-versions-deprecated": true,
       "contao-components/installer": true,
       "contao/manager-plugin": true,
-      "dealerdirect/phpcodesniffer-composer-installer": true
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "php-http/discovery": true
     }
   },
   "extra": {

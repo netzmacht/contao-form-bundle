@@ -22,6 +22,7 @@ use function explode;
 use function html_entity_decode;
 use function in_array;
 use function is_array;
+use function method_exists;
 use function sprintf;
 use function str_replace;
 use function str_starts_with;
@@ -70,7 +71,7 @@ final class RgxpValidator extends ConstraintValidator
      *
      * @throws UnexpectedTypeException When a not supported constraint is given.
      */
-    public function validate($value, Constraint $constraint): void
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (! $constraint instanceof Rgxp) {
             throw new UnexpectedTypeException($constraint, Rgxp::class);
@@ -104,7 +105,7 @@ final class RgxpValidator extends ConstraintValidator
      * @SuppressWarnings(PHPMD.Superglobals)
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    private function doValidate($value, Rgxp $constraint): void
+    private function doValidate(mixed $value, Rgxp $constraint): void
     {
         $rgxp = $constraint->getRgxp();
 
@@ -175,7 +176,7 @@ final class RgxpValidator extends ConstraintValidator
                 // Validate the date (see #5086)
                 try {
                     new Date($value, Date::getNumericDateFormat());
-                } catch (OutOfBoundsException $e) {
+                } catch (OutOfBoundsException) {
                     throw new InvalidArgumentException($this->translateError('invalidDate', [$value]));
                 }
 
@@ -206,7 +207,7 @@ final class RgxpValidator extends ConstraintValidator
                 // Validate the date (see #5086)
                 try {
                     new Date($value, Date::getNumericDatimFormat());
-                } catch (OutOfBoundsException $e) {
+                } catch (OutOfBoundsException) {
                     throw new InvalidArgumentException($this->translateError('invalidDate', [$value]));
                 }
 
@@ -292,7 +293,8 @@ final class RgxpValidator extends ConstraintValidator
                 break;
 
             case 'google+':
-                if (! Validator::isGooglePlusId($value)) {
+                /** @psalm-suppress UndefinedMethod */
+                if (method_exists(Validator::class, 'isGooglePlusId') && ! Validator::isGooglePlusId($value)) {
                     $this->invalidValue($constraint);
                 }
 
@@ -350,7 +352,7 @@ final class RgxpValidator extends ConstraintValidator
     private function invalidValue(Rgxp $constraint): void
     {
         throw new InvalidArgumentException(
-            sprintf($this->translateError($constraint->getRgxp()), (string) $constraint->getLabel())
+            sprintf($this->translateError($constraint->getRgxp()), (string) $constraint->getLabel()),
         );
     }
 

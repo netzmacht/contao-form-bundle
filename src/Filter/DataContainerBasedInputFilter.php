@@ -11,17 +11,9 @@ use Netzmacht\Contao\Toolkit\Dca\Definition;
  */
 final class DataContainerBasedInputFilter
 {
-    /**
-     * The input filter.
-     */
-    private ContaoInputFilter $inputFilter;
-
-    /**
-     * @param ContaoInputFilter $inputFilter The input filter.
-     */
-    public function __construct(ContaoInputFilter $inputFilter)
+    /** @param ContaoInputFilter $inputFilter The input filter. */
+    public function __construct(private readonly ContaoInputFilter $inputFilter)
     {
-        $this->inputFilter = $inputFilter;
     }
 
     /**
@@ -47,10 +39,8 @@ final class DataContainerBasedInputFilter
      * @param Definition $definition The data container definition.
      * @param string     $field      The field name.
      * @param mixed      $value      The given value.
-     *
-     * @return mixed
      */
-    public function filterValue(Definition $definition, string $field, $value)
+    public function filterValue(Definition $definition, string $field, mixed $value): mixed
     {
         if ($this->useRawRequestData($definition, $field)) {
             return $value;

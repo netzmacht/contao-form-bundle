@@ -15,22 +15,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class ContaoRequestTokenType extends HiddenType
 {
-    /**
-     * The csrf token storage.
-     */
-    private CsrfTokenProvider $tokenProvider;
-
-    /**
-     * @param CsrfTokenProvider $csrfTokenProvider The csrf token provider.
-     */
-    public function __construct(CsrfTokenProvider $csrfTokenProvider)
+    /** @param CsrfTokenProvider $tokenProvider The csrf token provider. */
+    public function __construct(private readonly CsrfTokenProvider $tokenProvider)
     {
-        $this->tokenProvider = $csrfTokenProvider;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);

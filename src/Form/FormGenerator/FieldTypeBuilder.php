@@ -15,9 +15,7 @@ final class FieldTypeBuilder
      */
     private array $mappers;
 
-    /**
-     * @param FormFieldMapper[] $mappers Form field mappers.
-     */
+    /** @param FormFieldMapper[] $mappers Form field mappers. */
     public function __construct(iterable $mappers)
     {
         $this->mappers = $mappers;
@@ -31,7 +29,7 @@ final class FieldTypeBuilder
      *
      * @return array<string,mixed>|null
      */
-    public function build(FormFieldModel $fieldModel, $next): ?array
+    public function build(FormFieldModel $fieldModel, callable $next): array|null
     {
         foreach ($this->mappers as $mapper) {
             if ($mapper->supports($fieldModel)) {

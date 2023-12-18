@@ -41,10 +41,6 @@ final class TextFieldMapper extends AbstractFieldMapper
 
     public function getTypeClass(FormFieldModel $model): string
     {
-        if (isset(static::$mapping[$model->rgxp])) {
-            return static::$mapping[$model->rgxp];
-        }
-
-        return parent::getTypeClass($model);
+        return self::$mapping[$model->rgxp] ?? parent::getTypeClass($model);
     }
 }

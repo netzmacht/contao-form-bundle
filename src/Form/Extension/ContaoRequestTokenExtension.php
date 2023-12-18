@@ -16,28 +16,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Class ContaoRequestTokenExtension allows to configure if the contao_request_token is added to a form
  *
- * It recognize route settings to auto activate / deactivate the request token.
+ * It recognizes route settings to auto activate / deactivate the request token.
  */
 final class ContaoRequestTokenExtension extends AbstractTypeExtension
 {
     /**
-     * Request scope matcher.
-     */
-    private RequestScopeMatcher $requestTokenMatcher;
-
-    /**
-     * Request stack.
-     */
-    private RequestStack $requestStack;
-
-    /**
      * @param RequestScopeMatcher $requestTokenMatcher Request scope matcher.
      * @param RequestStack        $requestStack        Request stack.
      */
-    public function __construct(RequestScopeMatcher $requestTokenMatcher, RequestStack $requestStack)
-    {
-        $this->requestTokenMatcher = $requestTokenMatcher;
-        $this->requestStack        = $requestStack;
+    public function __construct(
+        private readonly RequestScopeMatcher $requestTokenMatcher,
+        private readonly RequestStack $requestStack,
+    ) {
     }
 
     public function getExtendedType(): string
@@ -45,9 +35,7 @@ final class ContaoRequestTokenExtension extends AbstractTypeExtension
         return FormType::class;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public static function getExtendedTypes(): array
     {
         return [FormType::class];
@@ -59,13 +47,10 @@ final class ContaoRequestTokenExtension extends AbstractTypeExtension
 
         $resolver->setDefault('contao_request_token', $checkToken);
         $resolver->setDefault('csrf_protection', ! $checkToken);
-
         $resolver->setAllowedTypes('contao_request_token', 'bool');
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function finishView(FormView $view, FormInterface $form, array $options): void
     {
         if (! $options['contao_request_token']) {
@@ -86,7 +71,7 @@ final class ContaoRequestTokenExtension extends AbstractTypeExtension
             'REQUEST_TOKEN',
             ContaoRequestTokenType::class,
             null,
-            ['mapped' => false]
+            ['mapped' => false],
         );
 
         $view->children['REQUEST_TOKEN'] = $csrfForm->createView($view);

@@ -23,26 +23,16 @@ use function explode;
 final class RichTextExtension extends AbstractTypeExtension
 {
     /**
-     * Contao picker builder.
-     */
-    private PickerBuilderInterface $pickerBuilder;
-
-    /**
-     * Request Scope matcher.
-     */
-    private RequestScopeMatcher $scopeMatcher;
-
-    /**
      * @param PickerBuilderInterface $pickerBuilder Picker builder.
      * @param RequestScopeMatcher    $scopeMatcher  Scope matcher.
      */
-    public function __construct(PickerBuilderInterface $pickerBuilder, RequestScopeMatcher $scopeMatcher)
-    {
-        $this->pickerBuilder = $pickerBuilder;
-        $this->scopeMatcher  = $scopeMatcher;
+    public function __construct(
+        private readonly PickerBuilderInterface $pickerBuilder,
+        private readonly RequestScopeMatcher $scopeMatcher,
+    ) {
     }
 
-    /** @inheritDoc */
+    /** {@inheritDoc} */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         if ($options['rte'] === false || ! $this->scopeMatcher->isBackendRequest()) {
@@ -70,7 +60,7 @@ final class RichTextExtension extends AbstractTypeExtension
                 'fileBrowserTypes' => $fileBrowserTypes,
                 'source' => $options['rte_source'],
                 'language' => Backend::getTinyMceLanguage(),
-            ]
+            ],
         );
 
         $view->vars['rte'] = $template->parse();

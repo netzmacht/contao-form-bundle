@@ -29,7 +29,7 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
     /**
      * Multiple. If null, the value is read from the model.
      */
-    protected ?bool $multiple = null;
+    protected bool|null $multiple = null;
 
     /**
      * Display the choices expanded.
@@ -37,38 +37,27 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
     protected bool $expanded = true;
 
     /**
-     * Callback invoker.
-     */
-    private CallbackInvoker $callbackInvoker;
-
-    /**
      * @param ContaoFramework $framework       Contao framework.
      * @param CallbackInvoker $callbackInvoker Callback invoker.
      *
      * @throws AssertionFailedException When type class or field type is not given.
      */
-    public function __construct(
-        ContaoFramework $framework,
-        CallbackInvoker $callbackInvoker
-    ) {
+    public function __construct(ContaoFramework $framework, private readonly CallbackInvoker $callbackInvoker)
+    {
         parent::__construct($framework);
 
         $this->options['maxlength'] = false;
         $this->options['minlength'] = false;
         $this->options['rgxp']      = false;
-
-        $this->callbackInvoker = $callbackInvoker;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function getOptions(
         string $name,
         array $config,
         Context $context,
         WidgetTypeBuilder $fieldTypeBuilder,
-        callable $next
+        callable $next,
     ): array {
         $options = parent::getOptions($name, $config, $context, $fieldTypeBuilder, $next);
 

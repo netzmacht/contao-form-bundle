@@ -22,7 +22,7 @@ final class FieldsetFieldMapper implements FormFieldMapper
         return $model->type === 'fieldset' && $model->fsType === 'fsStart';
     }
 
-    public function getName(FormFieldModel $model): ?string
+    public function getName(FormFieldModel $model): string|null
     {
         return 'fieldset_' . $model->id;
     }
@@ -32,9 +32,7 @@ final class FieldsetFieldMapper implements FormFieldMapper
         return FieldsetType::class;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function getOptions(FormFieldModel $model, FieldTypeBuilder $fieldTypeBuilder, callable $next): array
     {
         $options = [

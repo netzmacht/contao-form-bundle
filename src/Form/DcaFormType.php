@@ -19,23 +19,11 @@ use function next;
 final class DcaFormType extends AbstractType
 {
     /**
-     * Data container manager.
-     */
-    private Manager $dcaManager;
-
-    /**
-     * The widget type builder.
-     */
-    private WidgetTypeBuilder $typeBuilder;
-
-    /**
      * @param Manager           $dcaManager  Data container manager.
      * @param WidgetTypeBuilder $typeBuilder Field type builder.
      */
-    public function __construct(Manager $dcaManager, WidgetTypeBuilder $typeBuilder)
+    public function __construct(private readonly Manager $dcaManager, private readonly WidgetTypeBuilder $typeBuilder)
     {
-        $this->dcaManager  = $dcaManager;
-        $this->typeBuilder = $typeBuilder;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -48,14 +36,12 @@ final class DcaFormType extends AbstractType
                     'driver'    => null,
                     'fields'    => null,
                     'callback'  => null,
-                ]
+                ],
             )
             ->setAllowedTypes('fields', 'array');
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($options['dataContainer'] instanceof Definition) {
@@ -67,7 +53,7 @@ final class DcaFormType extends AbstractType
         $context = new Context(
             $definition,
             $options['formatter'] ?: $this->dcaManager->getFormatter($definition->getName()),
-            $options['driver']
+            $options['driver'],
         );
 
         $fields = $this->getFieldConfigs($definition, $options);
@@ -121,9 +107,9 @@ final class DcaFormType extends AbstractType
      *
      * @param array<string,array<string,mixed>> $formFields Form fields array.
      */
-    private function createNextCallback(&$formFields): callable
+    private function createNextCallback(array &$formFields): callable
     {
-        return static function (?callable $condition = null) use (&$formFields) {
+        return static function (callable|null $condition = null) use (&$formFields) {
             $current = current($formFields);
 
             if ($current === false) {

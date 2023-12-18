@@ -17,11 +17,9 @@ final class MultipleCheckboxesWizard extends AbstractChoicesWidgetMapper
     /**
      * Multiple options are allowed.
      */
-    protected ?bool $multiple = true;
+    protected bool|null $multiple = true;
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function supports(string $name, array $config): bool
     {
         if (parent::supports($name, $config)) {

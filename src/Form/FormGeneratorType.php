@@ -27,23 +27,13 @@ use function sprintf;
 final class FormGeneratorType extends AbstractType
 {
     /**
-     * Contao model repository manager.
-     */
-    private RepositoryManager $repositoryManager;
-
-    /**
-     * Contao form generator field type builder.
-     */
-    private FieldTypeBuilder $fieldTypeBuilder;
-
-    /**
      * @param RepositoryManager $repositoryManager Contao model repository manager.
      * @param FieldTypeBuilder  $fieldTypeBuilder  Contao form type builder.
      */
-    public function __construct(RepositoryManager $repositoryManager, FieldTypeBuilder $fieldTypeBuilder)
-    {
-        $this->repositoryManager = $repositoryManager;
-        $this->fieldTypeBuilder  = $fieldTypeBuilder;
+    public function __construct(
+        private readonly RepositoryManager $repositoryManager,
+        private readonly FieldTypeBuilder $fieldTypeBuilder,
+    ) {
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -52,15 +42,13 @@ final class FormGeneratorType extends AbstractType
             [
                 'ignoreUnsupported' => true,
                 'ignore'            => [],
-            ]
+            ],
         );
 
         $resolver->setRequired(['formId']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function buildForm(FormBuilder $builder, array $options): void
     {
         $formId    = (int) $options['formId'];
@@ -156,11 +144,11 @@ final class FormGeneratorType extends AbstractType
     /**
      * Crate the next callback.
      *
-     * @param FormFieldModel[]|array $formFields Form fields array.
+     * @param FormFieldModel[] $formFields Form fields array.
      */
-    private function createNextCallback(&$formFields): callable
+    private function createNextCallback(array &$formFields): callable
     {
-        return static function (?callable $condition = null) use (&$formFields) {
+        return static function (callable|null $condition = null) use (&$formFields) {
             $current = current($formFields);
 
             if ($current === false) {

@@ -21,16 +21,14 @@ abstract class AbstractChoicesFieldMapper extends AbstractFieldMapper
     /**
      * Multiple. If null, the value is read from the model.
      */
-    protected ?bool $multiple = null;
+    protected bool|null $multiple = null;
 
     /**
      * Display the choices expanded.
      */
     protected bool $expanded = true;
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function __construct()
     {
         parent::__construct();
@@ -40,9 +38,7 @@ abstract class AbstractChoicesFieldMapper extends AbstractFieldMapper
         $this->options['rgxp']      = false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function getOptions(FormFieldModel $model, FieldTypeBuilder $fieldTypeBuilder, callable $next): array
     {
         $options                = parent::getOptions($model, $fieldTypeBuilder, $next);

@@ -14,5 +14,5 @@ final class CheckboxFieldMapper extends AbstractChoicesFieldMapper
     /**
      * Multiple. If null, the value is read from the model.
      */
-    protected ?bool $multiple = true;
+    protected bool|null $multiple = true;
 }

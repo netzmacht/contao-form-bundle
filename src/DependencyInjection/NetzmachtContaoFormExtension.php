@@ -13,14 +13,12 @@ use function dirname;
 
 final class NetzmachtContaoFormExtension extends Extension
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new YamlFileLoader(
             $container,
-            new FileLocator(dirname(__DIR__) . '/Resources/config')
+            new FileLocator(dirname(__DIR__) . '/Resources/config'),
         );
 
         $loader->load('services.yml');
