@@ -24,6 +24,7 @@ use function in_array;
 use function is_array;
 use function sprintf;
 use function str_replace;
+use function str_starts_with;
 use function strncmp;
 use function strpos;
 use function substr_count;
@@ -99,6 +100,7 @@ final class RgxpValidator extends ConstraintValidator
      * @throws InvalidArgumentException Then an error occurs.
      *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      * @SuppressWarnings(PHPMD.Superglobals)
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
@@ -106,16 +108,19 @@ final class RgxpValidator extends ConstraintValidator
     {
         $rgxp = $constraint->getRgxp();
 
+        if (str_starts_with($rgxp, 'digit_')) {
+            // Special validation rule for style sheets
+            $textual = explode('_', $rgxp);
+            array_shift($textual);
+
+            if (in_array($value, $textual, true) || strncmp($value, '$', 1) === 0) {
+                return;
+            }
+
+            $rgxp = 'digit';
+        }
+
         switch ($rgxp) {
-            case strncmp($rgxp, 'digit_', 6) === 0:
-                // Special validation rule for style sheets
-                $textual = explode('_', $rgxp);
-                array_shift($textual);
-
-                if (in_array($value, $textual, true) || strncmp($value, '$', 1) === 0) {
-                    break;
-                }
-
             // no break
             case 'digit':
                 // Support decimal commas and convert them automatically (see #3488)

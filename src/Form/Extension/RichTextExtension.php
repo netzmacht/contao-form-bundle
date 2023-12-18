@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use function array_pad;
 use function explode;
 
 /**
@@ -50,7 +51,7 @@ final class RichTextExtension extends AbstractTypeExtension
             return;
         }
 
-        [$file, $type] = explode('|', $options['rte'], 2);
+        [$file, $type] = array_pad(explode('|', $options['rte'], 2), 2, '');
 
         $fileBrowserTypes = [];
         foreach (['file' => 'image', 'link' => 'file'] as $context => $fileBrowserType) {

@@ -91,7 +91,7 @@ abstract class AbstractChoicesFieldMapper extends AbstractFieldMapper
                 continue;
             }
 
-            if ($options['multiple']) {
+            if ($options['multiple'] ?? false) {
                 $options['data'][] = $option['value'];
             } else {
                 $options['data'] = $option['value'];
