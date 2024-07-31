@@ -148,6 +148,9 @@ final class FormGeneratorType extends AbstractType
      */
     private function createNextCallback(array &$formFields): callable
     {
+        // phpcs:ignore SlevomatCodingStandard.TypeHints.NullTypeHintOnLastPosition.NullTypeHintNotOnLastPosition
+        /** @psalm-param null|callable(): bool $condition */
+
         return static function (callable|null $condition = null) use (&$formFields) {
             $current = current($formFields);
 
@@ -155,7 +158,7 @@ final class FormGeneratorType extends AbstractType
                 return null;
             }
 
-            if (! $condition || $condition($current)) {
+            if ($condition === null || $condition($current)) {
                 next($formFields);
 
                 return $current;

@@ -106,6 +106,7 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
         $formatter = $context->getFormatter();
 
         foreach ($config['options'] as $option) {
+            /** @psalm-suppress RiskyTruthyFalsyComparison */
             $label                      = $formatter->formatValue($name, $option, $context->getDriver()) ?: $option;
             $options['choices'][$label] = $option;
         }

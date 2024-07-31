@@ -35,7 +35,7 @@ final class Rgxp extends Constraint
 
         $this->groups = [];
         $this->rgxp   = is_array($options) ? ($options['rgxp'] ?? '') : '';
-        if ($this->label) {
+        if ($this->label !== null) {
             return;
         }
 

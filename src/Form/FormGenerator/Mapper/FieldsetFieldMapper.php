@@ -57,7 +57,7 @@ final class FieldsetFieldMapper implements FormFieldMapper
         while (($child = $next($condition)) !== null) {
             $field = $fieldTypeBuilder->build($child, $next);
 
-            if (! $field) {
+            if ($field === null) {
                 continue;
             }
 

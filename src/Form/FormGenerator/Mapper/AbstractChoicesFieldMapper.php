@@ -77,7 +77,7 @@ abstract class AbstractChoicesFieldMapper extends AbstractFieldMapper
                 continue;
             }
 
-            if ($group) {
+            if ($group !== null) {
                 $options['choices'][$group][$option['label']] = $option['value'];
             } else {
                 $options['choices'][$option['label']] = $option['value'];
@@ -87,6 +87,7 @@ abstract class AbstractChoicesFieldMapper extends AbstractFieldMapper
                 continue;
             }
 
+            /** @psalm-suppress RiskyTruthyFalsyComparison */
             if ($options['multiple'] ?? false) {
                 $options['data'][] = $option['value'];
             } else {

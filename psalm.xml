@@ -1,15 +1,9 @@
 <?xml version="1.0"?>
-<psalm
-    errorLevel="3"
-    resolveFromConfigFile="true"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="https://getpsalm.org/schema/config"
-    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
->
+<psalm xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://getpsalm.org/schema/config" errorLevel="3" resolveFromConfigFile="true" xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd" findUnusedCode="false" findUnusedBaselineEntry="false">
     <projectFiles>
-        <directory name="src" />
+        <directory name="src"/>
         <ignoreFiles>
-            <directory name="vendor" />
+            <directory name="vendor"/>
         </ignoreFiles>
     </projectFiles>
 
@@ -24,7 +18,7 @@
         </InternalMethod>
         <UndefinedConstant>
             <errorLevel type="suppress">
-                <file name="src/Form/FormGenerator/UploadHandler.php" />
+                <file name="src/Form/FormGenerator/UploadHandler.php"/>
             </errorLevel>
         </UndefinedConstant>
     </issueHandlers>
