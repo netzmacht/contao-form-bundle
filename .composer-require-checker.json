@@ -9,7 +9,7 @@
     "Contao\\ManagerPlugin\\Config\\ContainerBuilder",
     "Contao\\ManagerPlugin\\Config\\ExtensionPluginInterface",
     "Contao\\ManagerPlugin\\Dependency\\DependentPluginInterface",
-    "TL_FILES",
-    "scan"
+    "Netzmacht\\Contao\\Toolkit\\NetzmachtContaoToolkitBundle",
+    "Netzmacht\\Contao\\Toolkit\\Bundle\\NetzmachtContaoToolkitBundle"
   ]
 }

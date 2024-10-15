@@ -23,7 +23,7 @@
     "php": "^8.2",
     "beberlei/assert": "^3.0",
     "contao/core-bundle": "^4.13 || ^5.3",
-    "netzmacht/contao-toolkit": "^4.0",
+    "netzmacht/contao-toolkit": "^3.9 || ^4.0",
     "psr/log": "^1.1 || ^2.0",
     "symfony/config": "^5.4 || ^6.4",
     "symfony/dependency-injection": "^5.4 || ^6.4",

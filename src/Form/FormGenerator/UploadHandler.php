@@ -194,7 +194,7 @@ final class UploadHandler
         // Overwrite the upload folder with user's home directory
         if ($fieldModel->useHomeDir && $this->tokenChecker->hasFrontendUser()) {
             $user = $this->framework->createInstance(FrontendUser::class);
-            if ($user->assignDir && $user->homeDir) {
+            if ($user->assignDir && $user->homeDir !== '') {
                 $uploadFolderUuid = $user->homeDir;
             }
         }

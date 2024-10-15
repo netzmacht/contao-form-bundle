@@ -21,6 +21,12 @@
                 <file name="src/Form/FormGenerator/UploadHandler.php"/>
             </errorLevel>
         </UndefinedConstant>
+        <UndefinedClass>
+            <errorLevel type="suppress">
+                <referencedClass name="Netzmacht\Contao\Toolkit\NetzmachtContaoToolkitBundle"/>
+                <referencedClass name="Netzmacht\Contao\Toolkit\Bundle\NetzmachtContaoToolkitBundle"/>
+            </errorLevel>
+        </UndefinedClass>
     </issueHandlers>
 
     <universalObjectCrates>
