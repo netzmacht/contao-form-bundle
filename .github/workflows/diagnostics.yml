@@ -16,13 +16,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - php: 7.4
-            output: '-o github-action -o default'
-            phpcq_install: 'install'
-          - php: 8.0
+          - php: 8.2
             output: '-o github-action -o default'
             phpcq_install: 'update'
-          - php: 8.1
+          - php: 8.3
             output: '-o github-action -o default'
             phpcq_install: 'update'
 
