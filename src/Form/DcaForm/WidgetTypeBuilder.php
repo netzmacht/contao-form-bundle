@@ -15,9 +15,7 @@ final class WidgetTypeBuilder
      */
     private array $mappers;
 
-    /**
-     * @param WidgetMapper[] $mappers Form field mappers.
-     */
+    /** @param WidgetMapper[] $mappers Form field mappers. */
     public function __construct(iterable $mappers)
     {
         $this->mappers = $mappers;
@@ -37,7 +35,7 @@ final class WidgetTypeBuilder
         array $config,
         Context $context,
         callable $next,
-        FormBuilderInterface $builder
+        FormBuilderInterface $builder,
     ): void {
         foreach ($this->mappers as $mapper) {
             if (! $mapper->supports($name, $config)) {
@@ -47,7 +45,7 @@ final class WidgetTypeBuilder
             $builder->add(
                 $name,
                 $mapper->getTypeClass($name, $config),
-                $mapper->getOptions($name, $config, $context, $this, $next)
+                $mapper->getOptions($name, $config, $context, $this, $next),
             );
 
             $mapper->configure($builder->get($name), $config, $context);

@@ -21,9 +21,7 @@ final class TextareaFieldMapper extends AbstractFieldMapper
      */
     protected string $typeClass = TextareaType::class;
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function getOptions(FormFieldModel $model, FieldTypeBuilder $fieldTypeBuilder, callable $next): array
     {
         $options = parent::getOptions($model, $fieldTypeBuilder, $next);

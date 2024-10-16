@@ -31,9 +31,7 @@ final class FieldsetType extends AbstractType
             ->addAllowedTypes('fields', ['array', 'callable']);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if (empty($options['fields'])) {
@@ -49,9 +47,7 @@ final class FieldsetType extends AbstractType
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         if ($options['legend'] === false) {

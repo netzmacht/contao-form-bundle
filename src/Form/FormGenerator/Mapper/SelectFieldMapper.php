@@ -19,9 +19,7 @@ final class SelectFieldMapper extends AbstractChoicesFieldMapper
      */
     protected bool $expanded = false;
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function getOptions(FormFieldModel $model, FieldTypeBuilder $fieldTypeBuilder, callable $next): array
     {
         $options = parent::getOptions($model, $fieldTypeBuilder, $next);

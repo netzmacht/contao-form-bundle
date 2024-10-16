@@ -10,27 +10,30 @@ use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use Contao\ManagerPlugin\Config\ContainerBuilder;
 use Contao\ManagerPlugin\Config\ExtensionPluginInterface;
-use Netzmacht\Contao\Toolkit\Bundle\NetzmachtContaoToolkitBundle;
+use Netzmacht\Contao\Toolkit\Bundle\NetzmachtContaoToolkitBundle as LegacyNetzmachtContaoToolkitBundle;
+use Netzmacht\Contao\Toolkit\NetzmachtContaoToolkitBundle;
 use Netzmacht\ContaoFormBundle\NetzmachtContaoFormBundle;
 
 use function dirname;
 
 final class Plugin implements BundlePluginInterface, ExtensionPluginInterface
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function getBundles(ParserInterface $parser): array
     {
         return [
             BundleConfig::create(NetzmachtContaoFormBundle::class)
-                ->setLoadAfter([ContaoCoreBundle::class, NetzmachtContaoToolkitBundle::class]),
+                ->setLoadAfter(
+                    [
+                        ContaoCoreBundle::class,
+                        NetzmachtContaoToolkitBundle::class,
+                        LegacyNetzmachtContaoToolkitBundle::class,
+                    ],
+                ),
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function getExtensionConfig($extensionName, array $extensionConfigs, ContainerBuilder $container): array
     {
         if ($extensionName === 'framework') {

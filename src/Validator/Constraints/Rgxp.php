@@ -15,20 +15,14 @@ use function is_array;
  */
 final class Rgxp extends Constraint
 {
-    /**
-     * The rgxp.
-     */
+    /** The rgxp. */
     protected string $rgxp;
 
-    /**
-     * The widget.
-     */
-    protected ?Widget $widget = null;
+    /** The widget. */
+    protected Widget|null $widget = null;
 
-    /**
-     * The label.
-     */
-    protected ?string $label = null;
+    /** The label.*/
+    protected string|null $label = null;
 
     /**
      * {@inheritDoc}
@@ -41,7 +35,7 @@ final class Rgxp extends Constraint
 
         $this->groups = [];
         $this->rgxp   = is_array($options) ? ($options['rgxp'] ?? '') : '';
-        if ($this->label) {
+        if ($this->label !== null) {
             return;
         }
 
@@ -52,34 +46,25 @@ final class Rgxp extends Constraint
         $this->label = $this->widget->label;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function getRequiredOptions(): array
     {
         return array_merge(['rgxp'], parent::getRequiredOptions());
     }
 
-    /**
-     * Get the rgxp.
-     */
     public function getRgxp(): string
     {
         return $this->rgxp;
     }
 
-    /**
-     * Get the label if defined.
-     */
-    public function getLabel(): ?string
+    /** Get the label if defined. */
+    public function getLabel(): string|null
     {
         return $this->label;
     }
 
-    /**
-     * Get the widget is defined.
-     */
-    public function getWidget(): ?Widget
+    /** Get the widget is defined. */
+    public function getWidget(): Widget|null
     {
         return $this->widget;
     }

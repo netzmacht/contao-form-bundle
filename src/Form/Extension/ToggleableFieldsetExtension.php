@@ -17,17 +17,13 @@ final class ToggleableFieldsetExtension extends AbstractTypeExtension
         return FieldsetType::class;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public static function getExtendedTypes(): iterable
     {
         return [FieldsetType::class];
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['root_id']    = $form->getRoot()->getName();

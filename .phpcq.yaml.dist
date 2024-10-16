@@ -1,103 +1,91 @@
 phpcq:
   repositories:
-    - https://phpcq.github.io/repository/repository.json
+    - 'https://phpcq.github.io/repository/repository.json'
   directories:
     - src
   artifact: .phpcq/build
-
   plugins:
-    psalm:
+    composer-normalize:
       version: ^1.0
       signed: false
     composer-require-checker:
       version: ^1.0
       signed: false
-    phpmd:
-      version: ^1.0
-      signed: false
-      requirements:
-        phpmd:
-          signed: false
     phpcpd:
       version: ^1.1
       signed: false
     phploc:
       version: ^1.0
       signed: false
+    phpmd:
+      version: ^1.0
+      signed: false
+    psalm:
+      version: ^1.0
+      signed: false
+    rector:
+      version: ^1.0
+      signed: false
     phpcs:
       version: ^1.0
       signed: false
-    composer-normalize:
-      version: ^1.0
-      signed: false
   trusted-keys:
-    # composer-require-checker
+    - C00543248C87FB13
     - 033E5F8D801A2F8D
-    # sb@sebastian-bergmann.de
+    - D2CCAC42F6295E7D
     - 4AA394086372C20A
-    # psalm
+    - 9093F8B32E4815AA
     - 8A03EA3B385DBAA1
     - 12CE0F1D262429A5
-    # magl@magll.net
-    - D2CCAC42F6295E7D
-    # PHP_CodeSniffer
     - 31C7E470E2138192
-    # Composer normalize
-    - C00543248C87FB13
-
+    - 5E6DDE998AB73B8E
+    - A978220305CD5C32
 tasks:
   fix:
     - composer-normalize-fix
+    - rector-fix
     - phpcbf
-
   verify:
-    - composer-require-checker
     - composer-normalize
-
+    - composer-require-checker
   analyze:
-    - phploc
     - phpcpd
+    - phploc
     - phpmd
-    - phpcs
     - psalm
-
+    - rector
+    - phpcs
   default:
     - verify
     - analyze
-
-  phpcpd:
+  composer-normalize-fix:
     config:
-      exclude:
-        - spec/PropertyAccess/ContaoModelPropertyAccessorSpec.php
-
-  phpmd:
+      dry_run: false
+      ignore_output:
+        - '#> pre-command-run: Contao\\ManagerPlugin\\Composer\\ArtifactsPlugin->preCommandRun#'
+    plugin: composer-normalize
+  composer-normalize:
     config:
-      directories:
-        - src
-      ruleset:
-        - codesize
-        - controversial
-        - naming
-        - unusedcode
-
+      ignore_output:
+        - '#> pre-command-run: Contao\\ManagerPlugin\\Composer\\ArtifactsPlugin->preCommandRun#'
   composer-require-checker:
     config:
-      config_file: '.composer-require-checker.json'
-
+      config_file: .composer-require-checker.json
+  rector-fix:
+    config:
+      dry-run: false
+    plugin: rector
   phpcs:
-    config: &phpcs-config
+    config:
       standard: ~
       standard_paths:
         - ./vendor/slevomat/coding-standard
         - ./vendor/doctrine/coding-standard/lib
-
   phpcbf:
     plugin: phpcs
     config:
-      <<: *phpcs-config
+      standard: ~
+      standard_paths:
+        - ./vendor/slevomat/coding-standard
+        - ./vendor/doctrine/coding-standard/lib
       fix: true
-
-  composer-normalize-fix:
-    plugin: composer-normalize
-    config:
-      dry_run: false

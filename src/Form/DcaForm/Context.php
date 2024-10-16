@@ -15,30 +15,15 @@ use Netzmacht\Contao\Toolkit\Dca\Formatter\Formatter;
 final class Context
 {
     /**
-     * The data container definition.
-     */
-    private Definition $definition;
-
-    /**
-     * The formatter.
-     */
-    private Formatter $formatter;
-
-    /**
-     * The data container driver.
-     */
-    private ?DataContainer $driver = null;
-
-    /**
      * @param Definition         $definition The data container definition.
      * @param Formatter          $formatter  The formatter.
      * @param DataContainer|null $driver     The data container driver.
      */
-    public function __construct(Definition $definition, Formatter $formatter, ?DataContainer $driver)
-    {
-        $this->definition = $definition;
-        $this->formatter  = $formatter;
-        $this->driver     = $driver;
+    public function __construct(
+        private readonly Definition $definition,
+        private readonly Formatter $formatter,
+        private readonly DataContainer|null $driver,
+    ) {
     }
 
     /**
@@ -60,7 +45,7 @@ final class Context
     /**
      * Get driver.
      */
-    public function getDriver(): ?DataContainer
+    public function getDriver(): DataContainer|null
     {
         return $this->driver;
     }

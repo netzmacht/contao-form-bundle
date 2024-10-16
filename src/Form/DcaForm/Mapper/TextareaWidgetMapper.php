@@ -22,9 +22,7 @@ final class TextareaWidgetMapper extends AbstractWidgetMapper
      */
     protected string $typeClass = TextareaType::class;
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function __construct(ContaoFramework $framework)
     {
         parent::__construct($framework);

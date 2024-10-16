@@ -10,19 +10,12 @@ use Twig\TwigFunction;
 
 final class TwigExtension extends AbstractExtension
 {
-    private CsrfTokenProvider $csrfTokenProvider;
-
-    /**
-     * @param CsrfTokenProvider $csrfTokenProvider Csrf token manager.
-     */
-    public function __construct(CsrfTokenProvider $csrfTokenProvider)
+    /** @param CsrfTokenProvider $csrfTokenProvider Csrf token manager. */
+    public function __construct(private readonly CsrfTokenProvider $csrfTokenProvider)
     {
-        $this->csrfTokenProvider = $csrfTokenProvider;
     }
 
-    /**
-     * @return list<TwigFunction>
-     */
+    /** @return list<TwigFunction> */
     public function getFunctions(): array
     {
         return [new TwigFunction('contao_request_token', [$this, 'requestToken'])];

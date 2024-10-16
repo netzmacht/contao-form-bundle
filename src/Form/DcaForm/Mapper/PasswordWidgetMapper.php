@@ -48,15 +48,13 @@ final class PasswordWidgetMapper extends AbstractWidgetMapper
         $this->options['value'] = false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function getOptions(
         string $name,
         array $config,
         Context $context,
         WidgetTypeBuilder $fieldTypeBuilder,
-        callable $next
+        callable $next,
     ): array {
         $options = parent::getOptions($name, $config, $context, $fieldTypeBuilder, $next);
 
@@ -68,7 +66,7 @@ final class PasswordWidgetMapper extends AbstractWidgetMapper
             'label' => $this->translator->trans(
                 'MSC.confirmation',
                 [$options['first_options']['label']],
-                'contao_default'
+                'contao_default',
             ),
         ];
 

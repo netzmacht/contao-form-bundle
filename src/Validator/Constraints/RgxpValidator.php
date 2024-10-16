@@ -22,8 +22,10 @@ use function explode;
 use function html_entity_decode;
 use function in_array;
 use function is_array;
+use function method_exists;
 use function sprintf;
 use function str_replace;
+use function str_starts_with;
 use function strncmp;
 use function strpos;
 use function substr_count;
@@ -69,7 +71,7 @@ final class RgxpValidator extends ConstraintValidator
      *
      * @throws UnexpectedTypeException When a not supported constraint is given.
      */
-    public function validate($value, Constraint $constraint): void
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (! $constraint instanceof Rgxp) {
             throw new UnexpectedTypeException($constraint, Rgxp::class);
@@ -99,23 +101,27 @@ final class RgxpValidator extends ConstraintValidator
      * @throws InvalidArgumentException Then an error occurs.
      *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      * @SuppressWarnings(PHPMD.Superglobals)
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    private function doValidate($value, Rgxp $constraint): void
+    private function doValidate(mixed $value, Rgxp $constraint): void
     {
         $rgxp = $constraint->getRgxp();
 
+        if (str_starts_with($rgxp, 'digit_')) {
+            // Special validation rule for style sheets
+            $textual = explode('_', $rgxp);
+            array_shift($textual);
+
+            if (in_array($value, $textual, true) || strncmp($value, '$', 1) === 0) {
+                return;
+            }
+
+            $rgxp = 'digit';
+        }
+
         switch ($rgxp) {
-            case strncmp($rgxp, 'digit_', 6) === 0:
-                // Special validation rule for style sheets
-                $textual = explode('_', $rgxp);
-                array_shift($textual);
-
-                if (in_array($value, $textual, true) || strncmp($value, '$', 1) === 0) {
-                    break;
-                }
-
             // no break
             case 'digit':
                 // Support decimal commas and convert them automatically (see #3488)
@@ -170,7 +176,7 @@ final class RgxpValidator extends ConstraintValidator
                 // Validate the date (see #5086)
                 try {
                     new Date($value, Date::getNumericDateFormat());
-                } catch (OutOfBoundsException $e) {
+                } catch (OutOfBoundsException) {
                     throw new InvalidArgumentException($this->translateError('invalidDate', [$value]));
                 }
 
@@ -201,7 +207,7 @@ final class RgxpValidator extends ConstraintValidator
                 // Validate the date (see #5086)
                 try {
                     new Date($value, Date::getNumericDatimFormat());
-                } catch (OutOfBoundsException $e) {
+                } catch (OutOfBoundsException) {
                     throw new InvalidArgumentException($this->translateError('invalidDate', [$value]));
                 }
 
@@ -287,7 +293,8 @@ final class RgxpValidator extends ConstraintValidator
                 break;
 
             case 'google+':
-                if (! Validator::isGooglePlusId($value)) {
+                /** @psalm-suppress UndefinedMethod */
+                if (method_exists(Validator::class, 'isGooglePlusId') && ! Validator::isGooglePlusId($value)) {
                     $this->invalidValue($constraint);
                 }
 
@@ -345,7 +352,7 @@ final class RgxpValidator extends ConstraintValidator
     private function invalidValue(Rgxp $constraint): void
     {
         throw new InvalidArgumentException(
-            sprintf($this->translateError($constraint->getRgxp()), (string) $constraint->getLabel())
+            sprintf($this->translateError($constraint->getRgxp()), (string) $constraint->getLabel()),
         );
     }
 

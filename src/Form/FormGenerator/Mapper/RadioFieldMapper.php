@@ -14,5 +14,5 @@ final class RadioFieldMapper extends AbstractChoicesFieldMapper
     /**
      * Multiple. If null, the value is read from the model.
      */
-    protected ?bool $multiple = false;
+    protected bool|null $multiple = false;
 }

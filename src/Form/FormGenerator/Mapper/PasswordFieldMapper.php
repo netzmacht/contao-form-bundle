@@ -43,9 +43,7 @@ final class PasswordFieldMapper extends AbstractFieldMapper
         $this->options['value'] = false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function getOptions(FormFieldModel $model, FieldTypeBuilder $fieldTypeBuilder, callable $next): array
     {
         $options = parent::getOptions($model, $fieldTypeBuilder, $next);

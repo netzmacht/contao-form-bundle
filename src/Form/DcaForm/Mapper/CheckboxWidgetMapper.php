@@ -25,9 +25,7 @@ final class CheckboxWidgetMapper extends AbstractWidgetMapper
      */
     protected string $typeClass = CheckboxType::class;
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function supports(string $name, array $config): bool
     {
         if (! parent::supports($name, $config)) {
@@ -37,15 +35,13 @@ final class CheckboxWidgetMapper extends AbstractWidgetMapper
         return empty($config['eval']['multiple']);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function getOptions(
         string $name,
         array $config,
         Context $context,
         WidgetTypeBuilder $fieldTypeBuilder,
-        callable $next
+        callable $next,
     ): array {
         $options = parent::getOptions($name, $config, $context, $fieldTypeBuilder, $next);
 
@@ -54,9 +50,7 @@ final class CheckboxWidgetMapper extends AbstractWidgetMapper
         return $options;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function configure(FormBuilderInterface $formType, array $config, Context $context): void
     {
         parent::configure($formType, $config, $context);
@@ -66,8 +60,8 @@ final class CheckboxWidgetMapper extends AbstractWidgetMapper
                 /** @param mixed $value */
                 static fn ($value): bool => (bool) $value,
                 /** @param mixed $value */
-                static fn ($value): string => $value ? '1' : ''
-            )
+                static fn ($value): string => $value ? '1' : '',
+            ),
         );
     }
 }

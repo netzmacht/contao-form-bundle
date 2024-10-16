@@ -16,7 +16,7 @@ final class SubmitFieldMapper implements FormFieldMapper
         return $model->type === 'submit';
     }
 
-    public function getName(FormFieldModel $model): ?string
+    public function getName(FormFieldModel $model): string|null
     {
         return 'submit_' . $model->id;
     }
@@ -26,13 +26,11 @@ final class SubmitFieldMapper implements FormFieldMapper
         return ButtonType::class;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function getOptions(
         FormFieldModel $model,
         FieldTypeBuilder $fieldTypeBuilder,
-        callable $next
+        callable $next,
     ): array {
         $options = [
             'label' => $model->slabel ?: $model->name,

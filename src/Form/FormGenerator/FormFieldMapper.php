@@ -20,7 +20,7 @@ interface FormFieldMapper
      *
      * @param FormFieldModel $model The form field.
      */
-    public function getName(FormFieldModel $model): ?string;
+    public function getName(FormFieldModel $model): string|null;
 
     /**
      * Get the type class from the form field.
@@ -41,6 +41,6 @@ interface FormFieldMapper
     public function getOptions(
         FormFieldModel $model,
         FieldTypeBuilder $fieldTypeBuilder,
-        callable $next
+        callable $next,
     ): array;
 }

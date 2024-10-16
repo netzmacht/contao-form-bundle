@@ -56,9 +56,7 @@ abstract class AbstractFieldMapper implements FormFieldMapper
         'rgxp'      => true,
     ];
 
-    /**
-     * @throws AssertionFailedException When type class or field type is not givvn.
-     */
+    /** @throws AssertionFailedException When type class or field type is not given. */
     public function __construct()
     {
         /** @psalm-suppress UninitializedProperty */
@@ -72,7 +70,7 @@ abstract class AbstractFieldMapper implements FormFieldMapper
         return $model->type === $this->fieldType;
     }
 
-    public function getName(FormFieldModel $model): ?string
+    public function getName(FormFieldModel $model): string|null
     {
         return $model->name;
     }
@@ -94,35 +92,35 @@ abstract class AbstractFieldMapper implements FormFieldMapper
             'attr' => $this->getAttributes($model),
         ];
 
-        if ($this->options['label']) {
+        if ($this->options['label'] === true) {
             $options['label'] = StringUtil::decodeEntities($model->label);
         }
 
-        if ($this->options['mandatory']) {
+        if ($this->options['mandatory'] === true) {
             $options['required']      = (bool) $model->mandatory;
             $options['constraints'][] = new Required();
         }
 
-        if ($this->options['minlength'] && $model->maxlength > 0) {
+        if ($this->options['minlength'] === true && $model->maxlength > 0) {
             $options['attr']['minlength'] = $model->maxlength;
             $options['constraints'][]     = new Length(['min' => (int) $model->minlength]);
         }
 
-        if ($this->options['maxlength'] && $model->maxlength > 0) {
+        if ($this->options['maxlength'] === true && $model->maxlength > 0) {
             $options['attr']['maxlength'] = $model->maxlength;
             $options['constraints'][]     = new Length(['max' => (int) $model->maxlength]);
         }
 
-        if ($this->options['value'] && $model->value) {
+        if ($this->options['value'] === true && $model->value) {
             $options['data'] = $model->value;
         }
 
-        if ($this->options['rgxp'] && $model->rgxp) {
+        if ($this->options['rgxp'] === true && $model->rgxp) {
             $options['constraints'][] = new Rgxp(
                 [
                     'rgxp'  => $model->rgxp,
                     'label' => StringUtil::decodeEntities($model->label),
-                ]
+                ],
             );
         }
 

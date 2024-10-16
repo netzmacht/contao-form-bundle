@@ -18,9 +18,7 @@ final class HiddenFieldMapper extends AbstractFieldMapper
      */
     protected string $typeClass = HiddenType::class;
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function __construct()
     {
         parent::__construct();
