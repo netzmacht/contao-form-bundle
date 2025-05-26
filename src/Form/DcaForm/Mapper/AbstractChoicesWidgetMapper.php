@@ -9,6 +9,7 @@ use Contao\CoreBundle\Framework\ContaoFramework;
 use Netzmacht\Contao\Toolkit\Callback\Invoker as CallbackInvoker;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\Context;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetTypeBuilder;
+use Override;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 use function array_flip;
@@ -52,6 +53,7 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function getOptions(
         string $name,
         array $config,

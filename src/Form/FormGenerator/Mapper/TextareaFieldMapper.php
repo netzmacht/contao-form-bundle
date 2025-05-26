@@ -7,6 +7,7 @@ namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
 use Contao\FormFieldModel;
 use Contao\StringUtil;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
+use Override;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 final class TextareaFieldMapper extends AbstractFieldMapper
@@ -22,6 +23,7 @@ final class TextareaFieldMapper extends AbstractFieldMapper
     protected string $typeClass = TextareaType::class;
 
     /** {@inheritDoc} */
+    #[Override]
     public function getOptions(FormFieldModel $model, FieldTypeBuilder $fieldTypeBuilder, callable $next): array
     {
         $options = parent::getOptions($model, $fieldTypeBuilder, $next);

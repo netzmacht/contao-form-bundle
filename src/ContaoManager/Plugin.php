@@ -13,12 +13,14 @@ use Contao\ManagerPlugin\Config\ExtensionPluginInterface;
 use Netzmacht\Contao\Toolkit\Bundle\NetzmachtContaoToolkitBundle as LegacyNetzmachtContaoToolkitBundle;
 use Netzmacht\Contao\Toolkit\NetzmachtContaoToolkitBundle;
 use Netzmacht\ContaoFormBundle\NetzmachtContaoFormBundle;
+use Override;
 
 use function dirname;
 
 final class Plugin implements BundlePluginInterface, ExtensionPluginInterface
 {
     /** {@inheritDoc} */
+    #[Override]
     public function getBundles(ParserInterface $parser): array
     {
         return [
@@ -34,6 +36,7 @@ final class Plugin implements BundlePluginInterface, ExtensionPluginInterface
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function getExtensionConfig($extensionName, array $extensionConfigs, ContainerBuilder $container): array
     {
         if ($extensionName === 'framework') {

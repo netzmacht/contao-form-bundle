@@ -10,6 +10,7 @@ use Contao\Model;
 use Contao\StringUtil;
 use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
+use Override;
 use RuntimeException;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface as FormBuilder;
@@ -36,6 +37,7 @@ final class FormGeneratorType extends AbstractType
     ) {
     }
 
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
@@ -49,6 +51,7 @@ final class FormGeneratorType extends AbstractType
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function buildForm(FormBuilder $builder, array $options): void
     {
         $formId    = (int) $options['formId'];

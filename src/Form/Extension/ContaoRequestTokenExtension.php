@@ -6,6 +6,7 @@ namespace Netzmacht\ContaoFormBundle\Form\Extension;
 
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Netzmacht\ContaoFormBundle\Form\ContaoRequestTokenType;
+use Override;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormInterface;
@@ -36,11 +37,13 @@ final class ContaoRequestTokenExtension extends AbstractTypeExtension
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public static function getExtendedTypes(): array
     {
         return [FormType::class];
     }
 
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $checkToken = $this->isCheckRequestTokenEnabled();
@@ -51,6 +54,7 @@ final class ContaoRequestTokenExtension extends AbstractTypeExtension
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function finishView(FormView $view, FormInterface $form, array $options): void
     {
         if (! $options['contao_request_token']) {

@@ -8,6 +8,7 @@ use Assert\AssertionFailedException;
 use Contao\CoreBundle\Framework\Adapter;
 use Contao\FormFieldModel;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
+use Override;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints\File;
@@ -54,6 +55,7 @@ final class UploadFieldMapper extends AbstractFieldMapper
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function getOptions(FormFieldModel $model, FieldTypeBuilder $fieldTypeBuilder, callable $next): array
     {
         $options                  = parent::getOptions($model, $fieldTypeBuilder, $next);

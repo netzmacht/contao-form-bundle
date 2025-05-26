@@ -8,6 +8,7 @@ use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\Context;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetTypeBuilder;
+use Override;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,6 +27,7 @@ final class DcaFormType extends AbstractType
     {
     }
 
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -42,6 +44,7 @@ final class DcaFormType extends AbstractType
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($options['dataContainer'] instanceof Definition) {

@@ -11,6 +11,7 @@ use Contao\StringUtil;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FormFieldMapper;
 use Netzmacht\ContaoFormBundle\Validator\Constraints\Rgxp;
+use Override;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Required;
 
@@ -65,16 +66,19 @@ abstract class AbstractFieldMapper implements FormFieldMapper
         Assert::that($this->fieldType)->string()->notBlank();
     }
 
+    #[Override]
     public function supports(FormFieldModel $model): bool
     {
         return $model->type === $this->fieldType;
     }
 
+    #[Override]
     public function getName(FormFieldModel $model): string|null
     {
         return $model->name;
     }
 
+    #[Override]
     public function getTypeClass(FormFieldModel $model): string
     {
         return $this->typeClass;
@@ -86,6 +90,7 @@ abstract class AbstractFieldMapper implements FormFieldMapper
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
+    #[Override]
     public function getOptions(FormFieldModel $model, FieldTypeBuilder $fieldTypeBuilder, callable $next): array
     {
         $options = [

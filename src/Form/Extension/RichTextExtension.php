@@ -8,6 +8,7 @@ use Contao\Backend;
 use Contao\BackendTemplate;
 use Contao\CoreBundle\Picker\PickerBuilderInterface;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
+use Override;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormInterface;
@@ -33,6 +34,7 @@ final class RichTextExtension extends AbstractTypeExtension
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         if ($options['rte'] === false || ! $this->scopeMatcher->isBackendRequest()) {
@@ -66,6 +68,7 @@ final class RichTextExtension extends AbstractTypeExtension
         $view->vars['rte'] = $template->parse();
     }
 
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefault('rte', false);
@@ -78,6 +81,7 @@ final class RichTextExtension extends AbstractTypeExtension
     }
 
     /** @inheritDoc */
+    #[Override]
     public static function getExtendedTypes(): iterable
     {
         return [TextareaType::class];

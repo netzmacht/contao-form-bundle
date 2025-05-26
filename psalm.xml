@@ -8,19 +8,6 @@
     </projectFiles>
 
     <issueHandlers>
-        <InternalMethod>
-            <errorLevel type="suppress">
-                <referencedMethod name="Contao\CoreBundle\Framework\Adapter::__call"/>
-                <referencedMethod name="Contao\CoreBundle\Framework\ContaoFramework::initialize"/>
-                <referencedMethod name="Contao\CoreBundle\Framework\ContaoFramework::createInstance"/>
-                <referencedMethod name="Contao\CoreBundle\Framework\ContaoFramework::getAdapter"/>
-            </errorLevel>
-        </InternalMethod>
-        <UndefinedConstant>
-            <errorLevel type="suppress">
-                <file name="src/Form/FormGenerator/UploadHandler.php"/>
-            </errorLevel>
-        </UndefinedConstant>
         <UndefinedClass>
             <errorLevel type="suppress">
                 <referencedClass name="Netzmacht\Contao\Toolkit\NetzmachtContaoToolkitBundle"/>

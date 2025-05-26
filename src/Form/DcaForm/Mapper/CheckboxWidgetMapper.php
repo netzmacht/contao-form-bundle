@@ -6,6 +6,7 @@ namespace Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper;
 
 use Netzmacht\ContaoFormBundle\Form\DcaForm\Context;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetTypeBuilder;
+use Override;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,6 +27,7 @@ final class CheckboxWidgetMapper extends AbstractWidgetMapper
     protected string $typeClass = CheckboxType::class;
 
     /** {@inheritDoc} */
+    #[Override]
     public function supports(string $name, array $config): bool
     {
         if (! parent::supports($name, $config)) {
@@ -36,6 +38,7 @@ final class CheckboxWidgetMapper extends AbstractWidgetMapper
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function getOptions(
         string $name,
         array $config,
@@ -51,6 +54,7 @@ final class CheckboxWidgetMapper extends AbstractWidgetMapper
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function configure(FormBuilderInterface $formType, array $config, Context $context): void
     {
         parent::configure($formType, $config, $context);

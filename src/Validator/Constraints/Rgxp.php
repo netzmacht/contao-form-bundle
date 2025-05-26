@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netzmacht\ContaoFormBundle\Validator\Constraints;
 
 use Contao\Widget;
+use Override;
 use Symfony\Component\Validator\Constraint;
 
 use function array_merge;
@@ -47,6 +48,7 @@ final class Rgxp extends Constraint
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function getRequiredOptions(): array
     {
         return array_merge(['rgxp'], parent::getRequiredOptions());

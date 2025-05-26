@@ -6,6 +6,7 @@ namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
 
 use Contao\FormFieldModel;
 use Netzmacht\ContaoFormBundle\Form\FormGenerator\FieldTypeBuilder;
+use Override;
 
 final class SelectFieldMapper extends AbstractChoicesFieldMapper
 {
@@ -20,6 +21,7 @@ final class SelectFieldMapper extends AbstractChoicesFieldMapper
     protected bool $expanded = false;
 
     /** {@inheritDoc} */
+    #[Override]
     public function getOptions(FormFieldModel $model, FieldTypeBuilder $fieldTypeBuilder, callable $next): array
     {
         $options = parent::getOptions($model, $fieldTypeBuilder, $next);

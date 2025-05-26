@@ -13,6 +13,7 @@ use Netzmacht\ContaoFormBundle\Form\DcaForm\Context;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetMapper;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetTypeBuilder;
 use Netzmacht\ContaoFormBundle\Validator\Constraints\Rgxp;
+use Override;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
@@ -81,6 +82,7 @@ abstract class AbstractWidgetMapper implements WidgetMapper
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function supports(string $name, array $config): bool
     {
         if (! isset($config['inputType'])) {
@@ -91,6 +93,7 @@ abstract class AbstractWidgetMapper implements WidgetMapper
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function getTypeClass(string $name, array $config): string
     {
         return $this->typeClass;
@@ -102,6 +105,7 @@ abstract class AbstractWidgetMapper implements WidgetMapper
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
+    #[Override]
     public function getOptions(
         string $name,
         array $config,
@@ -157,6 +161,7 @@ abstract class AbstractWidgetMapper implements WidgetMapper
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function configure(FormBuilderInterface $formType, array $config, Context $context): void
     {
         $formType->addModelTransformer(

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form;
 
+use Override;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -18,6 +19,7 @@ use function is_callable;
  */
 final class FieldsetType extends AbstractType
 {
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -32,6 +34,7 @@ final class FieldsetType extends AbstractType
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if (empty($options['fields'])) {
@@ -48,6 +51,7 @@ final class FieldsetType extends AbstractType
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         if ($options['legend'] === false) {

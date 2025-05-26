@@ -8,6 +8,7 @@ use Assert\AssertionFailedException;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\Context;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetTypeBuilder;
+use Override;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Contracts\Translation\TranslatorInterface as Translator;
@@ -49,6 +50,7 @@ final class PasswordWidgetMapper extends AbstractWidgetMapper
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function getOptions(
         string $name,
         array $config,

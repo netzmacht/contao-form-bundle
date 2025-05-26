@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netzmacht\ContaoFormBundle\Form\FormGenerator\Mapper;
 
 use Contao\FormFieldModel;
+use Override;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -39,6 +40,7 @@ final class TextFieldMapper extends AbstractFieldMapper
         'url'   => UrlType::class,
     ];
 
+    #[Override]
     public function getTypeClass(FormFieldModel $model): string
     {
         return self::$mapping[$model->rgxp] ?? parent::getTypeClass($model);

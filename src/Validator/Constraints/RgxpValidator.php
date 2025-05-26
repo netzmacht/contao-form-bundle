@@ -12,6 +12,7 @@ use Contao\Validator;
 use InvalidArgumentException;
 use Netzmacht\Contao\Toolkit\Callback\Invoker;
 use OutOfBoundsException;
+use Override;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -71,6 +72,7 @@ final class RgxpValidator extends ConstraintValidator
      *
      * @throws UnexpectedTypeException When a not supported constraint is given.
      */
+    #[Override]
     public function validate(mixed $value, Constraint $constraint): void
     {
         if (! $constraint instanceof Rgxp) {

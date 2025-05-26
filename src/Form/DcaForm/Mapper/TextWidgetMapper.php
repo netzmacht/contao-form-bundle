@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper;
 
+use Override;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -42,6 +43,7 @@ final class TextWidgetMapper extends AbstractWidgetMapper
     ];
 
     /** {@inheritDoc} */
+    #[Override]
     public function getTypeClass(string $name, array $config): string
     {
         $rgxp = ($config['eval']['rgxp'] ?? null);
