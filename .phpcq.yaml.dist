@@ -63,11 +63,13 @@ tasks:
       dry_run: false
       ignore_output:
         - '#> pre-command-run: Contao\\ManagerPlugin\\Composer\\ArtifactsPlugin->preCommandRun#'
+        - '#Root package is not of type "project" or "contao-theme", we will not be installing Contao extensions.#'
     plugin: composer-normalize
   composer-normalize:
     config:
       ignore_output:
         - '#> pre-command-run: Contao\\ManagerPlugin\\Composer\\ArtifactsPlugin->preCommandRun#'
+        - '#Root package is not of type "project" or "contao-theme", we will not be installing Contao extensions.#'
   composer-require-checker:
     config:
       config_file: .composer-require-checker.json
