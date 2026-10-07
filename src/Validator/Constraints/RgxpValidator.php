@@ -59,8 +59,6 @@ final class RgxpValidator extends ConstraintValidator
      */
     public function __construct(TranslatorInterface $translator, Invoker $invoker, ContaoFramework $framework)
     {
-        /** @psalm-suppress PossiblyNullPropertyAssignmentValue */
-        $this->context    = null;
         $this->translator = $translator;
         $this->invoker    = $invoker;
         $this->framework  = $framework;
