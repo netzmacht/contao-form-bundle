@@ -34,6 +34,7 @@ use function substr_count;
  * Class RgxpValidator performs the validation for the Rgxp constraint.
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @psalm-suppress PropertyNotSetInConstructor - $context is declared and initialized by the parent class
  */
 final class RgxpValidator extends ConstraintValidator
 {
