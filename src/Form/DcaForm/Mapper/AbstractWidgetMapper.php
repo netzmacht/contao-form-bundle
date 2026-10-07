@@ -135,12 +135,12 @@ abstract class AbstractWidgetMapper implements WidgetMapper
 
         if ($this->options['minlength'] && isset($config['eval']['minlength'])) {
             $options['attr']['minlength'] = $config['eval']['minlength'];
-            $options['constraints'][]     = new Length(['min' => (int) $config['eval']['minlength']]);
+            $options['constraints'][]     = new Length(min: (int) $config['eval']['minlength']);
         }
 
         if ($this->options['maxlength'] && isset($config['eval']['maxlength'])) {
             $options['attr']['maxlength'] = $config['eval']['maxlength'];
-            $options['constraints'][]     = new Length(['max' => (int) $config['eval']['maxlength']]);
+            $options['constraints'][]     = new Length(max: (int) $config['eval']['maxlength']);
         }
 
         if ($this->options['emptyData']) {
