@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Netzmacht\ContaoFormBundle\Form;
 
-use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
+use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\Context;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetTypeBuilder;
 use Override;
@@ -23,8 +23,10 @@ final class DcaFormType extends AbstractType
      * @param DcaManager        $dcaManager  Data container manager.
      * @param WidgetTypeBuilder $typeBuilder Field type builder.
      */
-    public function __construct(private readonly DcaManager $dcaManager, private readonly WidgetTypeBuilder $typeBuilder)
-    {
+    public function __construct(
+        private readonly DcaManager $dcaManager,
+        private readonly WidgetTypeBuilder $typeBuilder,
+    ) {
     }
 
     #[Override]

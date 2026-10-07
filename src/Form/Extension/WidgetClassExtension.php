@@ -54,22 +54,19 @@ final class WidgetClassExtension extends AbstractTypeExtension
     {
         $resolver->setDefault(
             'contaoWidget',
-            // @codingStandardsIgnoreStart - static function is not supported
-            static function (OptionsResolver $widgetResolver) : void {
+            static function (OptionsResolver $widgetResolver): void {
                 $widgetResolver->setDefaults(
                     [
                         'class'    => '',
                         'be_class' => '',
-                        'fe_class' => ''
-                    ]
+                        'fe_class' => '',
+                    ],
                 );
-            }
-        // @codingStandardsIgnoreStop
+            },
         );
     }
 
-    /** @inheritDoc */
-    public function getExtendedType() : string
+    public function getExtendedType(): string
     {
         return FormType::class;
     }
