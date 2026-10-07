@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "deny": [
+      "Edit(/.claude/rules/companion.md)",
+      "Edit(/.claude/rules/phpcq.md)",
+      "Edit(/.editorconfig)",
+      "Edit(/.gitignore)",
+      "Edit(/.phpcq.yaml.dist)"
+    ]
+  },
+  "skillOverrides": {
+    "phpcq": "on"
+  }
+}

@@ -5,6 +5,12 @@ phpcq:
     - src
   artifact: .phpcq/build
   plugins:
+    doctrine-coding-standard:
+      version: ^1.0
+      signed: false
+      requirements:
+        composer:
+          doctrine/coding-standard: ^14.0
     composer-normalize:
       version: ^1.0
       signed: false
@@ -30,6 +36,7 @@ phpcq:
       version: ^1.0
       signed: false
   trusted-keys:
+    - 6659B17090D6C5D3
     - C00543248C87FB13
     - 033E5F8D801A2F8D
     - D2CCAC42F6295E7D
@@ -37,9 +44,12 @@ phpcq:
     - 9093F8B32E4815AA
     - 8A03EA3B385DBAA1
     - 12CE0F1D262429A5
+    - 99BF4D9A33D65E1E
     - 31C7E470E2138192
     - 5E6DDE998AB73B8E
     - A978220305CD5C32
+    - 97B02DD8E5071466
+    - 96E91A992CF22FF4
 tasks:
   fix:
     - composer-normalize-fix
@@ -80,14 +90,14 @@ tasks:
   phpcs:
     config:
       standard: ~
-      standard_paths:
-        - ./vendor/slevomat/coding-standard
-        - ./vendor/doctrine/coding-standard/lib
+    uses:
+      doctrine-coding-standard:
+        phpcs_standard: ignore
   phpcbf:
     plugin: phpcs
     config:
       standard: ~
-      standard_paths:
-        - ./vendor/slevomat/coding-standard
-        - ./vendor/doctrine/coding-standard/lib
       fix: true
+    uses:
+      doctrine-coding-standard:
+        phpcs_standard: ignore

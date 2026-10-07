@@ -1,5 +1,5 @@
 {
-  "receipts": ["projects/contao-bundle/4.13-5.3"],
+  "receipts": ["projects/contao-bundle/5.3"],
   "config": {
     "phpConstraint": "^8.2"
   },
