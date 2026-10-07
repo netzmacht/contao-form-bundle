@@ -7,6 +7,11 @@
  - Require Contao `^5.3` and Symfony `^6.4 || ^7.4`, drop support for Contao 4.13
  - Require `netzmacht/contao-toolkit` `^4.0`, drop support for toolkit 3
 
+### Removed
+
+ - Remove support for the `google+` rgxp which is not available in Contao 5 anymore (BC break: fields using
+   `rgxp => 'google+'` are now passed to the `addCustomRegexp` hook)
+
 ### Fixed
 
  - Pass all template variables required by Contao 5 to the rich text editor template so that TinyMCE gets initialized

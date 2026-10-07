@@ -23,7 +23,6 @@ use function explode;
 use function html_entity_decode;
 use function in_array;
 use function is_array;
-use function method_exists;
 use function sprintf;
 use function str_replace;
 use function str_starts_with;
@@ -289,14 +288,6 @@ final class RgxpValidator extends ConstraintValidator
 
             case 'language':
                 if (! Validator::isLanguage($value)) {
-                    $this->invalidValue($constraint);
-                }
-
-                break;
-
-            case 'google+':
-                /** @psalm-suppress UndefinedMethod */
-                if (method_exists(Validator::class, 'isGooglePlusId') && ! Validator::isGooglePlusId($value)) {
                     $this->invalidValue($constraint);
                 }
 
