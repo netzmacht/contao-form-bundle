@@ -20,6 +20,16 @@
 
  - Pass all template variables required by Contao 5 to the rich text editor template so that TinyMCE gets initialized
  - Use the configured `minlength` instead of `maxlength` for the `minlength` attribute of form generator fields
+ - The `Rgxp` constraint is validated again. It was assigned to no validation group, so the Contao rgxp rules were
+   never checked. **Input which was accepted so far may now be rejected.**
+ - `RgxpValidator` could not be created with Symfony 7 because it reset the validator context in its constructor
+ - Use Contao's error messages for the `digit_*`, `friendly` and `fieldname` rgxp
+ - Support values transformed by a form type (e.g. numbers of a `NumberType`, dates of a `DateType`) in the
+   `RgxpValidator`
+
+### Removed
+
+ - Remove the obsolete `getExtendedType()` methods of the form type extensions, `getExtendedTypes()` is used instead
 
 ### [2.0.0] - 2022-08-17
 
