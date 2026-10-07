@@ -14,6 +14,7 @@
 
 ### Fixed
 
+ - Use the configured `minlength` instead of `maxlength` for the `minlength` attribute of form generator fields
  - Pass all template variables required by Contao 5 to the rich text editor template so that TinyMCE gets initialized
 
 ### [2.0.0] - 2022-08-17

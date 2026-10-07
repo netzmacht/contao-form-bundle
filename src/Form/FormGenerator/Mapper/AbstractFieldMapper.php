@@ -106,14 +106,16 @@ abstract class AbstractFieldMapper implements FormFieldMapper
             $options['constraints'][] = new Required();
         }
 
-        if ($this->options['minlength'] === true && $model->maxlength > 0) {
-            $options['attr']['minlength'] = $model->maxlength;
-            $options['constraints'][]     = new Length(min: (int) $model->minlength);
+        $minLength = (int) $model->minlength;
+        if ($this->options['minlength'] === true && $minLength > 0) {
+            $options['attr']['minlength'] = $model->minlength;
+            $options['constraints'][]     = new Length(min: $minLength);
         }
 
-        if ($this->options['maxlength'] === true && $model->maxlength > 0) {
+        $maxLength = (int) $model->maxlength;
+        if ($this->options['maxlength'] === true && $maxLength > 0) {
             $options['attr']['maxlength'] = $model->maxlength;
-            $options['constraints'][]     = new Length(max: (int) $model->maxlength);
+            $options['constraints'][]     = new Length(max: $maxLength);
         }
 
         if ($this->options['value'] === true && $model->value) {
