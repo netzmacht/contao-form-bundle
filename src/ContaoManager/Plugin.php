@@ -10,7 +10,6 @@ use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use Contao\ManagerPlugin\Config\ContainerBuilder;
 use Contao\ManagerPlugin\Config\ExtensionPluginInterface;
-use Netzmacht\Contao\Toolkit\Bundle\NetzmachtContaoToolkitBundle as LegacyNetzmachtContaoToolkitBundle;
 use Netzmacht\Contao\Toolkit\NetzmachtContaoToolkitBundle;
 use Netzmacht\ContaoFormBundle\NetzmachtContaoFormBundle;
 use Override;
@@ -29,7 +28,6 @@ final class Plugin implements BundlePluginInterface, ExtensionPluginInterface
                     [
                         ContaoCoreBundle::class,
                         NetzmachtContaoToolkitBundle::class,
-                        LegacyNetzmachtContaoToolkitBundle::class,
                     ],
                 ),
         ];
