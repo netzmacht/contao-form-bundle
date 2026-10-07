@@ -11,6 +11,7 @@ use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetTypeBuilder;
 use Override;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
 /**
@@ -25,6 +26,8 @@ final class PasswordWidgetMapper extends AbstractWidgetMapper
 
     /**
      * The type class.
+     *
+     * @var class-string<FormTypeInterface>
      */
     protected string $typeClass = RepeatedType::class;
 

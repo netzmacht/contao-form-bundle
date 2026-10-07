@@ -11,6 +11,7 @@ use Netzmacht\ContaoFormBundle\Form\DcaForm\Context;
 use Netzmacht\ContaoFormBundle\Form\DcaForm\WidgetTypeBuilder;
 use Override;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormTypeInterface;
 
 use function array_flip;
 use function is_array;
@@ -24,6 +25,8 @@ abstract class AbstractChoicesWidgetMapper extends AbstractWidgetMapper
 {
     /**
      * The type class.
+     *
+     * @var class-string<FormTypeInterface>
      */
     protected string $typeClass = ChoiceType::class;
 

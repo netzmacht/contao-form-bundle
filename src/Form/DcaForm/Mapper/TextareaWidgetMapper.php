@@ -6,6 +6,7 @@ namespace Netzmacht\ContaoFormBundle\Form\DcaForm\Mapper;
 
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\FormTypeInterface;
 
 /**
  * Class TextareaWidgetMapper maps the textarea widget to the TextareaType
@@ -19,6 +20,8 @@ final class TextareaWidgetMapper extends AbstractWidgetMapper
 
     /**
      * The type class.
+     *
+     * @var class-string<FormTypeInterface>
      */
     protected string $typeClass = TextareaType::class;
 

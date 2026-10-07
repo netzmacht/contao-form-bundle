@@ -7,15 +7,6 @@
         </ignoreFiles>
     </projectFiles>
 
-    <issueHandlers>
-        <UndefinedClass>
-            <errorLevel type="suppress">
-                <referencedClass name="Netzmacht\Contao\Toolkit\NetzmachtContaoToolkitBundle"/>
-                <referencedClass name="Netzmacht\Contao\Toolkit\Bundle\NetzmachtContaoToolkitBundle"/>
-            </errorLevel>
-        </UndefinedClass>
-    </issueHandlers>
-
     <universalObjectCrates>
         <!-- allow magic property access -->
         <class name="Contao\FormFieldModel"/>

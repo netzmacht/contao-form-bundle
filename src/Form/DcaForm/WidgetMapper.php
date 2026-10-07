@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netzmacht\ContaoFormBundle\Form\DcaForm;
 
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormTypeInterface;
 
 interface WidgetMapper
 {
@@ -21,6 +22,8 @@ interface WidgetMapper
      *
      * @param string              $name   The form field name.
      * @param array<string,mixed> $config The form field config.
+     *
+     * @return class-string<FormTypeInterface>
      */
     public function getTypeClass(string $name, array $config): string;
 

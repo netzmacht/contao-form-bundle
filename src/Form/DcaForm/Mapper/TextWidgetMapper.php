@@ -12,6 +12,9 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Form\FormTypeInterface;
+
+use function is_string;
 
 /**
  * Class TextWidgetMapper maps the text widget to the TextType
@@ -25,13 +28,15 @@ final class TextWidgetMapper extends AbstractWidgetMapper
 
     /**
      * The type class.
+     *
+     * @var class-string<FormTypeInterface>
      */
     protected string $typeClass = TextType::class;
 
     /**
      * Mapping of rgxp to form type.
      *
-     * @var array<string,class-string>
+     * @var array<string,class-string<FormTypeInterface>>
      */
     private static array $mapping = [
         'digit' => NumberType::class,
@@ -46,8 +51,8 @@ final class TextWidgetMapper extends AbstractWidgetMapper
     #[Override]
     public function getTypeClass(string $name, array $config): string
     {
-        $rgxp = ($config['eval']['rgxp'] ?? null);
-        if (isset(static::$mapping[$rgxp])) {
+        $rgxp = $config['eval']['rgxp'] ?? null;
+        if (is_string($rgxp) && isset(static::$mapping[$rgxp])) {
             return static::$mapping[$rgxp];
         }
 

@@ -10,6 +10,7 @@ use Override;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormTypeInterface;
 
 /**
  * Class CheckboxWidgetMapper maps the checkbox widget to the CheckboxType
@@ -22,7 +23,9 @@ final class CheckboxWidgetMapper extends AbstractWidgetMapper
     protected string $widgetType = 'checkbox';
 
     /**
-     * The field type.
+     * The type class.
+     *
+     * @var class-string<FormTypeInterface>
      */
     protected string $typeClass = CheckboxType::class;
 

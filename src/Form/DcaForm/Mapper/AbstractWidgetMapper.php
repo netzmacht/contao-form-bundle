@@ -16,6 +16,7 @@ use Netzmacht\ContaoFormBundle\Validator\Constraints\Rgxp;
 use Override;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Required;
 
@@ -24,6 +25,7 @@ abstract class AbstractWidgetMapper implements WidgetMapper
     /**
      * The type class.
      *
+     * @var class-string<FormTypeInterface>
      * @psalm-suppress PropertyNotSetInConstructor
      */
     protected string $typeClass;
@@ -133,14 +135,16 @@ abstract class AbstractWidgetMapper implements WidgetMapper
             $options['constraints'][] = new Required();
         }
 
-        if ($this->options['minlength'] && isset($config['eval']['minlength'])) {
+        $minLength = (int) ($config['eval']['minlength'] ?? 0);
+        if ($this->options['minlength'] && isset($config['eval']['minlength']) && $minLength >= 0) {
             $options['attr']['minlength'] = $config['eval']['minlength'];
-            $options['constraints'][]     = new Length(min: (int) $config['eval']['minlength']);
+            $options['constraints'][]     = new Length(min: $minLength);
         }
 
-        if ($this->options['maxlength'] && isset($config['eval']['maxlength'])) {
+        $maxLength = (int) ($config['eval']['maxlength'] ?? 0);
+        if ($this->options['maxlength'] && isset($config['eval']['maxlength']) && $maxLength > 0) {
             $options['attr']['maxlength'] = $config['eval']['maxlength'];
-            $options['constraints'][]     = new Length(max: (int) $config['eval']['maxlength']);
+            $options['constraints'][]     = new Length(max: $maxLength);
         }
 
         if ($this->options['emptyData']) {
