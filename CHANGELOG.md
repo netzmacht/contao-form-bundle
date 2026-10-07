@@ -1,22 +1,25 @@
 # Changelog
 
-## [Unreleased]
+## [2.1.0] - Unreleased
+
+### Breaking changes
+
+ - Drop support for Contao 4.13, Contao `^5.3` is required
+ - Drop support for `netzmacht/contao-toolkit` 3, `^4.0` is required
+ - Drop support for Symfony 5.4, Symfony `^6.4 || ^7.4` is required
+ - Remove the `google+` rgxp validation which is not available in Contao 5 anymore. Fields using
+   `rgxp => 'google+'` are now passed to the `addCustomRegexp` hook
+ - `DcaFormType` requires `Netzmacht\Contao\Toolkit\Dca\DcaManager` instead of the toolkit `Manager`
 
 ### Changed
 
- - Require Contao `^5.3` and Symfony `^6.4 || ^7.4`, drop support for Contao 4.13
- - Require `netzmacht/contao-toolkit` `^4.0`, drop support for toolkit 3
  - The `Rgxp` constraint accepts named arguments, passing an options array is still supported
-
-### Removed
-
- - Remove support for the `google+` rgxp which is not available in Contao 5 anymore (BC break: fields using
-   `rgxp => 'google+'` are now passed to the `addCustomRegexp` hook)
+ - Use named arguments for the `Length` constraint
 
 ### Fixed
 
- - Use the configured `minlength` instead of `maxlength` for the `minlength` attribute of form generator fields
  - Pass all template variables required by Contao 5 to the rich text editor template so that TinyMCE gets initialized
+ - Use the configured `minlength` instead of `maxlength` for the `minlength` attribute of form generator fields
 
 ### [2.0.0] - 2022-08-17
 
@@ -106,7 +109,7 @@
  - Do not include invisible form fields
  - Fix choices group for multiple select fields
 
-[Unreleased]: https://github.com/netzmacht/contao-form-bundle/compare/master..develop
+[2.1.0]: https://github.com/netzmacht/contao-form-bundle/compare/2.0.3...master
 [1.3.0]: https://github.com/netzmacht/contao-form-bundle/compare/1.2.1...1.3.0
 [1.2.1]: https://github.com/netzmacht/contao-form-bundle/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/netzmacht/contao-form-bundle/compare/1.1.1...1.2.0
