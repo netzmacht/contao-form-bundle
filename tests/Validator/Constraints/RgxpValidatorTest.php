@@ -95,6 +95,7 @@ final class RgxpValidatorTest extends TestCase
     {
         yield 'digit' => ['digit', 'abc', 'digit: ' . self::LABEL];
         yield 'digit two commas' => ['digit', '1,000,5', 'digit: ' . self::LABEL];
+        yield 'digit_' => ['digit_auto', 'inherit', 'digit: ' . self::LABEL];
         yield 'natural' => ['natural', '-1', 'natural: ' . self::LABEL];
         yield 'alpha' => ['alpha', 'abc1', 'alpha: ' . self::LABEL];
         yield 'alnum' => ['alnum', 'abc!', 'alnum: ' . self::LABEL];
@@ -106,6 +107,7 @@ final class RgxpValidatorTest extends TestCase
         yield 'datim' => ['datim', '2024-02-29', 'dateTime: YYYY-MM-DD hh:mm'];
         yield 'invalid datim' => ['datim', '2023-02-29 13:45', 'invalidDate: 2023-02-29 13:45'];
         yield 'email' => ['email', 'foo', 'email: ' . self::LABEL];
+        yield 'friendly' => ['friendly', 'Foo Bar [foo]', 'email: ' . self::LABEL];
         yield 'emails' => ['emails', 'foo@example.org, bar', 'emails: ' . self::LABEL];
         yield 'url' => ['url', 'https://example.org/foo bar', 'url: ' . self::LABEL];
         yield 'alias' => ['alias', 'foo/bar', 'alias: ' . self::LABEL];
@@ -114,6 +116,7 @@ final class RgxpValidatorTest extends TestCase
         yield 'prcnt' => ['prcnt', '101', 'prcnt: ' . self::LABEL];
         yield 'locale' => ['locale', 'de-DE', 'locale: ' . self::LABEL];
         yield 'language' => ['language', 'de_DE', 'language: ' . self::LABEL];
+        yield 'fieldname' => ['fieldname', 'foo bar', 'invalidFieldName: ' . self::LABEL];
     }
 
     #[DataProvider('validValues')]

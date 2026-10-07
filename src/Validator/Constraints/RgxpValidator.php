@@ -130,35 +130,35 @@ final class RgxpValidator extends ConstraintValidator
                 }
 
                 if (! Validator::isNumeric($value)) {
-                    $this->invalidValue($constraint);
+                    $this->invalidValue($rgxp, $constraint);
                 }
 
                 break;
 
             case 'natural':
                 if (! Validator::isNatural($value)) {
-                    $this->invalidValue($constraint);
+                    $this->invalidValue($rgxp, $constraint);
                 }
 
                 break;
 
             case 'alpha':
                 if (! Validator::isAlphabetic($value)) {
-                    $this->invalidValue($constraint);
+                    $this->invalidValue($rgxp, $constraint);
                 }
 
                 break;
 
             case 'alnum':
                 if (! Validator::isAlphanumeric($value)) {
-                    $this->invalidValue($constraint);
+                    $this->invalidValue($rgxp, $constraint);
                 }
 
                 break;
 
             case 'extnd':
                 if (! Validator::isExtendedAlphanumeric(html_entity_decode($value))) {
-                    $this->invalidValue($constraint);
+                    $this->invalidValue($rgxp, $constraint);
                 }
 
                 break;
@@ -219,7 +219,7 @@ final class RgxpValidator extends ConstraintValidator
             // no break
             case 'email':
                 if (! Validator::isEmail($value)) {
-                    $this->invalidValue($constraint);
+                    $this->invalidValue($rgxp, $constraint);
                 }
 
                 if ($rgxp === 'friendly' && ! empty($name)) {
@@ -236,7 +236,7 @@ final class RgxpValidator extends ConstraintValidator
                     $email = Idna::encodeEmail($email);
 
                     if (! Validator::isEmail($email)) {
-                        $this->invalidValue($constraint);
+                        $this->invalidValue($rgxp, $constraint);
                         break;
                     }
                 }
@@ -245,56 +245,56 @@ final class RgxpValidator extends ConstraintValidator
 
             case 'url':
                 if (! Validator::isUrl($value)) {
-                    $this->invalidValue($constraint);
+                    $this->invalidValue($rgxp, $constraint);
                 }
 
                 break;
 
             case 'alias':
                 if (! Validator::isAlias($value)) {
-                    $this->invalidValue($constraint);
+                    $this->invalidValue($rgxp, $constraint);
                 }
 
                 break;
 
             case 'folderalias':
                 if (! Validator::isFolderAlias($value)) {
-                    $this->invalidValue($constraint);
+                    $this->invalidValue($rgxp, $constraint);
                 }
 
                 break;
 
             case 'phone':
                 if (! Validator::isPhone(html_entity_decode($value))) {
-                    $this->invalidValue($constraint);
+                    $this->invalidValue($rgxp, $constraint);
                 }
 
                 break;
 
             case 'prcnt':
                 if (! Validator::isPercent($value)) {
-                    $this->invalidValue($constraint);
+                    $this->invalidValue($rgxp, $constraint);
                 }
 
                 break;
 
             case 'locale':
                 if (! Validator::isLocale($value)) {
-                    $this->invalidValue($constraint);
+                    $this->invalidValue($rgxp, $constraint);
                 }
 
                 break;
 
             case 'language':
                 if (! Validator::isLanguage($value)) {
-                    $this->invalidValue($constraint);
+                    $this->invalidValue($rgxp, $constraint);
                 }
 
                 break;
 
             case 'fieldname':
                 if (! Validator::isFieldName($value)) {
-                    $this->invalidValue($constraint);
+                    $this->invalidValue($rgxp, $constraint);
                 }
 
                 break;
@@ -337,15 +337,20 @@ final class RgxpValidator extends ConstraintValidator
     /**
      * Create an invalid argument exception with translated error message.
      *
-     * @param Rgxp $constraint The rgxp constraint.
+     * @param string $rgxp       The validated rgxp.
+     * @param Rgxp   $constraint The rgxp constraint.
      *
      * @throws InvalidArgumentException With the translated error message.
      */
-    private function invalidValue(Rgxp $constraint): void
+    private function invalidValue(string $rgxp, Rgxp $constraint): void
     {
-        throw new InvalidArgumentException(
-            sprintf($this->translateError($constraint->getRgxp()), (string) $constraint->getLabel()),
-        );
+        $key = match ($rgxp) {
+            'friendly' => 'email',
+            'fieldname' => 'invalidFieldName',
+            default => $rgxp,
+        };
+
+        throw new InvalidArgumentException(sprintf($this->translateError($key), (string) $constraint->getLabel()));
     }
 
     /**
