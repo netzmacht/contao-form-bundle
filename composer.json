@@ -52,6 +52,11 @@
       "Netzmacht\\ContaoFormBundle\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Netzmacht\\ContaoFormBundle\\Tests\\": "tests/"
+    }
+  },
   "config": {
     "allow-plugins": {
       "composer/package-versions-deprecated": true,
