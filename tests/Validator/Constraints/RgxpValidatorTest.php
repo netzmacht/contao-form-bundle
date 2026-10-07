@@ -7,6 +7,7 @@ namespace Netzmacht\ContaoFormBundle\Tests\Validator\Constraints;
 use Contao\CoreBundle\Framework\Adapter;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\Widget;
+use DateTimeImmutable;
 use Netzmacht\Contao\Toolkit\Callback\Invoker;
 use Netzmacht\ContaoFormBundle\Tests\Fixtures\TestWidget;
 use Netzmacht\ContaoFormBundle\Validator\Constraints\Rgxp;
@@ -63,14 +64,18 @@ final class RgxpValidatorTest extends TestCase
         yield 'digit integer' => ['digit', '123'];
         yield 'digit negative decimal' => ['digit', '-1.5'];
         yield 'digit decimal comma' => ['digit', '1,5'];
+        yield 'digit float value' => ['digit', 1.5];
+        yield 'digit int value' => ['digit', 42];
         yield 'digit_ textual value' => ['digit_auto_inherit', 'auto'];
         yield 'digit_ variable' => ['digit_auto', '$foo'];
         yield 'digit_ number' => ['digit_auto', '12'];
         yield 'natural' => ['natural', '12'];
+        yield 'natural int value' => ['natural', 12];
         yield 'alpha' => ['alpha', 'Foo bar-baz'];
         yield 'alnum' => ['alnum', 'Foo_1 bar'];
         yield 'extnd' => ['extnd', 'Foo & bar!'];
         yield 'date' => ['date', '2024-02-29'];
+        yield 'date object' => ['date', new DateTimeImmutable()];
         yield 'time' => ['time', '13:45'];
         yield 'datim' => ['datim', '2024-02-29 13:45'];
         yield 'email' => ['email', 'foo@example.org'];
@@ -88,6 +93,7 @@ final class RgxpValidatorTest extends TestCase
         yield 'unknown rgxp without hooks' => ['custom', 'anything'];
         yield 'empty string' => ['digit', ''];
         yield 'null' => ['digit', null];
+        yield 'array' => ['digit', ['abc']];
     }
 
     /** @return iterable<string, array{string, mixed, string}> */
@@ -97,6 +103,7 @@ final class RgxpValidatorTest extends TestCase
         yield 'digit two commas' => ['digit', '1,000,5', 'digit: ' . self::LABEL];
         yield 'digit_' => ['digit_auto', 'inherit', 'digit: ' . self::LABEL];
         yield 'natural' => ['natural', '-1', 'natural: ' . self::LABEL];
+        yield 'natural negative int value' => ['natural', -1, 'natural: ' . self::LABEL];
         yield 'alpha' => ['alpha', 'abc1', 'alpha: ' . self::LABEL];
         yield 'alnum' => ['alnum', 'abc!', 'alnum: ' . self::LABEL];
         yield 'extnd' => ['extnd', 'foo<bar>', 'extnd: ' . self::LABEL];

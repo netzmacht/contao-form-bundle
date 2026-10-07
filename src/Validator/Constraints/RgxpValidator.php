@@ -23,6 +23,9 @@ use function explode;
 use function html_entity_decode;
 use function in_array;
 use function is_array;
+use function is_float;
+use function is_int;
+use function is_string;
 use function sprintf;
 use function str_replace;
 use function str_starts_with;
@@ -81,7 +84,13 @@ final class RgxpValidator extends ConstraintValidator
             return;
         }
 
-        if ($value === '') {
+        // Values transformed by a form type (e.g. NumberType) are validated by their string representation
+        if (is_int($value) || is_float($value)) {
+            $value = StringUtil::numberToString($value);
+        }
+
+        // Other types (e.g. DateTimeInterface of a DateType) are already ensured by the form type
+        if (! is_string($value) || $value === '') {
             return;
         }
 
@@ -95,8 +104,8 @@ final class RgxpValidator extends ConstraintValidator
     /**
      * Validate the value following contao validation rules.
      *
-     * @param mixed $value      The given value.
-     * @param Rgxp  $constraint The rgxp constraint.
+     * @param string $value      The given value.
+     * @param Rgxp   $constraint The rgxp constraint.
      *
      * @throws InvalidArgumentException Then an error occurs.
      *
@@ -105,7 +114,7 @@ final class RgxpValidator extends ConstraintValidator
      * @SuppressWarnings(PHPMD.Superglobals)
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    private function doValidate(mixed $value, Rgxp $constraint): void
+    private function doValidate(string $value, Rgxp $constraint): void
     {
         $rgxp = $constraint->getRgxp();
 
@@ -175,6 +184,8 @@ final class RgxpValidator extends ConstraintValidator
 
                 // Validate the date (see #5086)
                 try {
+                    // Contao's docblock only allows int, but the date string is parsed by the constructor
+                    /** @psalm-suppress InvalidArgument */
                     new Date($value, Date::getNumericDateFormat());
                 } catch (OutOfBoundsException) {
                     throw new InvalidArgumentException($this->translateError('invalidDate', [$value]));
@@ -206,6 +217,8 @@ final class RgxpValidator extends ConstraintValidator
 
                 // Validate the date (see #5086)
                 try {
+                    // Contao's docblock only allows int, but the date string is parsed by the constructor
+                    /** @psalm-suppress InvalidArgument */
                     new Date($value, Date::getNumericDatimFormat());
                 } catch (OutOfBoundsException) {
                     throw new InvalidArgumentException($this->translateError('invalidDate', [$value]));
