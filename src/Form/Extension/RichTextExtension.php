@@ -17,6 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use function array_pad;
 use function explode;
+use function implode;
 
 /**
  * Class RichTextExtension enables RTE support in Contao backend scope
@@ -57,11 +58,16 @@ final class RichTextExtension extends AbstractTypeExtension
         $template = new BackendTemplate('be_' . $file);
         $template->setData(
             [
-                'selector' => $view->vars['id'],
-                'type'     => $type,
-                'fileBrowserTypes' => $fileBrowserTypes,
-                'source' => $options['rte_source'],
-                'language' => Backend::getTinyMceLanguage(),
+                'selector'         => $view->vars['id'],
+                'type'             => $type,
+                'fileBrowserTypes' => implode(' ', $fileBrowserTypes),
+                'source'           => $options['rte_source'],
+                'readonly'         => (bool) ($view->vars['attr']['readonly'] ?? false),
+                'theme'            => Backend::getTheme(),
+                'enableAce'        => $GLOBALS['TL_CONFIG']['useCE'] ?? false,
+                'aceType'          => Backend::getAceType($type),
+                'enableTinyMce'    => $GLOBALS['TL_CONFIG']['useRTE'] ?? false,
+                'tinyMceLanguage'  => Backend::getTinyMceLanguage(),
             ],
         );
 

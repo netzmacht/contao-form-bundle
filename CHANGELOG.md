@@ -6,6 +6,10 @@
 
  - Require Contao `^5.3` and Symfony `^6.4 || ^7.4`, drop support for Contao 4.13
 
+### Fixed
+
+ - Pass all template variables required by Contao 5 to the rich text editor template so that TinyMCE gets initialized
+
 ### [2.0.0] - 2022-08-17
 
 ### Changed
