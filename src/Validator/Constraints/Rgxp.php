@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Netzmacht\ContaoFormBundle\Validator\Constraints;
 
 use Contao\Widget;
-use Override;
+use Symfony\Component\Validator\Attribute\HasNamedArguments;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Exception\MissingOptionsException;
 
-use function array_merge;
 use function is_array;
+use function sprintf;
 
 /**
  * Class Rgxp is a symfony validator constraint for the Contao rgxp setting
@@ -26,32 +27,48 @@ final class Rgxp extends Constraint
     protected string|null $label = null;
 
     /**
-     * {@inheritDoc}
+     * @param string|array<string,mixed>|null $rgxp    The rgxp. Passing an array of options is supported for backward
+     *                                                 compatibility.
+     * @param Widget|null                     $widget  The widget.
+     * @param string|null                     $label   The label.
+     * @param list<string>|null               $groups  The validation groups.
+     * @param mixed                           $payload Domain-specific data attached to a constraint.
      *
-     * @psalm-param mixed $options
+     * @throws MissingOptionsException When no rgxp is given.
      */
-    public function __construct($options = null)
-    {
-        parent::__construct($options);
+    #[HasNamedArguments]
+    public function __construct(
+        string|array|null $rgxp = null,
+        Widget|null $widget = null,
+        string|null $label = null,
+        array|null $groups = null,
+        mixed $payload = null,
+    ) {
+        if (is_array($rgxp)) {
+            /** @psalm-var Widget|null $widget */
+            $widget = $rgxp['widget'] ?? $widget;
+            /** @psalm-var string|null $label */
+            $label = $rgxp['label'] ?? $label;
+            /** @psalm-var list<string>|null $groups */
+            $groups  = $rgxp['groups'] ?? $groups;
+            $payload = $rgxp['payload'] ?? $payload;
+            /** @psalm-var string|null $rgxp */
+            $rgxp = $rgxp['rgxp'] ?? null;
+        }
+
+        if ($rgxp === null) {
+            throw new MissingOptionsException(
+                sprintf('The option "rgxp" must be given for constraint "%s".', self::class),
+                ['rgxp'],
+            );
+        }
+
+        parent::__construct(null, $groups, $payload);
 
         $this->groups = [];
-        $this->rgxp   = is_array($options) ? ($options['rgxp'] ?? '') : '';
-        if ($this->label !== null) {
-            return;
-        }
-
-        if (! ($this->widget instanceof Widget)) {
-            return;
-        }
-
-        $this->label = $this->widget->label;
-    }
-
-    /** {@inheritDoc} */
-    #[Override]
-    public function getRequiredOptions(): array
-    {
-        return array_merge(['rgxp'], parent::getRequiredOptions());
+        $this->rgxp   = $rgxp;
+        $this->widget = $widget;
+        $this->label  = $label ?? $widget?->label;
     }
 
     public function getRgxp(): string

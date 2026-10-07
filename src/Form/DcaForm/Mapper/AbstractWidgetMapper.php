@@ -20,6 +20,8 @@ use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Required;
 
+use function is_string;
+
 abstract class AbstractWidgetMapper implements WidgetMapper
 {
     /**
@@ -152,12 +154,11 @@ abstract class AbstractWidgetMapper implements WidgetMapper
         }
 
         if ($this->options['rgxp'] && isset($config['eval']['rgxp'])) {
+            $label                    = StringUtil::decodeEntities($config['label'][0] ?? $name);
             $options['constraints'][] = new Rgxp(
-                [
-                    'rgxp'   => $config['eval']['rgxp'],
-                    'label'  => StringUtil::decodeEntities(($config['label'][0] ?? $name)),
-                    'widget' => $this->createWidget($name, $config, $context),
-                ],
+                rgxp: (string) $config['eval']['rgxp'],
+                widget: $this->createWidget($name, $config, $context),
+                label: is_string($label) ? $label : null,
             );
         }
 

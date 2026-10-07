@@ -6,6 +6,7 @@
 
  - Require Contao `^5.3` and Symfony `^6.4 || ^7.4`, drop support for Contao 4.13
  - Require `netzmacht/contao-toolkit` `^4.0`, drop support for toolkit 3
+ - The `Rgxp` constraint accepts named arguments, passing an options array is still supported
 
 ### Removed
 

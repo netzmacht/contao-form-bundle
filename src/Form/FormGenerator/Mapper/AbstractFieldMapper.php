@@ -15,6 +15,8 @@ use Override;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Required;
 
+use function is_string;
+
 abstract class AbstractFieldMapper implements FormFieldMapper
 {
     /**
@@ -123,11 +125,10 @@ abstract class AbstractFieldMapper implements FormFieldMapper
         }
 
         if ($this->options['rgxp'] === true && $model->rgxp) {
+            $label                    = StringUtil::decodeEntities($model->label);
             $options['constraints'][] = new Rgxp(
-                [
-                    'rgxp'  => $model->rgxp,
-                    'label' => StringUtil::decodeEntities($model->label),
-                ],
+                rgxp: $model->rgxp,
+                label: is_string($label) ? $label : null,
             );
         }
 
