@@ -65,7 +65,6 @@ final class Rgxp extends Constraint
 
         parent::__construct(null, $groups, $payload);
 
-        $this->groups = [];
         $this->rgxp   = $rgxp;
         $this->widget = $widget;
         $this->label  = $label ?? $widget?->label;
