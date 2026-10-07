@@ -81,11 +81,6 @@ final class RichTextExtension extends AbstractTypeExtension
         $resolver->setDefault('rte_source', '');
     }
 
-    public function getExtendedType(): string
-    {
-        return TextareaType::class;
-    }
-
     /** @inheritDoc */
     #[Override]
     public static function getExtendedTypes(): iterable

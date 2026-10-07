@@ -13,11 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class ToggleableFieldsetExtension extends AbstractTypeExtension
 {
-    public function getExtendedType(): string
-    {
-        return FieldsetType::class;
-    }
-
     /** {@inheritDoc} */
     #[Override]
     public static function getExtendedTypes(): iterable

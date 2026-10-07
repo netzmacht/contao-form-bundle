@@ -16,11 +16,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class HelpMessageExtension extends AbstractTypeExtension
 {
-    public function getExtendedType(): string
-    {
-        return FormType::class;
-    }
-
     /** @inheritDoc */
     #[Override]
     public static function getExtendedTypes(): iterable

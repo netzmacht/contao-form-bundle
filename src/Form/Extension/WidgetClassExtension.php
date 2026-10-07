@@ -66,11 +66,6 @@ final class WidgetClassExtension extends AbstractTypeExtension
         );
     }
 
-    public function getExtendedType(): string
-    {
-        return FormType::class;
-    }
-
     /** @inheritDoc */
     #[Override]
     public static function getExtendedTypes(): iterable
